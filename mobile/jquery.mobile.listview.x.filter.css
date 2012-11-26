@@ -1,0 +1,7 @@
+/* .ui-listview-filter { border-width: 0; overflow: hidden; margin: -15px -15px 15px -15px } */
+/* .ui-listview-filter .ui-input-search { margin: 5px; width: auto; display: block; } */
+/* .ui-listview-filter-inset { margin: -15px -5px -15px -5px; background: transparent; } */
+
+.ui-listview-filter-types { border-width: 0; overflow: hidden; margin: -15px -15px 15px -15px; text-align: center; }
+.ui-listview-filter-types fieldset { margin: 5px 5px 0px 5px; width: auto; display: inline; }
+.ui-listview-filter-types-inset { margin: -15px -5px 15px -5px; background: transparent; }

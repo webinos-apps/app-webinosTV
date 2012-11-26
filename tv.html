@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="utf-8" />
+  <title>webinos | Zap and Shake</title>
+  <link rel="stylesheet" href="tv.css" />
+</head>
+ 
+<body>
+
+<div id="title">Zap and Shake</div>
+
+<div id="tvpart">
+	<iframe src="./index.html"  webkitallowfullScreen mozallowfullscreen allowFullScreen></iframe>
+</div>	
+
+<div id="tweetline">	
+<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: 'webinosproject',
+  interval: 30000,
+  title: 'Cross screen apps with webinos.',
+  subject: '',
+  width: 360,
+  height: 720,
+  theme: {
+    shell: {
+      background: '#333333',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#000000',
+      color: '#d9d9d9',
+      links: '#b1def2'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: true,
+    live: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+</div>
+
+<div class="line-down-wrap">
+                        <div class="left-gradient-white"></div>
+                        <div class="right-gradient-white"></div>
+                    </div>
+
+<a href="http://www.fokus.fraunhofer.de/en/fame/index.html"><span id="famelogo"></span></a>
+<a href="http://www.webinos.org" target="_blank"><span id="webinoslogo"></span></a>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<script src="/client/webinos.js"></script>
+<script src="lib/jquery-1.7.1.min.js"></script>
+<script>
+var app = (function() {
+	var events = {
+		service: undefined,
+		
+		handler: function(event) {
+			if (event.addressing.type != "player") {
+				return;
+			}
+			
+			switch (event.type) {
+			case "helloPlayer":
+				// something something
+			}
+		}
+	};
+	
+	function init() {
+		var buttons = ['#left', '#right', '#up'];
+		for (var i = 0; i < buttons.length; i++) {
+			$(buttons[i]).click(sendControlEvent);
+		}
+
+		webinos.discovery.findServices(new ServiceType("http://webinos.org/api/events"), {
+			onFound: function (service) {
+				events.service = service;
+
+				service.bind({onBind: function () {
+					service.addWebinosEventListener(events.handler);
+
+					var hello = service.createWebinosEvent("helloController");
+
+					hello.dispatchWebinosEvent();
+				}});
+			}
+		});
+	};
+	
+	function sendControlEvent(event) {
+		var le = events.service.createWebinosEvent("controllerAction", {}, {
+			action: event.target.value,
+			payload: null
+		});
+
+		le.dispatchWebinosEvent();
+	}
+	
+	return {
+		init: init,
+	};
+})();
+
+$(document).ready(app.init);
+</script>
+<div id="ctrl">
+	<input id="left" type="button" value="left">
+	<input id="right" type="button" value="right">
+	<input id="up" type="button" value="up">
+</div>
