@@ -1,0 +1,54 @@
+.ui-navbar-custom .ui-btn .ui-btn-inner {
+	padding-top: 40px !important;
+}
+
+.ui-navbar-custom .ui-btn .ui-icon {
+	width: 30px !important;
+	height: 30px !important;
+	margin-left: -15px !important;
+	box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	border-radius: 0px !important;
+	-webkit-border-radius: 0px !important;
+}
+
+.ui-icon-tv .ui-icon {
+	background: url(../images/tv.png) 50% 50% no-repeat;
+	background-size: 24px 24px;
+}
+
+.ui-icon-library .ui-icon {
+	background: url(../images/library.png) 50% 50% no-repeat;
+	background-size: 24px 22px;
+}
+
+#view-content, #live-content, #playback-content {
+	text-align: center;
+}
+
+#live-mode-wrapper .ui-slider-switch {
+	width: 50%;
+}
+
+#playback-timeline-wrapper .ui-slider-input {
+	display: none !important;
+}
+
+.ui-li-icon-video {
+	width: 20px;
+	height: 25px;
+	margin-top: -5px;
+}
+
+.ui-li-icon-audio {
+	width: 23px;
+	height: 23px;
+	margin-top: -5px;
+}
+
+.ui-li-icon-image {
+	width: 24px;
+	height: 26px;
+	margin-top: -5px;
+}

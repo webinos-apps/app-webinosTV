@@ -1,0 +1,136 @@
+
+
+{ margin: 0; padding: 0; }
+
+html { 
+        background: url('bg.jpg') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+
+#title{
+	text-align: center;
+color: #DDD;
+font-family: 'Comic Sans MS',sans-serif;
+text-shadow: 0 0 6px black;
+font-size: 30px;
+position: absolute;
+left: 0;
+right: 0;
+top: 20px;
+}
+
+#tvpart {
+	position: absolute;
+	top: 120px;
+	left: 40px;
+	height: 792px;
+	width: 1294px;
+	background-color: #000;
+	border-radius: 6px; 
+}
+#tvpart iframe {
+	padding: 7px;
+	border: 0;
+	overflow: hidden;
+	width: 1280px;
+	height: 778px;
+
+}
+
+#tweetline {
+	position: absolute;
+	top: 120px;
+	right: 40px;
+	height: 720px;
+	width: 360px;
+}
+
+#famelogo {
+	background: url('fame-logo.png') no-repeat;
+	width: 272px;
+	height: 92px;
+	position: absolute;
+	bottom: 40px;
+	left: 80px;
+}
+
+#webinoslogo {
+	background: url('webinos.png') no-repeat;
+	width: 272px;
+	height: 79px;
+	position: absolute;
+	bottom: 47px;
+	right: 80px;
+}
+
+div.line-down-wrap {
+    text-align: center;
+    margin: 4px 0 5px 0;
+    padding: 0;
+    line-height: 1px;
+    position: absolute;
+    bottom: 150px;
+    left: 0;
+    right: 0;
+}
+
+div.left-gradient-white {
+    display: inline-block;
+    width: 480px;
+    margin-right: -2px;
+    border: 0 none;
+    padding: 0;
+    height: 1px;
+}
+
+div.line-above-wrap div.left-gradient-white {
+    margin-top: 45px;
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(linear, left, left, from(#364c68), to(#FFFFFF));
+    background-image: -moz-linear-gradient(left, #364c68, #FFFFFF);  /* Firefox 3.6+ */
+    background-image: -webkit-linear-gradient(left, #364c68, #FFFFFF);   /* Safari 5.1+, Chrome 10+ */
+    background-image: -ms-linear-gradient(left, #364c68, #FFFFFF);   /* IE 10+ */
+    background-image: -o-linear-gradient(left, #364c68, #FFFFFF);   /* Opera */
+}
+
+div.line-down-wrap div.left-gradient-white {
+    margin-top: 0px;
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(linear, left, left, from(#364c68), to(#FFFFFF));
+    background-image: -moz-linear-gradient(left, #364c68, #FFFFFF);  /* Firefox 3.6+ */
+    background-image: -webkit-linear-gradient(left, #364c68, #FFFFFF);   /* Safari 5.1+, Chrome 10+ */
+    background-image: -ms-linear-gradient(left, #364c68, #FFFFFF);   /* IE 10+ */
+    background-image: -o-linear-gradient(left, #364c68, #FFFFFF);   /* Opera */
+}
+
+div.right-gradient-white {
+    display: inline-block;
+    width: 480px;
+    border: 0 none;
+    padding: 0;
+    margin-left: -2px;
+    height: 1px;
+}
+
+div.line-above-wrap div.right-gradient-white {
+    margin-top: 45px;
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(linear, left, left, from(#FFFFFF), to(#364c68));
+    background-image: -moz-linear-gradient(left, #FFFFFF, #364c68);  /* Firefox 3.6+ */
+    background-image: -webkit-linear-gradient(left, #FFFFFF, #364c68);   /* Safari 5.1+, Chrome 10+ */
+    background-image: -ms-linear-gradient(left, #FFFFFF, #364c68);   /* IE 10+ */
+    background-image: -o-linear-gradient(left, #FFFFFF, #364c68);   /* Opera */
+}
+
+div.line-down-wrap div.right-gradient-white {
+    margin-top: 0px;
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(linear, left, left, from(#FFFFFF), to(#364c68));
+    background-image: -moz-linear-gradient(left, #FFFFFF, #364c68);  /* Firefox 3.6+ */
+    background-image: -webkit-linear-gradient(left, #FFFFFF, #364c68);   /* Safari 5.1+, Chrome 10+ */
+    background-image: -ms-linear-gradient(left, #FFFFFF, #364c68);   /* IE 10+ */
+    background-image: -o-linear-gradient(left, #FFFFFF, #364c68);   /* Opera */
+}

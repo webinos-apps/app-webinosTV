@@ -1,0 +1,111 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>Remote</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.2/jquery.mobile-1.1.0-rc.2.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.listview.x.filter.css" />
+	<link rel="stylesheet" href="css/remote.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0-rc.2/jquery.mobile-1.1.0-rc.2.min.js"></script>
+	<script src="js/jquery.mobile.listview.x.filter.js"></script>
+	<!-- <script type="text/javascript" src="/client/webinosFS/js/jqm.page.params.js"></script> -->
+</head>
+<body>
+<div id="library" data-role="page">
+	<div data-role="header" data-position="fixed">
+		<a id="back.library" data-icon="back">Back</a>
+		<h1 id="location.library">Library</h1>
+		<!-- Now playing locally(!), i.e., initially some audio only. -->
+		<a id="refresh.library" data-icon="arrow-r" data-iconpos="right">Now</a>
+	</div>
+	<div data-role="content">
+		<!-- Filter recursively by name (and type), flatten (and group) results. Replace jQuery Mobile's default
+		     listview search by something that works asynchronous (hopefully efficient). -->
+		<ul id="entries.library" data-role="listview" data-x-filter="true" data-filter-theme="d" data-filter-types-theme="c" data-filter-types='{"video":"Video","audio":"Audio","image":"Image"}'>
+			<!-- <li data-role="list-divider">Video</li> -->
+			<li data-filtertype="video"><a href="#source" data-rel="dialog" class="entry file">One</a></li>
+			<li data-filtertype="video"><a class="entry directory">Two</a></li>
+			<li data-filtertype="video"><a class="entry directory">Three</a></li>
+			<!-- <li data-role="list-divider">Audio</li> -->
+			<li data-filtertype="audio"><a class="entry directory">Four</a></li>
+			<li data-filtertype="audio"><a class="entry directory">Five</a></li>
+			<li data-filtertype="audio"><a class="entry directory">Six</a></li>
+			<!-- <li data-role="list-divider">Image</li> -->
+			<li data-filtertype="image"><a class="entry directory">Seven</a></li>
+			<li data-filtertype="image"><a class="entry directory">Eight</a></li>
+			<li data-filtertype="image"><a class="entry directory">Nine</a></li>
+			<li data-filtertype="image"><a class="entry directory">Ten</a></li>
+		</ul>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<!-- Think about some TV channel list (or search w/ suggestions), library playback integration, and
+				     target selection. -->
+				<li><a>TV</a></li>
+				<li><a>Library</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- In case of multiple available targets, create a selectable list (multitarget playback). -->
+<div id="source" data-role="page">
+	<div data-role="header">
+		<h1>Source</h1>
+	</div>
+	<div data-role="content">
+		<ul id="shards.source" data-role="listview">
+			<li><a class="shard">Desktop</a></li>
+			<li><a class="shard">Laptop</a></li>
+			<li><a class="shard">Mobile</a></li>
+		</ul>
+	</div>
+</div>
+<div id="test" data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>Test</h1>
+	</div>
+	<div data-role="content" style="text-align: center;">
+		<div id="live-lock-wrapper" style="margin-bottom: 20px;">
+			<select id="live-lock" data-role="slider">
+				<option value="touch" selected="selected">Touch</option>
+				<option value="gesture">Gesture</option>
+			</select>
+		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div data-role="controlgroup" style="padding-right: 10px;">
+					<a data-role="button" data-icon="plus" data-iconpos="top">Up</a>
+					<a data-role="button" data-icon="minus" data-iconpos="bottom">Down</a>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div data-role="controlgroup" style="padding-left: 10px;">
+					<a data-role="button" data-icon="arrow-u" data-iconpos="top">Next</a>
+					<a data-role="button" data-icon="arrow-d" data-iconpos="bottom">Previous</a>
+				</div>
+			</div>
+		</div>
+		<div style="height: 100px; overflow: scroll;">
+			<ul data-role="listview" data-inset="true">
+				<li>One</li>
+				<li>Two</li>
+				<li>Three</li>
+				<li>Four</li>
+				<li>Five</li>
+			</ul>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div class="ui-navbar-custom" data-role="navbar">
+			<ul>
+				<li><a class="tv ui-btn-active ui-icon-tv" data-icon="custom">TV</a></li>
+				<li><a class="library ui-icon-library" data-icon="custom">Library</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+</html>
