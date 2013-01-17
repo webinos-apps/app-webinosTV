@@ -99,7 +99,8 @@ $list-pressed-color:$hl-color;
 //Tile selected
 .tile-panel-selected{
   color:$fg-color;
-  background-color:$sel-color;
+/*   background-color:$sel-color; */
+  @include background-gradient($sel-color);
 }
 
 //Tile pressed

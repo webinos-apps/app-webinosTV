@@ -59,7 +59,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	      {type: 'pc',  count: 100,deviceName:'My PC'},
 	      {type: 'tv',   count: 2,deviceName:'Living Room TV'},
 	      {type: 'phone', count: 0,deviceName:'My Phone'},
-	      {type: 'pc', count: 24,deviceName:'Ralph\'s tablet'},
+	      {type: 'tablet', count: 24,deviceName:'Ralph\'s tablet'},
 	      {type: 'laptop', count: 24,deviceName:'Mike\'s laptop'},
 	      {type: 'tablet', count: 4,deviceName:'My Tablet'},
 	      {type: 'tv',   count: 6,deviceName:'Kitchen TV'}
@@ -149,7 +149,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	      {type: 'pc', deviceName:'My PC'},
 	      {type: 'tv',  deviceName:'Living Room TV'},
 	      {type: 'phone',deviceName:'My Phone'},
-// 	      {type: 'pc', deviceName:'Ralph\'s tablet'},
+// 	      {type: 'tablet', deviceName:'Ralph\'s tablet'},
 // 	      {type: 'laptop',deviceName:'Mike\'s laptop'},
 	      {type: 'tablet',deviceName:'My Tablet'},
 	      {type: 'tv',  deviceName:'Kitchen TV'}
