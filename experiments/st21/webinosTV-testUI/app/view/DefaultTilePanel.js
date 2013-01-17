@@ -24,6 +24,14 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
     var tile=this;
     var tileText=tile.getText();
     var tileIconCls=tile.getIconCls();
+
+    if(tileIconCls!==null)
+    {
+      tile.add({
+	xtype:'panel',
+	cls:'tile-icon-'+tileIconCls
+      });
+    }
     
     if(tileText!==null)
     {
@@ -34,13 +42,7 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
       });
     }
     
-    if(tileIconCls!==null)
-    {
-      tile.add({
-	xtype:'panel',
-	cls:'tile-icon-'+tileIconCls
-      });
-    }
+
   },
   
   select:function(){

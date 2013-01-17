@@ -9,11 +9,13 @@ Ext.application({
     name: 'webinosTV',
 
     requires: [
-        'Ext.MessageBox'
+      'Ext.MessageBox'
     ],
 
-    views: ['Main','ButtonsGrid','PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton'],
+    views: [/*'Main',*/'PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton'],
 
+    profiles:['Phone','LargeScreen'],
+    
     icon: {
         '57': 'resources/icons/Icon.png',
         '72': 'resources/icons/Icon~ipad.png',
@@ -35,9 +37,9 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-
-        // Initialize the main view
-        Ext.Viewport.add(Ext.create('webinosTV.view.Main'));
+// 
+//         // Initialize the main view
+//         Ext.Viewport.add(Ext.create('webinosTV.view.PanelsGrid'));
     },
 
     onUpdated: function() {

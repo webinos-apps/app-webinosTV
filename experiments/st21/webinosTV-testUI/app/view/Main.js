@@ -17,29 +17,25 @@ Ext.define('webinosTV.view.Main', {
 	  {
 	    docked: 'top',
 	    xtype: 'titlebar',
-	    title: 'webinosTV ST2.1 UI test: panels grid'
-	  },
-	  {
-	    xtype: 'pnlgrid'
+// 	    title: 'IS '+(function(){
+// 	      var device='';
+// 	      device += Ext.os.is.Phone? 'phone':'';
+// 	      device += Ext.os.is.Tablet? 'tablet':'';
+// 	      device += Ext.os.is.Desktop? 'PC':'';
+// 
+// 	      return device;
+// 	    })()
+ 	    title: 'webinosTV ST2.1 UI test: panels grid'
 	  }
-	]
-      },
-      {
-	title:'Tiles test 2',
-	iconCls: 'lab', //TODO Use another icon,
-// 	styleHtmlContent: true,
-// 	scrollable: true,
-	items: [
-	  {
-	    docked: 'top',
-	    xtype: 'titlebar',
-	    title: 'webinosTV ST2.1 UI test: buttons grid'
-	  },
-	  {
-	    xtype: 'btngrid'
-	  }
+// 	  {
+// 	    xtype: 'pnlgrid'
+// 	  }
 	]
       }
     ]
+  },
+
+  initialize:function(){
+    this.getTabBar().add(Ext.create('webinosTV.view.PanelsGrid'));
   }
 });

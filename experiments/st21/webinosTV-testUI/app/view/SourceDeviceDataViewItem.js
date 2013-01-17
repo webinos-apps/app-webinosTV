@@ -23,7 +23,16 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	layout:'hbox',
 	height:100,
 	items:[
-	  {xtype:'tilepanel', iconCls: deviceInfo.count ? 'list' : null, text:deviceInfo.count ? deviceInfo.count : null},
+	  {
+	    xtype:'tilepanel',
+	    layout:{
+	      type:'hbox',
+	      align:'center',
+	      pack:'start'
+	    },
+	    iconCls: deviceInfo.count ? 'list' : null,
+	    text:deviceInfo.count ? deviceInfo.count : null
+	  },
 	  {xtype:'tilepanel', iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
 	]
       });

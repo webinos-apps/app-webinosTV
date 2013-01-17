@@ -1,52 +1,32 @@
-Ext.define('webinosTV.view.PanelsGrid', {
-  extend: 'Ext.Container',
-//   xtype: 'pnlgrid',
+Ext.define('webinosTV.view.phone.PanelsGrid', {
+  extend: 'webinosTV.view.PanelsGrid',
+//   xtype: 'crslgrid',
+    xtype: 'phone-pnlgrid',
+//     xtype: 'pnlgrid',
+
+
   requires: [
-    'Ext.Panel','Ext.Button','Ext.List','Ext.data.Store','Ext.Img','Ext.SegmentedButton'
+    'Ext.Carousel','Ext.Panel','Ext.Button','Ext.List','Ext.data.Store','Ext.Img','Ext.SegmentedButton'
   ],
   config:
   {
     width:'100%',
     height:'100%',
     cls: 'main-container',
+//     style:'background-color:red;',
     layout:
     {
       type: 'vbox', //Main component
-//       align: 'center',
+      align: 'center',
       pack: 'center'
     },
     items:
     [
-      {
- 	xtype: 'container', //Headers component (upper part)
-	cls:'title-container',
-	margin:2,
-	flex:1, // 1/10 of the height
-	width:'100%',
-	layout:
-	{
-	  type: 'hbox',
- 	  align: 'center',
- 	  pack: 'center'
-	},
-	items:[
-	{ xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1}, //#0a
-	{ xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5},//#0b
-	{ xtype: 'panel', html: 'Media Type',padding:2, margin: 2,flex:1.5}, //#1
-	{ xtype: 'panel', html: 'Select Media',padding:2, margin: 2,flex:3}, //#2
-	{ xtype: 'panel', html: 'Display Device',padding:2, margin: 2,flex:1.5}, //#3
-	{ xtype: 'panel', html: 'Play Mode',padding:2, margin: 2,flex:1.5} //#4
-	]
-      },
-      {
- 	xtype: 'container', //Items component (bottom part)
-	flex:9, // 1/10 of the height
-	cls: 'main-container',
-	width:'100%',
-	layout:
-	{
-	  type: 'hbox'
-	},
+    {
+      width:'99%',
+      height:'99%',
+//       styleHtmlContent: true,
+      xtype:'carousel',
 	items:
 	[
 	{//Container #0 (#0a and #0b)
@@ -84,7 +64,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	},
 	{//Container #2 - playlist TODO: should change according with the media selected in #1
 	  xtype: 'container',
-	  flex:3,
+// 	  flex:3,
 	  layout:
 	  {
 	    type: 'vbox'
@@ -142,7 +122,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
 	  defaultType: 'displaydevlistitem',//for display devices
-	  flex: 1.5,
+// 	  flex: 1.5,
 	  store: {
 	    fields: ['type', 'deviceName'],
 	    data: [
@@ -171,6 +151,6 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	}
       ]
     }
-    ]
+    ]	
   }
 });
