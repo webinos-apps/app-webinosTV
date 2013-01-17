@@ -22,6 +22,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       var itemContainer=Ext.create('Ext.Container',{
 	layout:'hbox',
 	height:100,
+	flex:1,
 	items:[
 	  {
 	    xtype:'tilepanel',
@@ -33,7 +34,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	    iconCls: deviceInfo.count ? 'list' : null,
 	    text:deviceInfo.count ? deviceInfo.count : null
 	  },
-	  {xtype:'tilepanel', iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
+	  {xtype:'tilepanel',flex:1.5, iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
 	]
       });
       return itemContainer;
