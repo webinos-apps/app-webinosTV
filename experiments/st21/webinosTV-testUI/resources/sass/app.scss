@@ -1,3 +1,5 @@
+$base-color:#666;
+
 @import 'sencha-touch/default/all';
 
 // You may remove any of the following modules that you
@@ -36,38 +38,148 @@
 @include pictos-iconmask('infinite');
 
 
-$bg-color:#337;
-$fg-color:#ddd;
-$hl-color:#acf;
+$bg-color: #333;//#337; //background color
+$fg-color:#ddd; //foreground color
+$sel-color:#006bb6; //selected color
+$hl-color:lighten($sel-color, 15%); //highlight or pressed color
 
+//List variables
 $list-zebrastripe:true;
 $list-bg-color:$bg-color;
 $list-color:$fg-color;
+$list-active-color:$sel-color;
+$list-pressed-color:$hl-color;
+
 
 @include sencha-list();
 
-@include sencha-button-ui('tile', $bg-color, 'glossy');
+.main-container{
+  background-color: darken($base-color,50%);
+}
+
+.title-container{
+  background-color: lighten($base-color,10%);
+}
+
+@include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
 
 .tile-btn{
   font-size:0.7em;
   color:$fg-color;
 }
 
-.tile-panel{
+
+/*.x-tab .x-button-icon.add_black,
+.x-button .x-button-icon.x-icon-mask.add_black {
+-webkit-mask-image: inline-image('add_black.png');
+}.x-tab .x-button-icon.play,
+.x-button .x-button-icon.x-icon-mask.play {
+-webkit-mask-image: inline-image('play2.png');
+} */
+
+/*.x-button,.tile-btn{
   text-align:center;
   font-size:0.7em;
   color:$fg-color;
   background-color:$bg-color;
+}*/
+
+//Basic Tile class, much like abstract class
+.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{
+  text-align:center;
+  font-size:0.7em;
 }
 
+//Tile unselected
+.tile-panel{
+  color:$fg-color;
+  background-color:$bg-color;
+}
+
+//Tile selected
 .tile-panel-selected{
-  font-size:0.7em;
-  color:$bg-color;
-  background-color:lighten($bg-color, 50%);;
+  color:$fg-color;
+  background-color:$sel-color;
 }
 
+//Tile pressed
 .tile-panel-pressed{
-  font-size:0.7em;
-  color:$bg-color;
+  color:$fg-color;
   background-color:$hl-color;
+}
+
+//Tile text
+.tile-text{
+  display:block;
+  margin: 0.5em;
+}
+
+//Tile icons
+.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs
+{
+  display:block;
+  margin: auto;
+  -webkit-mask-size: 32px;
+  background-image: none;
+  background-color:$fg-color;
+  width:32px;
+  height:32px;
+  padding:0.5em;
+  -webkit-transform: translateZ(0);
+}
+
+.tile-icon-play{
+  -webkit-mask: 0 0 inline-image('play2.png') no-repeat;
+}
+
+.tile-icon-queue{
+  -webkit-mask: 0 0 inline-image('add_black.png') no-repeat;
+}
+
+.tile-icon-favorites{
+  -webkit-mask: 0 0 inline-image('favorites.png') no-repeat;
+}
+
+.tile-icon-webinos{
+  -webkit-mask: 0 0 inline-image('webinos_logo.png') no-repeat;
+}
+
+.tile-icon-pc{
+  -webkit-mask: 0 0 inline-image('pc.png') no-repeat;
+}
+
+.tile-icon-list{
+  -webkit-mask: 0 0 inline-image('list.png') no-repeat;
+}
+
+.tile-icon-phone{
+  -webkit-mask: 0 0 inline-image('smartphone.png') no-repeat;
+}
+
+.tile-icon-tablet{
+  -webkit-mask: 0 0 inline-image('tablet.png') no-repeat;
+}
+
+.tile-icon-tv{
+  -webkit-mask: 0 0 inline-image('tv.png') no-repeat;
+}
+
+.tile-icon-laptop{
+  -webkit-mask: 0 0 inline-image('laptop.png') no-repeat;
+}
+
+.tile-icon-music{
+  -webkit-mask: 0 0 inline-image('music.png') no-repeat;
+}
+
+.tile-icon-videos{
+  -webkit-mask: 0 0 inline-image('video.png') no-repeat;
+}
+
+.tile-icon-images{
+  -webkit-mask: 0 0 inline-image('pictures.png') no-repeat;
+}
+
+.tile-icon-docs{
+  -webkit-mask: 0 0 inline-image('documents.png') no-repeat;
 }

@@ -12,7 +12,7 @@ Ext.application({
         'Ext.MessageBox'
     ],
 
-    views: ['Main','ButtonsGrid','PanelsGrid','DeviceDataView','DeviceDataViewItem','DefaultTilePanel'],
+    views: ['Main','ButtonsGrid','PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
