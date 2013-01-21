@@ -48,6 +48,7 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	},
 	{//Container #1 - Media type
 	  xtype:'tileslist',
+	  id:'mediaTypeList',
 	  defaultType: 'medialistitem',//for media
 	  flex: 1.5,
 	  store: {
@@ -63,61 +64,8 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	  }
 	},
 	{//Container #2 - playlist TODO: should change according with the media selected in #1
-	  xtype: 'container',
-// 	  flex:3,
-	  layout:
-	  {
-	    type: 'vbox'
-	  },
-	  items:
-	  [
-	    {
-	      xtype:'container',
-	      layout: 'hbox',
-   	      margin:2,
-// 	      flex:1,
-	      height:100,
-	      cls:'tile-panel',
-	      items:
-	      [
-		{
-		  xtype:'img',
-		  src: 'http://beatlesalbumcovers.net/wp-content/uploads/the-beatles-abbey-road-album-cover-256x256.jpg',
-		  padding:1,
-		  flex:1
-		},
-		{xtype: 'panel',  html: 'Beatles - Abbey Road',flex:3}
-	      ]
-	    },
-	    {
-	      xtype:'list',
-	      cls:'playlist',
-// 	      flex:5,
-	      height:'100%',
-	      margin:2,
-	      pressedCls:300,
-	      itemTpl: '{title}',
-	      data: [
-		{ title: 'Come Together' },
-		{ title: 'Something' },
-		{ title: 'Maxwell\'s Silver Hammer ' },
-		{ title: 'Oh! Darling' },
-		{ title: 'Octopus\'s Garden' },
-		{ title: 'I Want You (She\'s So Heavy)' },
-		{ title: 'Here Comes the Sun' },
-		{ title: 'Because' },
-		{ title: 'You Never Give Me Your Money' },
-		{ title: 'Sun King' },
-		{ title: 'Mean Mr. Mustard' },
-		{ title: 'Polythene Pam ' },
-		{ title: 'She Came In Through the Bathroom Window' },
-   		{ title: 'Golden Slumbers' },
-		{ title: 'Carry That Weight' },
-		{ title: 'The End' },
-		{ title: 'Her Majesty' }
-	      ]
-	    }
-	  ]
+	  xtype: 'mediaplaylist',
+	  flex:3,
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',

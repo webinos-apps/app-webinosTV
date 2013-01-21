@@ -150,6 +150,7 @@ $list-pressed-color:$hl-color;
 }
 
 .tile-icon-list{
+  margin: auto 0.5em auto 1.5em;
   -webkit-mask: 0 0 inline-image('list.png') no-repeat;
 }
 

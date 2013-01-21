@@ -12,7 +12,11 @@ Ext.application({
       'Ext.MessageBox'
     ],
 
-    views: [/*'Main',*/'PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton'],
+    views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist'],
+
+    stores:['TempMusicStore'],
+
+    controllers:['SelectMediaController'],
 
     profiles:['Phone','LargeScreen'],
     
@@ -35,11 +39,11 @@ Ext.application({
     },
 
     launch: function() {
-        // Destroy the #appLoadingIndicator element
-        Ext.fly('appLoadingIndicator').destroy();
-// 
-//         // Initialize the main view
-//         Ext.Viewport.add(Ext.create('webinosTV.view.PanelsGrid'));
+      // Destroy the #appLoadingIndicator element
+      Ext.fly('appLoadingIndicator').destroy();
+
+      // Initialize the stores
+      var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
     },
 
     onUpdated: function() {
