@@ -31,8 +31,8 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	      align:'center',
 	      pack:'start'
 	    },
-	    iconCls: deviceInfo.count ? 'list' : null,
-	    text:deviceInfo.count ? deviceInfo.count : null
+	    iconCls: deviceInfo.counter ? 'list' : null,
+	    text:deviceInfo.counter ? deviceInfo.counter : null
 	  },
 	  {xtype:'tilepanel',flex:1.5, iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
 	]

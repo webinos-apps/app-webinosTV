@@ -53,18 +53,19 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	  xtype:'tileslist',
 	  defaultType: 'sourcedevlistitem',//for source devices
 	  flex: 2.5,
-	  store: {
-	    fields: ['count', 'type', 'deviceName'],
-	    data: [
-	      {type: 'pc',  count: 100,deviceName:'My PC'},
-	      {type: 'tv',   count: 2,deviceName:'Living Room TV'},
-	      {type: 'phone', count: 0,deviceName:'My Phone'},
-	      {type: 'tablet', count: 24,deviceName:'Ralph\'s tablet'},
-	      {type: 'laptop', count: 24,deviceName:'Mike\'s laptop'},
-	      {type: 'tablet', count: 4,deviceName:'My Tablet'},
-	      {type: 'tv',   count: 6,deviceName:'Kitchen TV'}
-	    ]
-	  }
+	  store:'tmpsrcdevstore-id'
+// 	  store: {
+// 	    fields: ['count', 'type', 'deviceName'],
+// 	    data: [
+// 	      {type: 'pc',  count: 100,deviceName:'My PC'},
+// 	      {type: 'tv',   count: 2,deviceName:'Living Room TV'},
+// 	      {type: 'phone', count: 0,deviceName:'My Phone'},
+// 	      {type: 'tablet', count: 24,deviceName:'Ralph\'s tablet'},
+// 	      {type: 'laptop', count: 24,deviceName:'Mike\'s laptop'},
+// 	      {type: 'tablet', count: 4,deviceName:'My Tablet'},
+// 	      {type: 'tv',   count: 6,deviceName:'Kitchen TV'}
+// 	    ]
+// 	  }
 	},
 	{//Container #1 - Media type
 	  xtype:'tileslist',
@@ -91,7 +92,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	  xtype:'tileslist',
 	  defaultType: 'displaydevlistitem',//for display devices
 	  flex: 1.5,
-	  store: {
+	  store: 'tmpdispdevstore-id'/*{
 	    fields: ['type', 'deviceName'],
 	    data: [
 	      {type: 'pc', deviceName:'My PC'},
@@ -102,7 +103,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	      {type: 'tablet',deviceName:'My Tablet'},
 	      {type: 'tv',  deviceName:'Kitchen TV'}
 	    ]
-	  }
+	  }*/
 	},
 	{//Container #4 - Actions
 	  xtype: 'customsegbutton',

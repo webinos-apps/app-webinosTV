@@ -14,7 +14,9 @@ Ext.application({
 
     views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist'],
 
-    stores:['TempMusicStore'],
+    models:['Device','Media'],
+
+    stores:['TempMusicStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
     controllers:['SelectMediaController'],
 
@@ -56,5 +58,15 @@ Ext.application({
                 }
             }
         );
+    },
+
+    addDisplayDevices:function(deviceItems){
+      var dispDevStore=Ext.getStore('tmpdispdevstore-id');
+      dispDevStore.add(deviceItems);
+    },
+
+    addSourceDevices:function(deviceItems){
+      var srcDevStore=Ext.getStore('tmpsrcdevstore-id');
+      srcDevStore.add(deviceItems);
     }
 });
