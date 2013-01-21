@@ -85,7 +85,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	},
 	{//Container #2 - playlist TODO: should change according with the media selected in #1
 	  xtype: 'mediaplaylist',
-	  flex:3,
+	  flex:3
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
