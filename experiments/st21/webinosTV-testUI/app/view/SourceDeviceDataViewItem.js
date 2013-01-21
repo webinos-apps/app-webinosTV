@@ -22,10 +22,10 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       var itemContainer=Ext.create('Ext.Container',{
 	layout:'hbox',
 	height:100,
-	flex:1,
 	items:[
 	  {
 	    xtype:'tilepanel',
+	    flex:1,
 	    layout:{
 	      type:'hbox',
 	      align:'center',
