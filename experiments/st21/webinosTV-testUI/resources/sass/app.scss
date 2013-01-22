@@ -40,7 +40,8 @@ $base-color:#666;
 
 $bg-color: #333;//#337; //background color
 $fg-color:#ddd; //foreground color
-$sel-color:#006bb6; //selected color
+$sel-color:#006bb6; //selected items color
+$csel-color:complement($sel-color); //complementary of selected items color
 $hl-color:lighten($sel-color, 15%); //highlight or pressed color
 
 //List variables
@@ -68,21 +69,15 @@ $list-pressed-color:$hl-color;
   color:$fg-color;
 }
 
+//csc = complementary of selection color
+@include sencha-carousel-indicator-ui('csc-indicator',$csel-color,'glossy',lighten($csel-color,30%),'glossy');
 
-/*.x-tab .x-button-icon.add_black,
-.x-button .x-button-icon.x-icon-mask.add_black {
--webkit-mask-image: inline-image('add_black.png');
-}.x-tab .x-button-icon.play,
-.x-button .x-button-icon.x-icon-mask.play {
--webkit-mask-image: inline-image('play2.png');
-} */
-
-/*.x-button,.tile-btn{
-  text-align:center;
-  font-size:0.7em;
-  color:$fg-color;
-  background-color:$bg-color;
-}*/
+//Scroll indicator for the phone UI
+.phone-listview-indicator{
+  .x-scroll-indicator{
+    background-color:$csel-color;
+  }
+}
 
 //Basic Tile class, much like abstract class
 .default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{

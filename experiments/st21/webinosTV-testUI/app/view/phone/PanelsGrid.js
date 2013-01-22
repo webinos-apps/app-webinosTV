@@ -27,10 +27,11 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
       height:'99%',
 //       styleHtmlContent: true,
       xtype:'carousel',
-	items:
-	[
+      ui:'csc-indicator',
+      items:[
 	{
 	  xtype:'container',
+ 	  width:'100%',
 	  height:'100%',
 	  layout:{
 	    type: 'vbox',
@@ -49,12 +50,13 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      },
 	      items:[
 		{ xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1}, //#0a
-		{ xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5},//#0b
+		{ xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5}//#0b
 	      ]
 	    },
 	    {//Container #0 (#0a and #0b)
 	      xtype:'tileslist',
 	      defaultType: 'sourcedevlistitem',//for source devices
+	      cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	      width:'100%',
 	      store:'tmpsrcdevstore-id'
 	    }
@@ -63,6 +65,7 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	{
 	  xtype:'container',
 	  height:'100%',
+// 	  width:'90%',
 	  layout:{
 	    type: 'vbox',
 	    align: 'center',
@@ -79,13 +82,14 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Media Type',padding:2, margin: 2/*,flex:1.5*/},//#1
+	      { xtype: 'panel', html: 'Media Type',padding:2, margin: 2/*,flex:1.5*/}//#1
 	    ]
 	  },
 	  {//Container #1 - Media type
 	    xtype:'tileslist',
 	    id:'mediaTypeList',
 	    defaultType: 'medialistitem',//for media
+	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
 // 	    flex: 1.5,
 	    store: {
@@ -120,11 +124,12 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Select Media',padding:2, margin: 2/*,flex:1.5*/},//#1
+	      { xtype: 'panel', html: 'Select Media',padding:2, margin: 2/*,flex:1.5*/}//#2
 	    ]
 	  },
 	  {//Container #2 - playlist TODO: should change according with the media selected in #1
 	    xtype: 'mediaplaylist',
+	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
  	    height:'100%'
 	  }]
@@ -148,12 +153,13 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Display Device',padding:2, margin: 2/*,flex:1.5*/},//#1
+	      { xtype: 'panel', html: 'Display Device',padding:2, margin: 2/*,flex:1.5*/}//#3
 	    ]
 	  },
 	  { //Container #3 - Display devices
 	    xtype:'tileslist',
 	    defaultType: 'displaydevlistitem',//for display devices
+	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
 	    height:'100%',
 	    store: 'tmpdispdevstore-id'
@@ -178,7 +184,7 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Play Mode',padding:2, margin: 2/*,flex:1.5*/},//#1
+	      { xtype: 'panel', html: 'Play Mode',padding:2, margin: 2/*,flex:1.5*/}//#4
 	    ]
 	  },
 	{//Container #4 - Actions
