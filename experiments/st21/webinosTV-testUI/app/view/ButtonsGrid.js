@@ -8,7 +8,7 @@ Ext.define('webinosTV.view.ButtonsGrid', {
   {
     width:'100%',
     height:'100%',
-    style: 'background-color: #000029;',
+    cls: 'main-container',
     layout:
     {
       type: 'vbox', //Main component
@@ -19,7 +19,7 @@ Ext.define('webinosTV.view.ButtonsGrid', {
     [
       {
  	xtype: 'container', //Headers component (upper part)
-	style: 'background-color: #5E99CC;',
+	cls:'title-container',
 	margin:2,
 	flex:1, // 1/10 of the height
 	width:'100%',
@@ -41,6 +41,7 @@ Ext.define('webinosTV.view.ButtonsGrid', {
       {
  	xtype: 'container', //Items component (bottom part)
 	flex:9, // 1/10 of the height
+	cls: 'main-container',
 	width:'100%',
 	layout:
 	{

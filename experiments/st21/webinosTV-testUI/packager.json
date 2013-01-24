@@ -5,13 +5,13 @@
 	 * This is the name of your application, which is displayed on the device when the app is installed. On IOS, this should match
 	 * the name of your application in the Apple Provisioning Portal.
 	 */
-	"applicationName":"My Application",
+	"applicationName":"webinosTV",
 
 	/**
 	 * @cfg  applicationId
 	 * This is the name namespace for your application. On IOS, this should match the name of your application in the Apple Provisioning Portal.
 	 */
-	"applicationId":"com.mycompany.myAppID",
+	"applicationId":"org.webinos.webinosTV",
 
 	/**
 	 * @cfg  versionString
@@ -63,7 +63,7 @@
 	 *  - Android
 	 *  - AndroidEmulator
 	 */
-	"platform":"iOSSimulator",
+	"platform":"AndroidEmulator",
 
 	/**
 	 * @cfg  deviceType
@@ -103,7 +103,7 @@
 	 * @cfg  sdkPath
 	 * This is the path to the Android SDK, if you are developing an Android application.
 	 */
-	"sdkPath":"/path/to/android-sdk",
+	"sdkPath":"/home/vito/AndroidDevelopment/sdk",
 	
 	/**
 	 * @cfg  androidAPILevel
@@ -116,11 +116,12 @@
 	 * @cfg {Array[String]} orientations
 	 * @required
 	 * This is orientations that this application can run.
-	 */
-	"orientations": [
 		"portrait",
 		"landscapeLeft",
 		"landscapeRight",
 		"portraitUpsideDown"
+	 */
+	"orientations": [
+		"portrait"
 	]
 }
