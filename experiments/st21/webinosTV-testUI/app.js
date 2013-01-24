@@ -12,7 +12,11 @@ Ext.application({
       'Ext.MessageBox'
     ],
 
-    views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaDataViewItem','DefaultTilePanel','DisplayDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist'],
+    viewport: {
+      autoMaximize: false
+    },
+
+    views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist'],
 
     models:['Device','Media'],
 

@@ -1,9 +1,10 @@
-Ext.define('webinosTV.view.DisplayDeviceDataViewItem', {
+Ext.define('webinosTV.view.TargetDeviceDataViewItem', {
     extend: 'Ext.dataview.component.DataItem',
     requires: ['Ext.Container','Ext.Panel'],
-    xtype: 'displaydevlistitem',
+    xtype: 'targetdevlistitem',
     config:{
-      deviceLabel:true
+      deviceLabel:true,
+      selected:false
     },
 
     applyDeviceLabel:function(config)
@@ -49,6 +50,7 @@ Ext.define('webinosTV.view.DisplayDeviceDataViewItem', {
       setTimeout(function(){
 	deviceItem.getAt(0).setCls('tile-panel-selected');
       },300);
+      this.setSelected(true);
     },
 
     unselect:function(){
@@ -56,5 +58,6 @@ Ext.define('webinosTV.view.DisplayDeviceDataViewItem', {
       var deviceItem=this.getAt(1);
 
       deviceItem.getAt(0).setCls('tile-panel');
+      this.setSelected(false);
     }
 });

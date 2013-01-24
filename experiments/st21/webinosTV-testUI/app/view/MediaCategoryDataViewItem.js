@@ -1,9 +1,10 @@
-Ext.define('webinosTV.view.MediaDataViewItem', {
+Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
     extend: 'Ext.dataview.component.DataItem',
     requires: ['Ext.Container','Ext.Panel'],
-    xtype: 'medialistitem',
+    xtype: 'mediacategorylistitem',
     config:{
-      mediaLabel:true
+      mediaLabel:true,
+      selected:false
     },
 
     applyMediaLabel:function(config)
@@ -17,13 +18,13 @@ Ext.define('webinosTV.view.MediaDataViewItem', {
 	'apps':'webinos',//TODO find a suitable icon
 	'docs':'docs'
       };
-      var mediaTypeInfo = this.getRecord().data; //a count of media queued and mediaType name + mediaType type
+      var mediaCategoryInfo = this.getRecord().data; //a count of media queued and mediaCategory name + mediaCategory category
 
       var itemContainer=Ext.create('Ext.Container',{
 	layout:'hbox',
 	height:100,
 	items:[
-	  {xtype:'tilepanel', iconCls : iconClasses[mediaTypeInfo.type], text:mediaTypeInfo.mediaTypeName}
+	  {xtype:'tilepanel', iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
 	]
       });
       return itemContainer;
@@ -42,18 +43,20 @@ Ext.define('webinosTV.view.MediaDataViewItem', {
 
     select:function(){
       //getAt(1) returns this component container
-      var mediaTypeItem=this.getAt(1);
+      var mediaCategoryItem=this.getAt(1);
 
-      mediaTypeItem.getAt(0).setCls('tile-panel-pressed');
+      mediaCategoryItem.getAt(0).setCls('tile-panel-pressed');
       setTimeout(function(){
-	mediaTypeItem.getAt(0).setCls('tile-panel-selected');
+	mediaCategoryItem.getAt(0).setCls('tile-panel-selected');
       },300);
+      this.setSelected(true);
     },
 
     unselect:function(){
       //getAt(1) returns this component container
-      var mediaTypeItem=this.getAt(1);
+      var mediaCategoryItem=this.getAt(1);
 
-      mediaTypeItem.getAt(0).setCls('tile-panel');
+      mediaCategoryItem.getAt(0).setCls('tile-panel');
+      this.setSelected(false);
     }
 });

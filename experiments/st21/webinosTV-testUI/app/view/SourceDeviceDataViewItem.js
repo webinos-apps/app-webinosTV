@@ -3,7 +3,8 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     requires: ['Ext.Container','Ext.Panel'],
     xtype: 'sourcedevlistitem',
     config:{
-      deviceLabel:true
+      deviceLabel:true,
+      selected:false
     },
 
     applyDeviceLabel:function(config)
@@ -61,6 +62,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	deviceItem.getAt(0).setCls('tile-panel-selected');
 	deviceItem.getAt(1).setCls('tile-panel-selected');
       },300);
+      this.setSelected(true);
     },
 
     unselect:function(){
@@ -69,5 +71,6 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       
       deviceItem.getAt(0).setCls('tile-panel');
       deviceItem.getAt(1).setCls('tile-panel');
+      this.setSelected(false);
     }
 });

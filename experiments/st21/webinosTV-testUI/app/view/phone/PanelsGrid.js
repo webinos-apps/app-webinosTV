@@ -10,6 +10,7 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
   ],
   config:
   {
+    fullscreen:true,
     width:'100%',
     height:'100%',
     cls: 'main-container',
@@ -82,25 +83,25 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Media Type',padding:2, margin: 2/*,flex:1.5*/}//#1
+	      { xtype: 'panel', html: 'Categories',padding:2, margin: 2/*,flex:1.5*/}//#1
 	    ]
 	  },
-	  {//Container #1 - Media type
+	  {//Container #1 - Media Category
 	    xtype:'tileslist',
-	    id:'mediaTypeList',
-	    defaultType: 'medialistitem',//for media
+	    id:'mediaCategoryList',
+	    defaultType: 'mediacategorylistitem',//for media
 	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
 // 	    flex: 1.5,
 	    store: {
-	      fields: ['type', 'mediaTypeName'],
+	      fields: ['category', 'mediaCategoryName'],
 	      data: [
-		{type: 'music',mediaTypeName:'Mp3 collection'},
-		{type: 'channels',mediaTypeName:'DVB-T'},
-		{type: 'movies',mediaTypeName:'Videos'},
-		{type: 'images',mediaTypeName:'Pictures'},
-		{type: 'apps',mediaTypeName:'webinos app store'},
-		{type: 'docs',mediaTypeName:'Documents'}
+		{category: 'music',mediaCategoryName:'Mp3 collection'},
+		{category: 'channels',mediaCategoryName:'DVB-T'},
+		{category: 'movies',mediaCategoryName:'Videos'},
+		{category: 'images',mediaCategoryName:'Pictures'},
+		{category: 'apps',mediaCategoryName:'webinos app store'},
+		{category: 'docs',mediaCategoryName:'Documents'}
 	      ]
 	    }
 	  }]
@@ -153,12 +154,13 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Display Device',padding:2, margin: 2/*,flex:1.5*/}//#3
+	      { xtype: 'panel', html: 'Target Device',padding:2, margin: 2/*,flex:1.5*/}//#3
 	    ]
 	  },
 	  { //Container #3 - Display devices
 	    xtype:'tileslist',
-	    defaultType: 'displaydevlistitem',//for display devices
+	    allowMultipleSelection:true,
+	    defaultType: 'targetdevlistitem',//for display devices
 	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
 	    height:'100%',

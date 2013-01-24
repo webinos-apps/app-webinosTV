@@ -3,26 +3,26 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   xtype: 'selmediactrl',
 //   requires:[''],
 
-  //TODO this controller should change shape depending on the selected media type
+  //TODO this controller should change shape depending on the selected media category
   config: {
     control:{
-      mtype:
+      mcategory:
       {
-	select:'mediaTypeSelected' //event = select, cb = mediaTypeSelected
+	select:'mediaCategorySelected' //event = select, cb = mediaCategorySelected
       }
     },
     refs: {
       mplist: '#selectMedia',
-      mtype: '#mediaTypeList'
+      mcategory: '#mediaCategoryList'
     }
   },
 
-  mediaTypeSelected:function(mediaTypeList, record, eOpts)
+  mediaCategorySelected:function(mediaCategoryList, record, eOpts)
   {
     var mplist=this.getMplist();
-//     console.log("selected",record,record.get('mediaTypeName'),record.get('type'));
-    var mediaType=record.get('type');
-    switch(mediaType)
+     console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
+    var mediaCategory=record.get('category');
+    switch(mediaCategory)
     {
       case 'movies':
 // 	console.log("selected movies");

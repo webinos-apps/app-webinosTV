@@ -32,9 +32,9 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	items:[
 	{ xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1}, //#0a
 	{ xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5},//#0b
-	{ xtype: 'panel', html: 'Media Type',padding:2, margin: 2,flex:1.5}, //#1
+	{ xtype: 'panel', html: 'Categories',padding:2, margin: 2,flex:1.5}, //#1
 	{ xtype: 'panel', html: 'Select Media',padding:2, margin: 2,flex:3}, //#2
-	{ xtype: 'panel', html: 'Display Device',padding:2, margin: 2,flex:1.5}, //#3
+	{ xtype: 'panel', html: 'Target Device',padding:2, margin: 2,flex:1.5}, //#3
 	{ xtype: 'panel', html: 'Play Mode',padding:2, margin: 2,flex:1.5} //#4
 	]
       },
@@ -55,20 +55,20 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	  flex: 2.5,
 	  store:'tmpsrcdevstore-id'
 	},
-	{//Container #1 - Media type
+	{//Container #1 - Media category
 	  xtype:'tileslist',
-	  id:'mediaTypeList',
-	  defaultType: 'medialistitem',//for media
+	  id:'mediaCategoryList',
+	  defaultType: 'mediacategorylistitem',//for media
 	  flex: 1.5,
 	  store: {
-	    fields: ['type', 'mediaTypeName'],
+	    fields: ['category', 'mediaCategoryName'],
 	    data: [
-	      {type: 'music',mediaTypeName:'Mp3 collection'},
-	      {type: 'channels',mediaTypeName:'DVB-T'},
-	      {type: 'movies',mediaTypeName:'Videos'},
-	      {type: 'images',mediaTypeName:'Pictures'},
-	      {type: 'apps',mediaTypeName:'webinos app store'},
-	      {type: 'docs',mediaTypeName:'Documents'}
+	      {category: 'music',mediaCategoryName:'Mp3 collection'},
+	      {category: 'channels',mediaCategoryName:'DVB-T'},
+	      {category: 'movies',mediaCategoryName:'Videos'},
+	      {category: 'images',mediaCategoryName:'Pictures'},
+	      {category: 'apps',mediaCategoryName:'webinos app store'},
+	      {category: 'docs',mediaCategoryName:'Documents'}
 	    ]
 	  }
 	},
@@ -78,7 +78,8 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
-	  defaultType: 'displaydevlistitem',//for display devices
+	  allowMultipleSelection:true,
+	  defaultType: 'targetdevlistitem',//for display devices
 	  flex: 1.5,
 	  store: 'tmpdispdevstore-id'
 	},
