@@ -9,11 +9,23 @@ Ext.application({
     name: 'webinosTV',
 
     requires: [
-        'Ext.MessageBox'
+      'Ext.MessageBox'
     ],
 
-    views: ['Main','ButtonsGrid','PanelsGrid','DeviceDataView','DeviceDataViewItem','DefaultTilePanel'],
+    viewport: {
+      autoMaximize: false
+    },
 
+    views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist'],
+
+    models:['Device','Media'],
+
+    stores:['TempMusicStore','TempSourceDevsStore','TempDisplayDevsStore'],
+
+    controllers:['SelectMediaController'],
+
+    profiles:['Phone','LargeScreen'],
+    
     icon: {
         '57': 'resources/icons/Icon.png',
         '72': 'resources/icons/Icon~ipad.png',
@@ -33,11 +45,11 @@ Ext.application({
     },
 
     launch: function() {
-        // Destroy the #appLoadingIndicator element
-        Ext.fly('appLoadingIndicator').destroy();
+      // Destroy the #appLoadingIndicator element
+      Ext.fly('appLoadingIndicator').destroy();
 
-        // Initialize the main view
-        Ext.Viewport.add(Ext.create('webinosTV.view.Main'));
+      // Initialize the stores
+      var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
     },
 
     onUpdated: function() {
@@ -50,5 +62,15 @@ Ext.application({
                 }
             }
         );
+    },
+
+    addDisplayDevices:function(deviceItems){
+      var dispDevStore=Ext.getStore('tmpdispdevstore-id');
+      dispDevStore.add(deviceItems);
+    },
+
+    addSourceDevices:function(deviceItems){
+      var srcDevStore=Ext.getStore('tmpsrcdevstore-id');
+      srcDevStore.add(deviceItems);
     }
 });
