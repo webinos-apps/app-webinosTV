@@ -31,7 +31,8 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	  align:'center'
 	},
 	margin:2,
-	height:100,
+	flex:2,
+// 	height:100,
 	cls:'tile-panel',
 	items:
 	[
@@ -54,11 +55,21 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       },
       {
 	xtype:'list',
+	flex:9,
+	defaultType: 'audiolistitem',
+	useComponents:true,
+	listeners:{
+	  itemtap:function(s, index,target, record){
+// 	    console.log("itemTap",s, index,target, record)
+	    var t=record.get('title');
+// 	    console.log(t)
+ 	    record.set('title',t.fontcolor('blue'));
+	  }
+	},
 	cls:'playlist',
-	height:'100%',
 	margin:2,
 	pressedCls:300,
-	itemTpl: '{title}',
+//   	itemTpl: '{title}',
 	store: 'tmpmusicstore-id'
       }
     ]);

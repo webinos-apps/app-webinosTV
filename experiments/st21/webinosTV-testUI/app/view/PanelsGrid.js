@@ -51,6 +51,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	[
 	{//Container #0 (#0a and #0b)
 	  xtype:'tileslist',
+	  id:'sourceDevsList',
 	  defaultType: 'sourcedevlistitem',//for source devices
 	  flex: 2.5,
 	  store:'tmpsrcdevstore-id'
