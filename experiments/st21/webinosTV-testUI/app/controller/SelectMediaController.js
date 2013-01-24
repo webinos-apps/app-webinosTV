@@ -20,7 +20,7 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
   {
     var mplist=this.getMplist();
-     console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
+//      console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
     var mediaCategory=record.get('category');
     switch(mediaCategory)
     {

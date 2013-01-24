@@ -19,7 +19,7 @@ Ext.define('webinosTV.view.TilesDataView',{
       directionLock: true
     },
     listeners:{
-      itemtap:{
+      itemsingletap:{
 	fn:function(tileList, index, listItem, record, e, eOpts){
 	  if(tileList.getAllowMultipleSelection())
 	  {
@@ -35,6 +35,17 @@ Ext.define('webinosTV.view.TilesDataView',{
 	    }
 	      tileList.setIndexSelected(index);
 	      listItem.select();
+	  }
+	}
+      },
+      //double tap selects only tapped item and deselects the others (if allowMultipleSelection is true)
+      itemdoubletap:{
+	fn:function(tileList, index, listItem, record, e, eOpts){
+	  if(tileList.getAllowMultipleSelection())
+	  {
+ 	    tileList.getAt(1).getItems().items.forEach(function(titleListItem,itemIndex){
+	      itemIndex===index? titleListItem.select():titleListItem.unselect();
+	    });
 	  }
 	}
       }
