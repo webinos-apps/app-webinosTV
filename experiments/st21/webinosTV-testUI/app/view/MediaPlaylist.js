@@ -39,35 +39,56 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	  {
 	    xtype:'img',
 	    src: 'http://beatlesalbumcovers.net/wp-content/uploads/the-beatles-abbey-road-album-cover-256x256.jpg',
-	    height: 98,
-	    width: 98,
+	    height:'90%',
+	    width: '90%',
 	    padding:1,
 	    margin:1,
-	    flex:1
+	    flex:1,
+	    zIndex:1000
 	  },
 	  {
 	    xtype: 'panel',
-	    cls:'tile-text',
- 	    html: 'Beatles - Abbey Road',
+	    cls:['tile-text'],
+	    items:[{
+	      xtype:'panel',
+	      cls:'sliding-text',
+	      html:'Beatles - Abbey Road'
+// 	      html:'extremely long text may appear here and should never flow oustide its parent container'
+	    }],
 	    flex:3
 	  }
 	]
       },
       {
-	xtype:'list',
+// 	xtype:'list',
+	xtype:'dataview',
 	flex:9,
+	scrollable:{
+	  direction: 'vertical',
+	  directionLock: true
+	},
 	defaultType: 'audiolistitem',
 	useComponents:true,
 	listeners:{
-	  itemtap:function(s, index,target, record){
-// 	    console.log("itemTap",s, index,target, record)
-	    var t=record.get('title');
-// 	    console.log(t)
- 	    record.set('title',t.fontcolor('blue'));
+	  itemtap:{
+	    fn:function(pl, index,target, record){
+	      target.getSelected()? target.unselect():target.select();
+	    }
+	  },
+	  resize:{
+	    fn:function(elem){
+	      var pl = this;
+	      var items= pl.getInnerItems()[0].innerItems;
+// 	      console.log("<<<<<<<<<RESIZE")
+	      items.forEach(function(audioListItem){
+		audioListItem.checkTextOverflow()
+	      })
+
+	    }
 	  }
 	},
 	cls:'playlist',
-	margin:2,
+// 	margin:2,
 	pressedCls:300,
 //   	itemTpl: '{title}',
 	store: 'tmpmusicstore-id'

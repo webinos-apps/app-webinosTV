@@ -45,19 +45,14 @@ Ext.define('webinosTV.view.TargetDeviceDataViewItem', {
     select:function(){
       //getAt(1) returns this component container
       var deviceItem=this.getAt(1);
-
-      deviceItem.getAt(0).setCls('tile-panel-pressed');
-      setTimeout(function(){
-	deviceItem.getAt(0).setCls('tile-panel-selected');
-      },300);
+      deviceItem.getAt(0).select();
       this.setSelected(true);
     },
 
     unselect:function(){
       //getAt(1) returns this component container
       var deviceItem=this.getAt(1);
-
-      deviceItem.getAt(0).setCls('tile-panel');
+      deviceItem.getAt(0).unselect();
       this.setSelected(false);
     }
 });
