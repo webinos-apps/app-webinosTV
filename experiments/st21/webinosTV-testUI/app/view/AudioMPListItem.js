@@ -75,7 +75,7 @@ Ext.define('webinosTV.view.AudioMPListItem', {
 	      xtype:'panel',
 	      docked:'right',
 	      width:'10%',
-	      style:'background-color:#333;color:#006bb6;text-align:center;',
+	      style:'background-color:#333;color:#006bb6;text-align:center;',//TODO in css
 	      html: (' + ').bold()
 	    }
 	  ]

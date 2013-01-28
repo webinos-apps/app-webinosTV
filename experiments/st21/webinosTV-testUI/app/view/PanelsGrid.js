@@ -6,6 +6,8 @@ Ext.define('webinosTV.view.PanelsGrid', {
   ],
   config:
   {
+    id:'browserMainView',
+    currentSourceDeviceQueue:null, //private attribute - see showSourceDeviceQueue
     width:'100%',
     height:'100%',
     cls: 'main-container',
@@ -18,7 +20,7 @@ Ext.define('webinosTV.view.PanelsGrid', {
     items:
     [
       {
- 	xtype: 'container', //Headers component (upper part)
+ 	xtype: 'container', //Headers component (upper part) TODO css
 	cls:'title-container',
 	margin:2,
 	flex:1, // 1/10 of the height
@@ -100,5 +102,60 @@ Ext.define('webinosTV.view.PanelsGrid', {
       ]
     }
     ]
+  },
+
+  showSourceDeviceQueue:function(deviceID){ //TODO update panel if it is already showing (otherwise 2 pushes)
+    var mainContainer=this;
+    var headers=this.getAt(0);
+    var contentContainer=this.getAt(1);
+
+    //TODO remove once layouts are ready
+    function get_random_color() {
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+	    color += letters[Math.round(Math.random() * 15)];
+	}
+	return color;
+    }
+    
+    var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
+    switch(currentSourceDeviceID)
+    {
+      case null: //add
+	{
+  	  //WARNING: this is NOT the final stuff
+	  headers.insert(0,{ xtype: 'panel', html: 'Device Queue', padding:2, margin: 2, flex:2});
+	  contentContainer.insert(0,{
+	    xtype:'container',
+	    layout:'vbox',
+	    flex:2,
+	    items:[
+	    {
+	      xtype:'tilepanel',
+	      flex:1,
+	      text: ('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small()
+	    }]
+	  });
+	  contentContainer.getAt(0).getAt(0).getAt(0).addCls('not-implemented-yet');
+	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
+	}
+	break;
+      case deviceID: //remove
+	{
+	  headers.removeAt(0);
+	  contentContainer.removeAt(0);
+  	  mainContainer.setCurrentSourceDeviceQueue(null);
+	}
+	break;
+      default: //update
+	{
+    	  //WARNING: this is NOT the final stuff
+	  contentContainer.getAt(0).getAt(0).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
+	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
+	}
+	break;
+    }
   }
+
 });

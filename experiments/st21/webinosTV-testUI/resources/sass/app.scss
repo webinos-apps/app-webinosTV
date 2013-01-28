@@ -241,3 +241,23 @@ $list-pressed-color:$hl-color;
   }
 }
 
+//For labels of not yet implemented features
+.not-implemented-yet {
+  -webkit-animation-name: rotateAndScale;
+  -webkit-animation-duration:5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function:ease-in-out;
+}
+@-webkit-keyframes rotateAndScale {
+  0% {
+    -webkit-transform:scale(1.0) rotate(0deg);
+  }
+  
+  60% {
+    -webkit-transform:scale(2.5) rotate(0deg);
+  }
+  
+  100% {
+    -webkit-transform:scale(1.0) rotate(360deg);
+  }
+}

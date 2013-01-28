@@ -86,7 +86,9 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       var deviceInfo=this.getRecord().data;
       if(deviceInfo.counter)
       {
-	console.log("Here we should push some other list view on the left");
+	var browserMainView = Ext.getCmp('browserMainView');
+	var deviceID= deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
+	browserMainView.showSourceDeviceQueue(deviceID);
       }
     }
 });
