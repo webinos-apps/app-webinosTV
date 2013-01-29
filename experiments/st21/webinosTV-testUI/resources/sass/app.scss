@@ -79,34 +79,66 @@ $list-pressed-color:$hl-color;
   }
 }
 
+//Playlist unselected item container
+.playlist{
+  max-width:100%;
+}
+
+.playlist div{
+  max-width:100%;
+}
+
+.playlist-container,.playlist-container-0,.playlist-container-1,.playlist-container-pressed,.playlist-container-selected{
+  text-align:left;
+  font-size:0.7em;
+  margin: 0.25em;
+  color:$fg-color;
+  white-space:nowrap;
+}
+
+.playlist-container-0{
+  background-color:darken($bg-color,10%);
+}
+
+.playlist-container-1{
+  background-color:$bg-color;
+}
+
+.playlist-container-pressed{
+  background-color:$hl-color;
+}
+
+.playlist-container-selected{
+  @include background-gradient($sel-color);
+}
+
 //Basic Tile class, much like abstract class
 .default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{
   text-align:center;
   font-size:0.7em;
+  color:$fg-color;
 }
+
 
 //Tile unselected
 .tile-panel{
-  color:$fg-color;
   background-color:$bg-color;
 }
 
 //Tile selected
 .tile-panel-selected{
-  color:$fg-color;
-/*   background-color:$sel-color; */
   @include background-gradient($sel-color);
 }
 
 //Tile pressed
 .tile-panel-pressed{
-  color:$fg-color;
   background-color:$hl-color;
 }
 
 //Tile text
 .tile-text{
-  display:block;
+/*   display:block; */
+  overflow-x:hidden;
   margin: 0.5em 0em 0.5em 0em;
 }
 
@@ -182,4 +214,50 @@ $list-pressed-color:$hl-color;
 
 .tile-icon-docs{
   -webkit-mask: 0 0 inline-image('documents.png') no-repeat;
+}
+
+//Sliding text
+.sliding-text{
+  text-overflow:clip;
+  white-space:nowrap;
+  -webkit-animation-name: slider;
+  -webkit-animation-duration: 20s;
+  -webkit-animation-delay: -10s; //important! makes the text start from 0
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes slider{
+  0%{
+    -webkit-transform: translateX(100%);
+  }
+
+  50%{
+    -webkit-transform: translateX(0%);
+  }
+
+  100%{
+    -webkit-transform: translateX(-150%);
+  }
+}
+
+//For labels of not yet implemented features
+.not-implemented-yet {
+  -webkit-animation-name: rotateAndScale;
+  -webkit-animation-duration:5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function:ease-in-out;
+}
+@-webkit-keyframes rotateAndScale {
+  0% {
+    -webkit-transform:scale(1.0) rotate(0deg);
+  }
+  
+  60% {
+    -webkit-transform:scale(2.5) rotate(0deg);
+  }
+  
+  100% {
+    -webkit-transform:scale(1.0) rotate(360deg);
+  }
 }

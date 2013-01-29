@@ -33,9 +33,21 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	      pack:'start'
 	    },
 	    iconCls: deviceInfo.counter ? 'list' : null,
-	    text:deviceInfo.counter ? deviceInfo.counter : null
+	    text:deviceInfo.counter ? deviceInfo.counter : null,
+	    listeners:{
+	      tap:{
+		element:'element',
+		scope:this,
+		fn:function(){this.showDeviceQueue();}
+	      }
+	    }
 	  },
-	  {xtype:'tilepanel',flex:1.5, iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
+	  {
+	    xtype:'tilepanel',
+	    flex:1.5,
+	    iconCls : iconClasses[deviceInfo.type],
+	    text:deviceInfo.deviceName
+	  }
 	]
       });
       return itemContainer;
@@ -56,12 +68,8 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       //getAt(1) returns this component container
       var deviceItem=this.getAt(1);
 
-      deviceItem.getAt(0).setCls('tile-panel-pressed');
-      deviceItem.getAt(1).setCls('tile-panel-pressed');
-      setTimeout(function(){
-	deviceItem.getAt(0).setCls('tile-panel-selected');
-	deviceItem.getAt(1).setCls('tile-panel-selected');
-      },300);
+      deviceItem.getAt(0).select();
+      deviceItem.getAt(1).select();
       this.setSelected(true);
     },
 
@@ -69,8 +77,18 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       //getAt(1) returns this component container
       var deviceItem=this.getAt(1);
       
-      deviceItem.getAt(0).setCls('tile-panel');
-      deviceItem.getAt(1).setCls('tile-panel');
+      deviceItem.getAt(0).unselect();
+      deviceItem.getAt(1).unselect();
       this.setSelected(false);
+    },
+
+    showDeviceQueue:function(){
+      var deviceInfo=this.getRecord().data;
+      if(deviceInfo.counter)
+      {
+	var browserMainView = Ext.getCmp('browserMainView');
+	var deviceID= deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
+	browserMainView.showSourceDeviceQueue(deviceID);
+      }
     }
 });
