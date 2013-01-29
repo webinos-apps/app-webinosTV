@@ -13,56 +13,75 @@ Ext.define('webinosTV.view.PanelsGrid', {
     cls: 'main-container',
     layout:
     {
-      type: 'vbox', //Main component
-//       align: 'center',
+      type: 'hbox', //Main component
+      align: 'center',
       pack: 'center'
     },
-    items:
-    [
+    items:[
       {
- 	xtype: 'container', //Headers component (upper part) TODO css
-	cls:'title-container',
-	margin:2,
-	flex:1, // 1/10 of the height
-	width:'100%',
-	layout:
-	{
-	  type: 'hbox',
- 	  align: 'center',
- 	  pack: 'center'
+	xtype:'container',
+	flex:2.5,
+ 	height:'100%',
+	layout:{
+	  type: 'vbox',
+	  align: 'center',
+	  pack: 'center'
 	},
 	items:[
-	{ xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1}, //#0a
-	{ xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5},//#0b
-	{ xtype: 'panel', html: 'Categories',padding:2, margin: 2,flex:1.5}, //#1
-	{ xtype: 'panel', html: 'Select Media',padding:2, margin: 2,flex:3}, //#2
-	{ xtype: 'panel', html: 'Target Device',padding:2, margin: 2,flex:1.5}, //#3
-	{ xtype: 'panel', html: 'Play Mode',padding:2, margin: 2,flex:1.5} //#4
+	  { //Headers  #0 (#0a and #0b)
+	    xtype:'container',
+	    width:'100%',
+	    cls:'title-container',
+	    layout:{
+	      type: 'hbox',
+	      align: 'center',
+	      pack: 'center'
+	    },
+	    items:[
+	      { xtype: 'panel', html: 'Queue', padding:2, margin: 2/*, flex:1*/}, //#0a
+	      { xtype: 'panel', html: 'Source Device',padding:2, margin: 2/*,flex:1.5*/}//#0b
+	    ]
+	  },
+	  {//Container #0 (#0a and #0b)
+	    xtype:'tileslist',
+	    defaultType: 'sourcedevlistitem',//for source devices
+	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
+	    width:'100%',
+	    store:'tmpsrcdevstore-id'
+	  }
 	]
       },
       {
- 	xtype: 'container', //Items component (bottom part)
-	flex:9, // 1/10 of the height
-	cls: 'main-container',
-	width:'100%',
-	layout:
-	{
-	  type: 'hbox'
+	xtype:'container',
+	height:'100%',
+// 	  width:'90%',
+	flex:1.5,
+	layout:{
+	  type: 'vbox',
+	  align: 'center',
+	  pack: 'center'
 	},
-	items:
-	[
-	{//Container #0 (#0a and #0b)
-	  xtype:'tileslist',
-	  id:'sourceDevsList',
-	  defaultType: 'sourcedevlistitem',//for source devices
-	  flex: 2.5,
-	  store:'tmpsrcdevstore-id'
+	items:[
+	{ //Headers  #1
+	  xtype:'container',
+	  width:'100%',
+	  cls:'title-container',
+	  layout:{
+	    type: 'hbox',
+	    align: 'center',
+	    pack: 'center'
+	  },
+	  items:[
+	    { xtype: 'panel', html: 'Categories',padding:2, margin: 2/*,flex:1.5*/}//#1
+	  ]
 	},
-	{//Container #1 - Media category
+	{//Container #1 - Media Category
 	  xtype:'tileslist',
 	  id:'mediaCategoryList',
 	  defaultType: 'mediacategorylistitem',//for media
-	  flex: 1.5,
+	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
+	  width:'100%',
+// 	    flex: 1.5,
 	  store: {
 	    fields: ['category', 'mediaCategoryName'],
 	    data: [
@@ -74,40 +93,116 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	      {category: 'docs',mediaCategoryName:'Documents'}
 	    ]
 	  }
+	}]
+      },
+      {
+	xtype:'container',
+ 	height:'100%',
+	flex:3,
+	layout:{
+	  type: 'vbox',
+	  align: 'center',
+	  pack: 'center'
+	},
+	items:[
+	{ //Headers  #2
+	  xtype:'container',
+	  width:'100%',
+	  cls:'title-container',
+	  layout:{
+	    type: 'hbox',
+	    align: 'center',
+	    pack: 'center'
+	  },
+	  items:[
+	    { xtype: 'panel', html: 'Select Media',padding:2, margin: 2/*,flex:1.5*/}//#2
+	  ]
 	},
 	{//Container #2 - playlist TODO: should change according with the media selected in #1
 	  xtype: 'mediaplaylist',
-	  flex:3
+	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
+	  width:'100%',
+	  height:'100%'
+	}]
+      },
+      {
+	xtype:'container',
+	height:'100%',
+	flex:1.5,
+	layout:{
+	  type: 'vbox',
+	  align: 'center',
+	  pack: 'center'
+	},
+	items:[
+	{ //Headers  #3
+	  xtype:'container',
+	  width:'100%',
+	  cls:'title-container',
+	  layout:{
+	    type: 'hbox',
+	    align: 'center',
+	    pack: 'center'
+	  },
+	  items:[
+	    { xtype: 'panel', html: 'Target Device',padding:2, margin: 2/*,flex:1.5*/}//#3
+	  ]
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
 	  allowMultipleSelection:true,
 	  defaultType: 'targetdevlistitem',//for display devices
-	  flex: 1.5,
+	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
+	  width:'100%',
+	  height:'100%',
 	  store: 'tmpdispdevstore-id'
+	}]
+      },
+      {
+	xtype:'container',
+ 	height:'100%',
+	flex:1.5,
+	layout:{
+	  type: 'vbox',
+	  align: 'center',
+	  pack: 'center'
 	},
-	{//Container #4 - Actions
-	  xtype: 'customsegbutton',
-	  flex:1.5,
-	  padding:1,
-	  layout:
-	  {
-	    type: 'vbox'
+	items:[
+	{ //Headers  #4
+	  xtype:'container',
+	  width:'100%',
+	  cls:'title-container',
+	  layout:{
+	    type: 'hbox',
+	    align: 'center',
+	    pack: 'center'
 	  },
 	  items:[
-	    {xtype:'tilepanel', iconCls : 'play', text:'Play Now'},
-	    {xtype:'tilepanel', iconCls : 'queue', text:'Add to Queue'}
+	    { xtype: 'panel', html: 'Play Mode',padding:2, margin: 2/*,flex:1.5*/}//#4
 	  ]
-	}
-      ]
-    }
+	},
+      {//Container #4 - Actions
+	xtype: 'customsegbutton',
+	
+ 	width:'100%',
+ 	height:'100%',
+	padding:1,
+	layout:
+	{
+	  type: 'vbox'
+	},
+	items:[
+	  {xtype:'tilepanel', iconCls : 'play', text:'Play Now'},
+	  {xtype:'tilepanel', iconCls : 'queue', text:'Add to Queue'}
+	]
+      }]
+      }
     ]
   },
 
+  
   showSourceDeviceQueue:function(deviceID){ //TODO update panel if it is already showing (otherwise 2 pushes)
     var mainContainer=this;
-    var headers=this.getAt(0);
-    var contentContainer=this.getAt(1);
 
     //TODO remove once layouts are ready
     function get_random_color() {
@@ -118,44 +213,61 @@ Ext.define('webinosTV.view.PanelsGrid', {
 	}
 	return color;
     }
-    
+
     var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
     switch(currentSourceDeviceID)
     {
       case null: //add
 	{
-  	  //WARNING: this is NOT the final stuff
-	  headers.insert(0,{ xtype: 'panel', html: 'Device Queue', padding:2, margin: 2, flex:2});
-	  contentContainer.insert(0,{
+	  
+//   	  //WARNING: this is NOT the final stuff
+	  mainContainer.insert(0,{
 	    xtype:'container',
-	    layout:'vbox',
 	    flex:2,
+	    height:'100%',
+	    layout:{
+	      type: 'vbox',
+	      align: 'center',
+	      pack: 'center'
+	    },
 	    items:[
-	    {
-	      xtype:'tilepanel',
-	      flex:1,
-	      text: ('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small()
-	    }]
+	      	{ //Headers  #1
+		  xtype:'container',
+		  width:'100%',
+		  cls:'title-container',
+		  layout:{
+		    type: 'hbox',
+		    align: 'center',
+		    pack: 'center'
+		  },
+		  items:[
+		    {  xtype: 'panel', html: 'Device Queue', padding:2, margin: 2}
+		  ]
+	      },
+	      {
+		xtype:'tilepanel',
+		flex:9,
+		text: ('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small()
+	      }
+	    ]
 	  });
-	  contentContainer.getAt(0).getAt(0).getAt(0).addCls('not-implemented-yet');
-	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
+	  mainContainer.getAt(0).getAt(1).getAt(0).addCls('not-implemented-yet');
+ 	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
 	}
 	break;
       case deviceID: //remove
 	{
-	  headers.removeAt(0);
-	  contentContainer.removeAt(0);
+	  mainContainer.removeAt(0);
   	  mainContainer.setCurrentSourceDeviceQueue(null);
 	}
 	break;
       default: //update
 	{
     	  //WARNING: this is NOT the final stuff
-	  contentContainer.getAt(0).getAt(0).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
+    	  mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
 	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
 	}
 	break;
     }
   }
-
 });

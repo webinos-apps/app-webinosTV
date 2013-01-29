@@ -11,6 +11,8 @@ Ext.define('webinosTV.view.phone.PanelsGrid', {
   config:
   {
     fullscreen:true,
+    id:'browserMainView',
+    currentSourceDeviceQueue:null, //private attribute - see showSourceDeviceQueue
     width:'100%',
     height:'100%',
     cls: 'main-container',
