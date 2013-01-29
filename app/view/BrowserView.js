@@ -1,6 +1,6 @@
-Ext.define('webinosTV.view.PanelsGrid', {
+Ext.define('webinosTV.view.BrowserView', {
   extend: 'Ext.Container',
-//   xtype: 'pnlgrid',
+
   requires: [
     'Ext.Panel','Ext.Button','Ext.data.Store','Ext.Img','Ext.SegmentedButton'
   ],

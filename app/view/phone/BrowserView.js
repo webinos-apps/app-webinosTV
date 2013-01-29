@@ -1,9 +1,6 @@
-Ext.define('webinosTV.view.phone.PanelsGrid', {
-  extend: 'webinosTV.view.PanelsGrid',
-//   xtype: 'crslgrid',
-    xtype: 'phone-pnlgrid',
-//     xtype: 'pnlgrid',
-
+Ext.define('webinosTV.view.phone.BrowserView', {
+  extend: 'webinosTV.view.BrowserView',
+  xtype: 'phone-browserview',
 
   requires: [
     'Ext.Carousel','Ext.Panel','Ext.Button','Ext.List','Ext.data.Store','Ext.Img','Ext.SegmentedButton'
