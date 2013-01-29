@@ -20,41 +20,62 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
     }
   },
 
-  initialize:function(){
-    var tile=this;
-    var tileText=tile.getText();
-    var tileIconCls=tile.getIconCls();
-
-    if(tileIconCls!==null)
-    {
-      tile.add({
-	xtype:'panel',
-	cls:'tile-icon-'+tileIconCls
-      });
-    }
-    
-    if(tileText!==null)
-    {
-      tile.add({
-	xtype:'panel',
-	cls:'tile-text',
-	html:tileText
-      });
-    }
-    
-
-  },
-  
   select:function(){
-    var panel=this;
-    panel.setCls('tile-panel-pressed');
+    var tile=this;
+    tile.setCls('tile-panel-pressed');
     setTimeout(function(){
-      panel.setCls('tile-panel-selected');
+      tile.setCls('tile-panel-selected');
     },300);
   },
 
   unselect:function(){
-    var panel=this;
-    panel.setCls('tile-panel');
+    var tile=this;
+    tile.setCls('tile-panel');
+  },
+
+  //Override setters
+  applyText:function(newText){
+    var tile=this;
+    var oldText=tile.getText();
+    var position = tile.getIconCls() ? 1:0;
+
+    if(oldText!==newText)
+    {
+      if(oldText===null) //set
+      {
+	tile.insert(position,{
+	  xtype:'panel',
+	  cls:'tile-text',
+	  html:newText
+	});
+      }
+      else //update
+      {
+	tile.getAt(position).setHtml(newText);
+      }
+    }
+    return newText;
+  },
+
+  applyIconCls:function(newCls){
+    var tile=this;
+    var oldIconCls=tile.getIconCls();
+    if(oldIconCls!==newCls)
+    {
+      if(oldIconCls===null) //set
+      {
+	tile.insert(0,{ //always first
+	  xtype:'panel',
+	  cls:'tile-icon-'+newCls
+	});
+      }
+      else //update
+      {
+	tile.getAt(0).setCls(newCls);
+      }
+    }
+    return newCls;
   }
+
+  
 });

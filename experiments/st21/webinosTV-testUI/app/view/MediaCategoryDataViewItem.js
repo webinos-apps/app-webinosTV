@@ -45,10 +45,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
       //getAt(1) returns this component container
       var mediaCategoryItem=this.getAt(1);
 
-      mediaCategoryItem.getAt(0).setCls('tile-panel-pressed');
-      setTimeout(function(){
-	mediaCategoryItem.getAt(0).setCls('tile-panel-selected');
-      },300);
+      mediaCategoryItem.getAt(0).select();
       this.setSelected(true);
     },
 
@@ -56,7 +53,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
       //getAt(1) returns this component container
       var mediaCategoryItem=this.getAt(1);
 
-      mediaCategoryItem.getAt(0).setCls('tile-panel');
+      mediaCategoryItem.getAt(0).unselect();
       this.setSelected(false);
     }
 });

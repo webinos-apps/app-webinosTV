@@ -1,3 +1,4 @@
+//TODO drop me
 Ext.define('webinosTV.view.Main', {
   extend: 'Ext.tab.Panel',
   xtype: 'main',

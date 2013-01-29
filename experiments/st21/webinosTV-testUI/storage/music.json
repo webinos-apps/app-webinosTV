@@ -3,6 +3,7 @@
   [
     { "title": "Come Together","artist":"The Beatles", "album":"Abbey Road" },
     { "title": "Something" ,"artist":"The Beatles", "album":"Abbey Road"},
+    { "title": "A very long title for a song, don't you think so? I'm sure you agree..." ,"artist":"The Unknown", "album":"No title"},
     { "title": "Maxwell\'s Silver Hammer " ,"artist":"The Beatles", "album":"Abbey Road"},
     { "title": "Oh! Darling","artist":"The Beatles", "album":"Abbey Road" },
     { "title": "Octopus\'s Garden" ,"artist":"The Beatles", "album":"Abbey Road"},
