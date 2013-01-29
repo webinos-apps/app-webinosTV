@@ -4,7 +4,7 @@ Ext.define('webinosTV.profile.Phone', {
     config: {
         name: 'phone',
 	namespace : 'phone',
-        views: ['PanelsGrid']
+        views: ['BrowserView']
     },
 
     isActive: function() {
@@ -13,6 +13,6 @@ Ext.define('webinosTV.profile.Phone', {
 
     launch: function() {
       // Initialize the main view
-      Ext.Viewport.add(Ext.create('webinosTV.view.phone.PanelsGrid'));
+      Ext.Viewport.add(Ext.create('webinosTV.view.phone.BrowserView'));
     }
 });
