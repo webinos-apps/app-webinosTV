@@ -79,8 +79,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	{//Container #1 - Media Category
 	  xtype:'tileslist',
 	  id:'mediaCategoryList',
-//       disabled:true,
-//       masked:true,
+      disabled:true,
+      masked:true,
 	  defaultType: 'mediacategorylistitem',//for media
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
