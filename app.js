@@ -50,6 +50,9 @@ Ext.application({
 
       // Initialize the stores
       var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
+
+      //connect interface with ui
+      run_ui_connect();
     },
 
     onUpdated: function() {

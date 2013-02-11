@@ -8,7 +8,8 @@ Ext.define('webinosTV.controller.SelectMediaController', {
     control:{
       mcategory:
       {
-	select:'mediaCategorySelected' //event = select, cb = mediaCategorySelected
+	select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
+  deselect:'mediaCategoryDeselected'
       }
     },
     refs: {
@@ -16,7 +17,13 @@ Ext.define('webinosTV.controller.SelectMediaController', {
       mcategory: '#mediaCategoryList'
     }
   },
-
+  mediaCategoryDeselected:function(mediaCategoryList, record, eOpts){
+    var mplist=this.getMplist();
+    mplist.setItems({
+      xtype:'tilepanel',
+      text: 'please select a media type...'
+    });
+  },
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
   {
     var mplist=this.getMplist();
