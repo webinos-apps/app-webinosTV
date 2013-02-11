@@ -44,6 +44,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	  },
 	  {//Container #0 (#0a and #0b)
 	    xtype:'tileslist',
+        id:'sourceDevicesList',
 	    defaultType: 'sourcedevlistitem',//for source devices
 	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
@@ -78,6 +79,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	{//Container #1 - Media Category
 	  xtype:'tileslist',
 	  id:'mediaCategoryList',
+//       disabled:true,
+//       masked:true,
 	  defaultType: 'mediacategorylistitem',//for media
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
@@ -206,12 +209,12 @@ Ext.define('webinosTV.view.BrowserView', {
 
     //TODO remove once layouts are ready
     function get_random_color() {
-	var letters = '0123456789ABCDEF'.split('');
-	var color = '#';
-	for (var i = 0; i < 6; i++ ) {
-	    color += letters[Math.round(Math.random() * 15)];
-	}
-	return color;
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+          color += letters[Math.round(Math.random() * 15)];
+      }
+      return color;
     }
 
     var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
@@ -264,7 +267,7 @@ Ext.define('webinosTV.view.BrowserView', {
       default: //update
 	{
     	  //WARNING: this is NOT the final stuff
-    	  mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
+      mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
 	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
 	}
 	break;
