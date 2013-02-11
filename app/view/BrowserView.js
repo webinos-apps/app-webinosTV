@@ -44,6 +44,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	  },
 	  {//Container #0 (#0a and #0b)
 	    xtype:'tileslist',
+	    id:'sourceDeviceList',
 	    defaultType: 'sourcedevlistitem',//for source devices
 	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
@@ -78,6 +79,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	{//Container #1 - Media Category
 	  xtype:'tileslist',
 	  id:'mediaCategoryList',
+	  disabled: true,
+	  masked:true,
 	  defaultType: 'mediacategorylistitem',//for media
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
@@ -122,7 +125,9 @@ Ext.define('webinosTV.view.BrowserView', {
 	  xtype: 'mediaplaylist',
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
-	  height:'100%'
+	  height:'100%',
+	  disabled: true,
+	  masked:true,
 	}]
       },
       {
@@ -151,6 +156,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
 	  allowMultipleSelection:true,
+disabled: true,
+	  masked:true,
 	  defaultType: 'targetdevlistitem',//for display devices
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
@@ -161,6 +168,7 @@ Ext.define('webinosTV.view.BrowserView', {
       {
 	xtype:'container',
  	height:'100%',
+ 		  
 	flex:1.5,
 	layout:{
 	  type: 'vbox',
@@ -183,7 +191,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
       {//Container #4 - Actions
 	xtype: 'customsegbutton',
-	
+	disabled: true,
+	  masked:true,
  	width:'100%',
  	height:'100%',
 	padding:1,
