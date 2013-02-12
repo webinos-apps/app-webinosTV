@@ -26,6 +26,7 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
       text: 'please select a media type...'
     });
     mplist.setMasked(true);
+    mplist.setDisabled(false);
   },
 
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
@@ -64,5 +65,6 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     break;
     }
     mplist.setMasked(false);
+    mplist.setDisabled(true);
   }
 });

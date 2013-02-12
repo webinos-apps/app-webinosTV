@@ -51,9 +51,164 @@ Ext.application({
       // Initialize the stores
       var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
 
-      //connect interface with ui
-      run_ui_connect();
+//       //connect interface with ui
+//       webinosTV.app.connectUi=run_ui_connect();
     },
+    
+    //connect interface with ui
+    connectUi:function(){
+
+      var addTargetDevice = function(id,type,counter,name){
+        var store = Ext.StoreMgr.get('tmpdispdevstore-id');
+        store.add({"id": id, "type": type, "counter": counter,"deviceName":name});
+      };
+      
+      var clearTargetDevices = function(){
+        var store = Ext.StoreMgr.get('tmpdispdevstore-id');
+        store.clearData();
+      };
+
+      //Navigation
+//       var moveLeft=function(){
+//         var index=this.leftRightIndex;
+//         if(index>0)
+//         {
+//           var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+//           currCmp.removeCls("nav-selected");
+//           
+//           this.leftRightIndex--;
+//           index=this.leftRightIndex;
+//           var nextCmp=Ext.getCmp(this.columns[index]);
+//           nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+//           this.lastVisitedColumnId=this.columns[index];
+//           console.log("MoveLeft")
+//         }
+//       };
+      
+//       var moveRight=function(){
+//         var index=this.leftRightIndex;
+//         if(index<this.columns.length)
+//         {
+//           console.log(index,this.lastVisitedColumnId)
+//           var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+//           currCmp.removeCls("nav-selected");
+// 
+//           this.leftRightIndex++;
+//           index=this.leftRightIndex;
+//           var nextCmp=Ext.getCmp(this.columns[index]);
+//           nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+//           this.lastVisitedColumnId=this.columns[index];
+//           console.log("MoveRight");
+//         }
+//       };
+  
+      var moveUp=function(){
+        var bw=Ext.get('browserView');
+        console.log("MU",this);
+      };
+      
+      var moveDown=function(){
+        var bw=Ext.get('browserView');
+        console.log("MD",this);
+      
+      };
+      
+//       var startBrowsing=function(){
+//         var bw=Ext.get('browserView');
+//         var startCmp=Ext.getCmp(this.columns[0]);
+//         console.log("Started ok",startCmp.getCls());
+//         startCmp.setCls(["nav-selected","phone-listview-indicator"]);
+//         this.lastVisitedColumnId=this.columns[0];
+//         this.leftRightIndex++;
+//       };
+      
+      var browse={
+          browserView:'browserMainView',
+          columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','playQueueSegmBtn'],
+          lastVisitedColumnId:null,
+          leftRightIndex:-1,
+          upDownIndex:-1,
+          startBrowsing:function(){
+            var bw=Ext.get('browserView');
+            var startCmp=Ext.getCmp(this.columns[0]);
+            console.log("Started ok",startCmp.getCls());
+            startCmp.setCls(["nav-selected","phone-listview-indicator"]);
+            this.lastVisitedColumnId=this.columns[0];
+            this.leftRightIndex++;
+          },
+          moveLeft:function(){
+            var index=this.leftRightIndex;
+            if(index>0)
+            {
+              var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+              currCmp.removeCls("nav-selected");
+              
+              this.leftRightIndex--;
+              index=this.leftRightIndex;
+              var nextCmp=Ext.getCmp(this.columns[index]);
+              nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+              this.lastVisitedColumnId=this.columns[index];
+              console.log("MoveLeft")
+            }
+          },
+          moveRight:function(){
+            var index=this.leftRightIndex;
+            if(index<this.columns.length)
+            {
+              console.log(index,this.lastVisitedColumnId)
+              var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+              currCmp.removeCls("nav-selected");
+
+              this.leftRightIndex++;
+              index=this.leftRightIndex;
+              var nextCmp=Ext.getCmp(this.columns[index]);
+              nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+              this.lastVisitedColumnId=this.columns[index];
+              console.log("MoveRight");
+            }
+          },
+          moveUp:moveUp,
+          moveDown:moveDown
+      };
+
+      var bindKey=function(evt)
+      {
+        var key = evt.keyCode;
+        switch(key){
+          case 97://a
+            browse.moveLeft();
+            break;
+          case 115://s
+            browse.moveDown();
+            break;
+          case 100://d
+            browse.moveRight();
+            break;
+          case 119://w
+            browse.moveUp();
+            break;
+          case 13://return
+            browse.startBrowsing()
+            break;
+          case 32://space
+            //browse.stopBrowsing()
+            break;
+          default:
+            console.log("Unhandled key",key);
+        }
+      };
+      document.onkeypress = bindKey;
+      
+      return {
+        addTargetDevice:addTargetDevice,
+        clearTargetDevices:clearTargetDevices,
+        browse:browse
+  };
+// })();
+
+
+},
+
 
     onUpdated: function() {
         Ext.Msg.confirm(
