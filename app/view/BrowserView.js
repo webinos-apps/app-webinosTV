@@ -38,13 +38,13 @@ Ext.define('webinosTV.view.BrowserView', {
 	      pack: 'center'
 	    },
 	    items:[
-	      { xtype: 'panel', html: 'Queue', padding:2, margin: 2/*, flex:1*/}, //#0a
-	      { xtype: 'panel', html: 'Source Device',padding:2, margin: 2/*,flex:1.5*/}//#0b
+	      { xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1,style:'text-align:center;'}, //#0a
+	      { xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5,style:'text-align:center;'}//#0b
 	    ]
 	  },
 	  {//Container #0 (#0a and #0b)
 	    xtype:'tileslist',
-        id:'sourceDevicesList',
+	    id:'sourceDeviceList',
 	    defaultType: 'sourcedevlistitem',//for source devices
 	    cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	    width:'100%',
@@ -79,7 +79,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	{//Container #1 - Media Category
 	  xtype:'tileslist',
 	  id:'mediaCategoryList',
-      disabled:true,
+      disabled: true,
       masked:true,
 	  defaultType: 'mediacategorylistitem',//for media
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
@@ -125,7 +125,9 @@ Ext.define('webinosTV.view.BrowserView', {
 	  xtype: 'mediaplaylist',
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
-	  height:'100%'
+	  height:'100%',
+	  disabled: true,
+	  masked:true,
 	}]
       },
       {
@@ -153,7 +155,9 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
-	  allowMultipleSelection:true,
+	  disabled: true,
+	  masked:true,
+      mode:'MULTI',
 	  defaultType: 'targetdevlistitem',//for display devices
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
@@ -164,6 +168,7 @@ Ext.define('webinosTV.view.BrowserView', {
       {
 	xtype:'container',
  	height:'100%',
+ 		  
 	flex:1.5,
 	layout:{
 	  type: 'vbox',
@@ -266,7 +271,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	break;
       default: //update
 	{
-    	  //WARNING: this is NOT the final stuff
+      //WARNING: this is NOT the final stuff
       mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
 	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
 	}
