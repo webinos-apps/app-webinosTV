@@ -123,6 +123,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
 	{//Container #2 - playlist TODO: should change according with the media selected in #1
 	  xtype: 'mediaplaylist',
+      id:'mediaPlaylist',
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
 	  height:'100%',
@@ -155,6 +156,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
+      id:'targetDevicesList',
 	  disabled: true,
 	  masked:true,
       mode:'MULTI',
@@ -191,7 +193,9 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
       {//Container #4 - Actions
 	xtype: 'customsegbutton',
-	
+	id:'playQueueSegmBtn',
+    disabled: true,
+    masked:true,
  	width:'100%',
  	height:'100%',
 	padding:1,

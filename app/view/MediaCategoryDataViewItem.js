@@ -14,7 +14,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
 	'movies':'videos',
 	'music':'music',
 	'images':'images',
-	'channels':'tv',//TODO find a suitable icon
+	'channels':'tvchannels',//TODO find a suitable icon
 	'apps':'webinos',//TODO find a suitable icon
 	'docs':'docs'
       };

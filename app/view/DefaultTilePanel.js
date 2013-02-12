@@ -37,6 +37,7 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
 
   //Override setters
   applyText:function(newText){
+//     console.log("applyText",newText)
     var tile=this;
     var oldText=tile.getText();
     var position = tile.getIconCls() ? 1:0;
@@ -56,13 +57,19 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
       }
       else //update
       {
-	tile.getAt(position).setHtml(newText);
+        tile.getAt(position).setHtml(newText);
       }
     }
     return newText;
   },
+  
+  updateText:function(newText,oldText){
+//     console.log("updateText",this,this._text)
+    this._text=newText;
+  },
 
   applyIconCls:function(newCls){
+//     console.log("applyIconCls",newCls)
     var tile=this;
     var oldIconCls=tile.getIconCls();
     if(oldIconCls!==newCls)
@@ -76,11 +83,14 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
       }
       else //update
       {
-        tile.getAt(0).setCls(newCls);
+        tile.getAt(0).setCls('tile-icon-'+newCls);
       }
     }
     return newCls;
-  }
+  },
 
-  
+  updateIconCls:function(newIconCls,oldIconCls){
+//     console.log("updateIconCls",this,this._iconCls)
+    this._iconCls=newIconCls;
+  }  
 });
