@@ -21,13 +21,17 @@ Ext.define('webinosTV.controller.PlayModeController', {
   targetDevDeselected:function(targetDeVList, record, eOpts){
     var pqSegBtn=this.getPqSegBtn();
     if(targetDeVList.getSelectionCount()===0)
+    {
       pqSegBtn.setMasked(true);
+      pqSegBtn.setDisabled(false);
+    }
   },
 
   targetDevSelected:function(targetDeVList, record, eOpts)
   {
     var pqSegBtn=this.getPqSegBtn();
     pqSegBtn.setMasked(false);
+    pqSegBtn.setDisabled(true);
   }
 
 });

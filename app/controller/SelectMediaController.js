@@ -21,11 +21,13 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   mediaPLDeselected:function(mediaPlaylist, record, eOpts){
     var targetDeVList=this.getTargetDeVList();
     targetDeVList.setMasked(true);
+    targetDeVList.setDisabled(false);
   },
 
   mediaPLSelected:function(mediaPlaylist, record, eOpts)
   {
     var targetDeVList=this.getTargetDeVList();
     targetDeVList.setMasked(false);
+    targetDeVList.setDisabled(true);
   }
 });

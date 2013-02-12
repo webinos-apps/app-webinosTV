@@ -13,7 +13,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
       }
     },
     refs: {
-      mplist: '#selectMedia',
+//       mplist: '#selectMedia',
       mcategory: '#mediaCategoryList',
       sdevList: '#sourceDeviceList'
     }
