@@ -19,6 +19,10 @@ Ext.define('webinosTV.view.TilesDataView',{
       directionLock: true
     },
     mode:'SINGLE',
+    allowDeselect: true,
+    itemCls:'tile-panel',
+    selectedCls:'tile-panel-selected',
+    pressedCls:'tile-panel-pressed'/*,
     listeners:{
       itemsingletap:{
         fn:this.onItemSingleTap,
@@ -36,46 +40,45 @@ Ext.define('webinosTV.view.TilesDataView',{
 //           }
         }
       }
-    }
+    }*/
   },
   
-  select: function(records, keepExisting, suppressEvent) {
-    
-    var me = this,
-      record;
-console.log("Zelect",records)
-var r =me.getSelection()
-if(r.length)
-  console.log(r[0].select)
-    if (me.getDisableSelection()) {
-      return;
-    }
+//   select: function(records, keepExisting, suppressEvent) {
+// /*    
+//     var me = this,
+//       record;
+// var r =me.getSelection()
+// if(r.length)
+//   console.log(r[0].select)
+//     if (me.getDisableSelection()) {
+//       return;
+//     }
+// 
+//     if (typeof records === "number") {
+//       records = [me.getStore().getAt(records)];
+//     }
+// 
+//     if (!records) {
+//       return;
+//     }*/
+// 
+//     if (me.getMode() == "SINGLE" && records) {
+//       record = records.length ? records[0] : records;
+//       me.doSingleSelect(record, suppressEvent);
+//     } else {
+//       me.doMultiSelect(records, keepExisting, suppressEvent);
+//     }
+//   },
+//   
+//   deselect:function(records, suppressEvent){
+//     var tileList=this;
+// //     tileList.superclass.deselect(records, suppressEvent);
+//     console.log("DESelected")
+//   },
 
-    if (typeof records === "number") {
-      records = [me.getStore().getAt(records)];
-    }
-
-    if (!records) {
-      return;
-    }
-
-    if (me.getMode() == "SINGLE" && records) {
-      record = records.length ? records[0] : records;
-      me.doSingleSelect(record, suppressEvent);
-    } else {
-      me.doMultiSelect(records, keepExisting, suppressEvent);
-    }
-  },
-  
-  deselect:function(records, suppressEvent){
-    var tileList=this;
-//     tileList.superclass.deselect(records, suppressEvent);
-    console.log("DESelected")
-  },
-
-  onItemSingleTap:function(tl, listItem,index/* , record, e, eOpts*/){
-    var tileList=this;
-//     console.log(this.superclass)
-  }
+//   onItemSingleTap:function(tl, listItem,index/* , record, e, eOpts*/){
+//     var tileList=this;
+// //     console.log(this.superclass)
+//   }
   
 });

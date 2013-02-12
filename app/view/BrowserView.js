@@ -200,8 +200,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	  type: 'vbox'
 	},
 	items:[
-	  {xtype:'tilepanel', iconCls : 'play', text:'Play Now'},
-	  {xtype:'tilepanel', iconCls : 'queue', text:'Add to Queue'}
+	  {xtype:'tilepanel',cls:'tile-panel', iconCls : 'play', text:'Play Now'},
+	  {xtype:'tilepanel',cls:'tile-panel', iconCls : 'queue', text:'Add to Queue'}
 	]
       }]
       }
@@ -254,6 +254,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	      },
 	      {
 		xtype:'tilepanel',
+        cls:'tile-panel',
 		flex:9,
 		text: ('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small()
 	      }

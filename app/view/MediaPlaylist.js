@@ -15,6 +15,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     [
       {
 	xtype:'tilepanel',
+    cls:'tile-panel',
 	text: 'please select a media type...'
       }
     ]
@@ -102,10 +103,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Videos').fontcolor('cyan').big()
     }]);
-    console.log(mediaPL);
-    mediaPL.items.items[0].addCls('not-implemented-yet');
   },
 
   showImages:function(){
@@ -113,9 +114,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Images').fontcolor('lime').big()
     }]);
-    mediaPL.items.items[0].addCls('not-implemented-yet');
   },
 
   showTV:function(){
@@ -123,9 +125,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('DVB-T').fontcolor('orange').big()
     }]);
-    mediaPL.items.items[0].addCls('not-implemented-yet');
   },
 
   showApps:function(){
@@ -133,9 +136,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('webinos Apps').fontcolor('magenta').big()
     }]);
-    mediaPL.items.items[0].addCls('not-implemented-yet');
   },
 
   showDocuments:function(){
@@ -143,8 +147,9 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Documents').fontcolor('red').big()
     }]);
-    mediaPL.items.items[0].addCls('not-implemented-yet');
   }
 });
