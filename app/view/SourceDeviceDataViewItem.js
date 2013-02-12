@@ -11,11 +11,11 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     {
       //TODO data handling here
       var iconClasses={
-	'pc':'pc',
-	'tv':'tv',
-	'phone':'phone',
-	'tablet':'tablet',
-	'laptop':'laptop'
+        'pc':'pc',
+        'tv':'tv',
+        'phone':'phone',
+        'tablet':'tablet',
+        'laptop':'laptop'
       };
       
       var deviceInfo = this.getRecord().data; //a count of media queued and device name + device type
@@ -36,9 +36,9 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 	    text:deviceInfo.counter ? deviceInfo.counter : null,
 	    listeners:{
 	      tap:{
-		element:'element',
-		scope:this,
-		fn:function(){this.showDeviceQueue();}
+            element:'element',
+            scope:this,
+            fn:function(){this.showDeviceQueue();}
 	      }
 	    }
 	  },
@@ -56,11 +56,11 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     updateDeviceLabel:function(newLabel,oldLabel)
     {
       if (oldLabel) {
-	this.remove(oldLabel);
+        this.remove(oldLabel);
       }
 
       if (newLabel) {
-	this.add(newLabel);
+        this.add(newLabel);
       }
     },
 
@@ -84,11 +84,11 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 
     showDeviceQueue:function(){
       var deviceInfo=this.getRecord().data;
-      if(deviceInfo.counter)
-      {
-	var browserMainView = Ext.getCmp('browserMainView');
-	var deviceID= deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
-	browserMainView.showSourceDeviceQueue(deviceID);
-      }
+//       if(deviceInfo.counter)
+//       {
+      var browserMainView = Ext.getCmp('browserMainView');
+      var deviceID= deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
+      browserMainView.showSourceDeviceQueue(deviceID);
+//       }
     }
 });

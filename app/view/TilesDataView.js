@@ -18,73 +18,67 @@ Ext.define('webinosTV.view.TilesDataView',{
       direction: 'vertical',
       directionLock: true
     },
+    mode:'SINGLE',
+    allowDeselect: true,
+    itemCls:'tile-panel',
+    selectedCls:'tile-panel-selected',
+    pressedCls:'tile-panel-pressed'/*,
     listeners:{
       itemsingletap:{
-	fn:this.onItemSingleTap,
- 	scope: this
-      },
-      //double tap selects only tapped item and deselects the others (if allowMultipleSelection is true)
+        fn:this.onItemSingleTap,
+        scope: this
+          },
+          //double tap selects only tapped item and deselects the others (if allowMultipleSelection is true)
       itemdoubletap:{
-	fn:function(tileList, index, listItem, record, e, eOpts){
-	  if(tileList.getAllowMultipleSelection())
-	  {
-      console.log(tileList);
- 	    tileList.container.items.items.forEach(function(titleListItem,itemIndex){
-	      itemIndex===index? titleListItem.select():titleListItem.unselect();
-	    });
-	  }
-	}
+        fn:function(tileList, index, listItem, record, e, eOpts){
+//           if(tileList.getAllowMultipleSelection())
+//           {
+//             tileList.getAt(1).getItems().items.forEach(function(titleListItem,itemIndex){
+//               itemIndex===index? titleListItem.select():titleListItem.unselect();
+//             });
+//             tileList.deselectAll();
+//           }
+        }
       }
-    }
+    }*/
   },
+  
+//   select: function(records, keepExisting, suppressEvent) {
+// /*    
+//     var me = this,
+//       record;
+// var r =me.getSelection()
+// if(r.length)
+//   console.log(r[0].select)
+//     if (me.getDisableSelection()) {
+//       return;
+//     }
+// 
+//     if (typeof records === "number") {
+//       records = [me.getStore().getAt(records)];
+//     }
+// 
+//     if (!records) {
+//       return;
+//     }*/
+// 
+//     if (me.getMode() == "SINGLE" && records) {
+//       record = records.length ? records[0] : records;
+//       me.doSingleSelect(record, suppressEvent);
+//     } else {
+//       me.doMultiSelect(records, keepExisting, suppressEvent);
+//     }
+//   },
+//   
+//   deselect:function(records, suppressEvent){
+//     var tileList=this;
+// //     tileList.superclass.deselect(records, suppressEvent);
+//     console.log("DESelected")
+//   },
 
-  onItemSingleTap:function(tl, listItem,index/* , record, e, eOpts*/){
-    //listeners scope is different when it is not anonymous
-    var tileList=this;
-    if(tileList.getAllowMultipleSelection())
-    {
-      if(listItem.getSelected() )
-      {  
-        listItem.unselect(); 
-        tileList.deselect(index,false);
-      }
-      else{ 
-        listItem.select();
-        tileList.select(index,true,false);
-      };
-    }
-    else //select only one at time
-    {
-      var previousIndex=tileList.getIndexSelected();
-//       console.log("Stap",tileList.getSelectionCount(),record)
-
-      if(previousIndex>-1)
-      {
-        if(previousIndex===index)
-        {
-          if(listItem.getSelected() )
-          {  
-            listItem.unselect();
-            tileList.deselect(index,false);
-          }
-          else{ 
-            listItem.select();
-            tileList.select(index,false,false);
-          };
-        }
-        else{
-          //getAt(1) returns this component container
-          console.log(tileList);
-          tileList.container.items.items[previousIndex].unselect();
-          listItem.select();
-        }
-      }
-      else
-      {
-        listItem.select();
-      }
-      tileList.setIndexSelected(index);
-    }
-  }
+//   onItemSingleTap:function(tl, listItem,index/* , record, e, eOpts*/){
+//     var tileList=this;
+// //     console.log(this.superclass)
+//   }
   
 });

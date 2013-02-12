@@ -155,9 +155,9 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
-	  allowMultipleSelection:true,
-		disabled: true,
+	  disabled: true,
 	  masked:true,
+      mode:'MULTI',
 	  defaultType: 'targetdevlistitem',//for display devices
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
@@ -168,7 +168,7 @@ Ext.define('webinosTV.view.BrowserView', {
       {
 	xtype:'container',
  	height:'100%',
-
+ 		  
 	flex:1.5,
 	layout:{
 	  type: 'vbox',
@@ -191,8 +191,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	},
       {//Container #4 - Actions
 	xtype: 'customsegbutton',
-	disabled: true,
-	  masked:true,
+	
  	width:'100%',
  	height:'100%',
 	padding:1,
@@ -201,8 +200,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	  type: 'vbox'
 	},
 	items:[
-	  {xtype:'tilepanel', iconCls : 'play', text:'Play Now'},
-	  {xtype:'tilepanel', iconCls : 'queue', text:'Add to Queue'}
+	  {xtype:'tilepanel',cls:'tile-panel', iconCls : 'play', text:'Play Now'},
+	  {xtype:'tilepanel',cls:'tile-panel', iconCls : 'queue', text:'Add to Queue'}
 	]
       }]
       }
@@ -215,12 +214,12 @@ Ext.define('webinosTV.view.BrowserView', {
 
     //TODO remove once layouts are ready
     function get_random_color() {
-	var letters = '0123456789ABCDEF'.split('');
-	var color = '#';
-	for (var i = 0; i < 6; i++ ) {
-	    color += letters[Math.round(Math.random() * 15)];
-	}
-	return color;
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+          color += letters[Math.round(Math.random() * 15)];
+      }
+      return color;
     }
 
     var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
@@ -255,6 +254,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	      },
 	      {
 		xtype:'tilepanel',
+        cls:'tile-panel',
 		flex:9,
 		text: ('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small()
 	      }
@@ -272,8 +272,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	break;
       default: //update
 	{
-    	  //WARNING: this is NOT the final stuff
-    	  mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
+      //WARNING: this is NOT the final stuff
+      mainContainer.getAt(0).getAt(1).setText(('Queue for '+deviceID+'<br>Here you\'ll see a single device queue...').fontcolor(get_random_color()).small());
 	  mainContainer.setCurrentSourceDeviceQueue(deviceID);
 	}
 	break;
