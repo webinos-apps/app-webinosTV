@@ -6,11 +6,13 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
 //   ],
   config:
   {
-    cls:'tile-panel',
-    padding:2,
-    margin: 2,
+    cls:'default-tile',
+//     cls:'tile-panel',
+//     padding:2,
+//     margin: 2,
     flex:1,
     iconCls:null,
+    textCls:null, //additional CSS for text
     text:null,
     index:-1,
     layout:{
@@ -43,11 +45,14 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
     {
       if(oldText===null) //set
       {
-	tile.insert(position,{
-	  xtype:'panel',
-	  cls:'tile-text',
-	  html:newText
-	});
+        var tcls = ['tile-text'];
+        if(tile.getTextCls())
+          tcls=tcls.concat(tile.getTextCls());
+        tile.insert(position,{
+          xtype:'panel',
+          cls:tcls,
+          html:newText
+        });
       }
       else //update
       {
@@ -64,14 +69,14 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
     {
       if(oldIconCls===null) //set
       {
-	tile.insert(0,{ //always first
-	  xtype:'panel',
-	  cls:'tile-icon-'+newCls
-	});
+        tile.insert(0,{ //always first
+          xtype:'panel',
+          cls:'tile-icon-'+newCls
+        });
       }
       else //update
       {
-	tile.getAt(0).setCls(newCls);
+        tile.getAt(0).setCls(newCls);
       }
     }
     return newCls;

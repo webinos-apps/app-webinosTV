@@ -8,8 +8,8 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     control:{
       sdevList:
       {
-	select:'sourceDeviceSelected', //event = select, cb = mediaCategorySelected
-  deselect:'sourceDeviceDeselected'
+        select:'sourceDeviceSelected', //event = select, cb = mediaCategorySelected
+        deselect:'sourceDeviceDeselected'
       }
     },
     refs: {
@@ -21,22 +21,28 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
 
   sourceDeviceSelected:function(sourceDeviceList, record, eOpts)
   {
-    var mcategory=this.getMcategory();    
-    console.log(mcategory.getDisabled());
+    var mcategory=this.getMcategory();
+//     console.log(mcategory.getDisabled());
     mcategory.setMasked(false);
     mcategory.setDisabled(false);
-     console.log(mcategory.getDisabled());
+    mcategory.setDisableSelection(false);
+//     console.log("mcategory.getDisabled()",mcategory.getDisabled());
     
   },
+  
   sourceDeviceDeselected:function(sourceDeviceList, record, eOpts)
   {
     var mcategory=this.getMcategory();
-    var sdevList=this.getSdevList();  
-    console.log(sdevList.getSelectionCount());   
-    if(sdevList.getSelectionCount()==0){
-    mcategory.setMasked(true);
-    mcategory.setDisabled(true);
-   }
-    
+    var sdevList=this.getSdevList();
+//     console.log("Count",sdevList.getSelectionCount());
+    if(sdevList.getSelectionCount()==0)
+    {
+      mcategory.deselectAll(false);
+      mcategory.setMasked(true);
+      mcategory.setDisabled(true);
+      mcategory.setDisableSelection(true);
+    }
+    console.log("mcategory.getDisabled()",mcategory.getDisabled(),"Sel cnt ",sdevList.getSelectionCount());
+
   }
 });

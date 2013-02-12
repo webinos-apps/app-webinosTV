@@ -12,21 +12,21 @@ Ext.define('webinosTV.view.TargetDeviceDataViewItem', {
       //TODO data handling here
       //associate a device type with an icon name
       var iconClasses={
-	'pc':'pc',
-	'tv':'tv',
-	'phone':'phone',
-	'tablet':'tablet',
-	'laptop':'laptop'
+        'pc':'pc',
+        'tv':'tv',
+        'phone':'phone',
+        'tablet':'tablet',
+        'laptop':'laptop'
       };
 
       var deviceInfo = this.getRecord().data; //a count of media queued and mediaType name + mediaType type
 
       var itemContainer=Ext.create('Ext.Container',{
-	layout:'hbox',
-	height:100,
-	items:[
-	  {xtype:'tilepanel', iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
-	]
+        layout:'hbox',
+        height:100,
+        items:[
+          {xtype:'tilepanel', iconCls : iconClasses[deviceInfo.type], text:deviceInfo.deviceName}
+        ]
       });
       return itemContainer;
     },
@@ -34,11 +34,11 @@ Ext.define('webinosTV.view.TargetDeviceDataViewItem', {
     updateDeviceLabel:function(newLabel,oldLabel)
     {
       if (oldLabel) {
-	this.remove(oldLabel);
+        this.remove(oldLabel);
       }
 
       if (newLabel) {
-	this.add(newLabel);
+        this.add(newLabel);
       }
     },
 

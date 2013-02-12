@@ -17,16 +17,22 @@ Ext.define('webinosTV.controller.SelectMediaController', {
       mcategory: '#mediaCategoryList'
     }
   },
+  
   mediaCategoryDeselected:function(mediaCategoryList, record, eOpts){
     var mplist=this.getMplist();
     mplist.setItems({
       xtype:'tilepanel',
+      cls:['tile-panel'],
       text: 'please select a media type...'
     });
+    mplist.setMasked(true);
   },
+
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
   {
     var mplist=this.getMplist();
+//     var mcategoryList=this.getMcategory();
+//     console.log("mediaCategorySelected",mcategoryList.getSelectionCount(),record)
 //      console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
     var mediaCategory=record.get('category');
     switch(mediaCategory)
@@ -56,5 +62,6 @@ Ext.define('webinosTV.controller.SelectMediaController', {
 	mplist.showDocuments();
 	break;
     }
+    mplist.setMasked(false);
   }
 });

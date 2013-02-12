@@ -24,7 +24,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
 	layout:'hbox',
 	height:100,
 	items:[
-	  {xtype:'tilepanel', iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
+	  {xtype:'tilepanel',iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
 	]
       });
       return itemContainer;
