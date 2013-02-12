@@ -2,55 +2,66 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     extend: 'Ext.dataview.component.DataItem',
     requires: ['Ext.Container','Ext.Panel'],
     xtype: 'sourcedevlistitem',
+    
     config:{
-      deviceLabel:true,
-      selected:false
+      deviceLabel:{
+        xtype:'container',
+        layout:'hbox',
+        height:100,
+        items:[
+          {//counter
+            xtype:'tilepanel', 
+            iconCls : '', 
+            text:'',
+            flex:1,
+            layout:{
+              type:'hbox',
+              align:'center',
+              pack:'start'
+            },
+            listeners:{
+              tap:{
+                element:'element',
+//                 scope:this,
+                fn:function(){
+                  console.log("onTap",this.getParent())
+                  this.getParent().getParent().showDeviceQueue();
+                }
+              }
+            }
+          },
+          {//device
+            xtype:'tilepanel', 
+            iconCls : '', 
+            text:'',
+            flex:1.5
+          }
+        ]}
     },
 
     applyDeviceLabel:function(config)
     {
-      //TODO data handling here
-      var iconClasses={
-        'pc':'pc',
-        'tv':'tv',
-        'phone':'phone',
-        'tablet':'tablet',
-        'laptop':'laptop'
-      };
+      return Ext.factory(config,webinosTV.view.DefaultTilePanel,this.getDeviceLabel())
+    },
+    
+    updateRecord:function(newRecord)
+    {
+      var dataItem = this;
+      if (!newRecord) {
+        return;
+      }
       
-      var deviceInfo = this.getRecord().data; //a count of media queued and device name + device type
-      
-      var itemContainer=Ext.create('Ext.Container',{
-	layout:'hbox',
-	height:100,
-	items:[
-	  {
-	    xtype:'tilepanel',
-	    flex:1,
-	    layout:{
-	      type:'hbox',
-	      align:'center',
-	      pack:'start'
-	    },
-	    iconCls: deviceInfo.counter ? 'list' : null,
-	    text:deviceInfo.counter ? deviceInfo.counter : null,
-	    listeners:{
-	      tap:{
-            element:'element',
-            scope:this,
-            fn:function(){this.showDeviceQueue();}
-	      }
-	    }
-	  },
-	  {
-	    xtype:'tilepanel',
-	    flex:1.5,
-	    iconCls : iconClasses[deviceInfo.type],
-	    text:deviceInfo.deviceName
-	  }
-	]
-      });
-      return itemContainer;
+      dataItem._record = newRecord;
+
+      //counter
+      var counterIconCls=newRecord.get('counter') ? 'list' : null;
+      var counterText=newRecord.get('counter') ? newRecord.get('counter') : null
+      dataItem.getDeviceLabel().getAt(0).setIconCls(counterIconCls);
+      dataItem.getDeviceLabel().getAt(0).setText(counterText);
+
+      //device
+      dataItem.getDeviceLabel().getAt(1).setIconCls(newRecord.get('type'));
+      dataItem.getDeviceLabel().getAt(1).setText(newRecord.get('deviceName'));
     },
 
     updateDeviceLabel:function(newLabel,oldLabel)
@@ -63,32 +74,11 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
         this.add(newLabel);
       }
     },
-
-    select:function(){
-      //getAt(1) returns this component container
-      var deviceItem=this.getAt(1);
-
-      deviceItem.getAt(0).select();
-      deviceItem.getAt(1).select();
-      this.setSelected(true);
-    },
-
-    unselect:function(){
-      //getAt(1) returns this component container
-      var deviceItem=this.getAt(1);
-      
-      deviceItem.getAt(0).unselect();
-      deviceItem.getAt(1).unselect();
-      this.setSelected(false);
-    },
-
+    
     showDeviceQueue:function(){
       var deviceInfo=this.getRecord().data;
-//       if(deviceInfo.counter)
-//       {
       var browserMainView = Ext.getCmp('browserMainView');
       var deviceID= deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
       browserMainView.showSourceDeviceQueue(deviceID);
-//       }
     }
 });
