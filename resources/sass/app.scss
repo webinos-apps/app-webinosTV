@@ -185,8 +185,12 @@ $list-pressed-color:$hl-color;
   -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
 }
 
+.tile-icon-tvchannels{
+  -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
+}
+
 .tile-icon-phone{
-  -webkit-mask: 0 0 inline-image('smartphone.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/phone.svg') no-repeat;
 }
 
 .tile-icon-tablet{

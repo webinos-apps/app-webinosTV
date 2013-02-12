@@ -8,9 +8,9 @@ Ext.define('webinosTV.view.TilesDataView',{
   xtype: 'tileslist',
   config:{
     useComponents:true,
-    allowMultipleSelection:false,
+//     allowMultipleSelection:false, //See Mode
     height:'100%',
-    indexSelected:-1,
+//     indexSelected:-1, //useless
 //     defaultType: 'devicelistitem',
     loadingText: 'Loading list...',
     emptyText: '<div>'+('No items found!').fontcolor('cyan')+'</div>',
@@ -22,8 +22,9 @@ Ext.define('webinosTV.view.TilesDataView',{
     allowDeselect: true,
     itemCls:'tile-panel',
     selectedCls:'tile-panel-selected',
-    pressedCls:'tile-panel-pressed'/*,
-    listeners:{
+    pressedDelay:300,
+    pressedCls:'tile-panel-pressed',
+/*    listeners:{
       itemsingletap:{
         fn:this.onItemSingleTap,
         scope: this

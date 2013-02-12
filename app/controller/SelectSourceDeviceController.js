@@ -42,7 +42,5 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
       mcategory.setDisabled(true);
       mcategory.setDisableSelection(true);
     }
-    console.log("mcategory.getDisabled()",mcategory.getDisabled(),"Sel cnt ",sdevList.getSelectionCount());
-
   }
 });
