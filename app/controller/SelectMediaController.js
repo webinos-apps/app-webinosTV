@@ -8,8 +8,8 @@ Ext.define('webinosTV.controller.SelectMediaController', {
     control:{
       mcategory:
       {
-        select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
-        deselect:'mediaCategoryDeselected'
+	select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
+  deselect:'mediaCategoryDeselected'
       }
     },
     refs: {

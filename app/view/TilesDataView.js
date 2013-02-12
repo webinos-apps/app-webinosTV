@@ -8,7 +8,10 @@ Ext.define('webinosTV.view.TilesDataView',{
   xtype: 'tileslist',
   config:{
     useComponents:true,
+    allowMultipleSelection:false,
     height:'100%',
+    indexSelected:-1,
+//     defaultType: 'devicelistitem',
     loadingText: 'Loading list...',
     emptyText: '<div>'+('No items found!').fontcolor('cyan')+'</div>',
     scrollable:{
