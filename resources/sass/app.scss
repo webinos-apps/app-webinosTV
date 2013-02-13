@@ -62,6 +62,19 @@ $list-pressed-color:$hl-color;
   background-color: lighten($base-color,10%);
 }
 
+div.nav-selected, div.x-container .x-unsized .x-dataview{
+  border: 3px solid $csel-color;
+}
+
+
+
+/*.nav-selected{
+  .x-container .x-unsized .x-dataview{
+    border: 3px solid $csel-color;
+  }
+}*/
+
+
 @include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
 
 .tile-btn{
@@ -117,7 +130,9 @@ $list-pressed-color:$hl-color;
   text-align:center;
   font-size:0.7em;
   color:$fg-color;
-  border: 2px solid darken($bg-color,10%);;
+  border: 2px solid transparent;
+  margin: 3px;
+/*   padding:1px; */
 }
 
 

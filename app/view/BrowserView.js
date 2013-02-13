@@ -39,7 +39,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	    },
 	    items:[
 	     { xtype: 'panel', html: 'Queue', padding:2, margin: 2, flex:1,style:'text-align:center;'}, //#0a
-          { xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5,style:'text-align:center;'}//#0b
+        { xtype: 'panel', html: 'Source Device',padding:2, margin: 2,flex:1.5,style:'text-align:center;'}//#0b
 	    ]
 	  },
 	  {//Container #0 (#0a and #0b)
@@ -127,8 +127,8 @@ Ext.define('webinosTV.view.BrowserView', {
 	  cls:'phone-listview-indicator', //additional css class to highlight scrollbar
 	  width:'100%',
 	  height:'100%',
-	  disabled: true,
-	  masked:true,
+	  disabled:true,
+	  masked:true
 	}]
       },
       {
@@ -157,7 +157,7 @@ Ext.define('webinosTV.view.BrowserView', {
 	{ //Container #3 - Display devices
 	  xtype:'tileslist',
       id:'targetDevicesList',
-	  disabled: true,
+	  disabled:true,
 	  masked:true,
       mode:'MULTI',
 	  defaultType: 'targetdevlistitem',//for display devices
