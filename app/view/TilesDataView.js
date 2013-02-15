@@ -24,6 +24,16 @@ Ext.define('webinosTV.view.TilesDataView',{
     selectedCls:'tile-panel-selected',
     pressedDelay:300,
     pressedCls:'tile-panel-pressed',
+    listeners:{
+      itemdoubletap:{
+        fn:function(tileList, index, listItem, record, e, eOpts){
+          if(tileList.getMode()==='MULTI'){
+//             tileList.deselectAll();
+            tileList.select(index);
+          }
+        }
+      }
+    }
 /*    listeners:{
       itemsingletap:{
         fn:this.onItemSingleTap,
