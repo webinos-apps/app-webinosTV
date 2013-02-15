@@ -44,6 +44,9 @@
             "update": "delta"
         },
         {
+            "path": "integration/events.js"
+        },
+        {
             "path": "integration/ui.js"
         }
     ],
