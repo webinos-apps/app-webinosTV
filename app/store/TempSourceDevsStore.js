@@ -10,7 +10,7 @@ Ext.define('webinosTV.store.TempSourceDevsStore', {
     model:'webinosTV.model.Device',
     proxy: {
       type: 'ajax',
-      url : '/storage/srcdev.json',
+      url : './storage/srcdev.json',
       reader: {
 	type: 'json',
 	rootProperty: 'sourceDevs'
