@@ -15,6 +15,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     [
       {
 	xtype:'tilepanel',
+    cls:'tile-panel',
 	text: 'please select a media type...'
       }
     ]
@@ -38,12 +39,12 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	[
 	  {
 	    xtype:'img',
-	    src: 'http://beatlesalbumcovers.net/wp-content/uploads/the-beatles-abbey-road-album-cover-256x256.jpg',
-	    height:'90%',
-	    width: '90%',
+	    src: './resources/images/cover.png',
+	    height:'70%',
+	    width: '70%',
 	    padding:1,
 	    margin:1,
-	    flex:1,
+	    flex:2,
 	    zIndex:1000
 	  },
 	  {
@@ -52,7 +53,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	    items:[{
 	      xtype:'panel',
 	      cls:'sliding-text',
-	      html:'Beatles - Abbey Road'
+	      html:'Artist - Album'
 // 	      html:'extremely long text may appear here and should never flow oustide its parent container'
 	    }],
 	    flex:3
@@ -102,9 +103,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Videos').fontcolor('cyan').big()
     }]);
-    mediaPL.getAt(0).getAt(0).addCls('not-implemented-yet');
   },
 
   showImages:function(){
@@ -112,9 +114,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Images').fontcolor('lime').big()
     }]);
-    mediaPL.getAt(0).getAt(0).addCls('not-implemented-yet');
   },
 
   showTV:function(){
@@ -122,9 +125,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('DVB-T').fontcolor('orange').big()
     }]);
-    mediaPL.getAt(0).getAt(0).addCls('not-implemented-yet');
   },
 
   showApps:function(){
@@ -132,9 +136,10 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('webinos Apps').fontcolor('magenta').big()
     }]);
-    mediaPL.getAt(0).getAt(0).addCls('not-implemented-yet');
   },
 
   showDocuments:function(){
@@ -142,8 +147,9 @@ Ext.define('webinosTV.view.MediaPlaylist', {
     mediaPL.setItems([
       {
 	xtype:'tilepanel',
+    cls:['tile-panel'],
+    textCls:'not-implemented-yet',
 	text: ('Documents').fontcolor('red').big()
     }]);
-    mediaPL.getAt(0).getAt(0).addCls('not-implemented-yet');
   }
 });
