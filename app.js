@@ -16,13 +16,13 @@ Ext.application({
       autoMaximize: false
     },
 
-    views: ['PanelsGrid','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
+    views: ['BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
 
     models:['Device','Media'],
 
     stores:['TempMusicStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
-    controllers:['SelectMediaController'],
+    controllers:['PlayModeController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
 
     profiles:['Phone','LargeScreen'],
     
@@ -47,10 +47,19 @@ Ext.application({
     launch: function() {
       // Destroy the #appLoadingIndicator element
       Ext.fly('appLoadingIndicator').destroy();
-
+      //connect interface with ui
+      webinosTV.app.connectUi=run_ui_connect();
+      webinosTV.app.connectEvents=run_events_connect();
       // Initialize the stores
       var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
+
     },
+    
+    //connect interface with ui.js
+    connectUi:null,
+    
+    //connect interface with events.js
+    connectEvents:null,
 
     onUpdated: function() {
         Ext.Msg.confirm(

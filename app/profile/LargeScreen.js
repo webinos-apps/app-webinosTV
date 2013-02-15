@@ -4,7 +4,7 @@ Ext.define('webinosTV.profile.LargeScreen', {
     config: {
         name: 'largescreen',
 	namespace : 'largescreen',
-        views: ['PanelsGrid']
+        views: ['BrowserView']
     },
 
     isActive: function() {
@@ -13,6 +13,6 @@ Ext.define('webinosTV.profile.LargeScreen', {
 
     launch: function() {
       // Initialize the main view
-      Ext.Viewport.add(Ext.create('webinosTV.view.largescreen.PanelsGrid'));
+      Ext.Viewport.add(Ext.create('webinosTV.view.largescreen.BrowserView'));
     }
 });
