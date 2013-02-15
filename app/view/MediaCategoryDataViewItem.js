@@ -14,7 +14,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
 	'movies':'videos',
 	'music':'music',
 	'images':'images',
-	'channels':'tv',//TODO find a suitable icon
+	'channels':'tvchannels',//TODO find a suitable icon
 	'apps':'webinos',//TODO find a suitable icon
 	'docs':'docs'
       };
@@ -24,7 +24,7 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
 	layout:'hbox',
 	height:100,
 	items:[
-	  {xtype:'tilepanel', iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
+	  {xtype:'tilepanel',iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
 	]
       });
       return itemContainer;

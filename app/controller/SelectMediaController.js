@@ -3,51 +3,31 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   xtype: 'selmediactrl',
 //   requires:[''],
 
-  //TODO this controller should change shape depending on the selected media category
+  //TODO actions depending on media type - right now it's just masking/unmasking
   config: {
     control:{
       mcategory:
       {
-	select:'mediaCategorySelected' //event = select, cb = mediaCategorySelected
+        select:'mediaPLSelected', //event = select, cb = mediaCategorySelected
+        deselect:'mediaPLDeselected'
       }
     },
     refs: {
-      mplist: '#selectMedia',
-      mcategory: '#mediaCategoryList'
+      mplist: '#mediaPlaylist', //controlling
+      targetDeVList: '#targetDevicesList' //controlled
     }
   },
+  
+  mediaPLDeselected:function(mediaPlaylist, record, eOpts){
+    var targetDeVList=this.getTargetDeVList();
+    targetDeVList.setMasked(true);
+    targetDeVList.setDisabled(false);
+  },
 
-  mediaCategorySelected:function(mediaCategoryList, record, eOpts)
+  mediaPLSelected:function(mediaPlaylist, record, eOpts)
   {
-    var mplist=this.getMplist();
-//      console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
-    var mediaCategory=record.get('category');
-    switch(mediaCategory)
-    {
-      case 'movies':
-// 	console.log("selected movies");
-	mplist.showVideos();
-	break;
-      case 'music':
-// 	console.log("selected mp3");
-	mplist.showMusic();
-	break;
-      case 'images':
-// 	console.log("selected pictures");
-	mplist.showImages();
-	break;
-      case 'channels':
-// 	console.log("selected TV");
-	mplist.showTV();
-	break;
-      case 'apps':
-// 	console.log("selected Apps");
-	mplist.showApps();
-	break;
-      case 'docs':
-// 	console.log("selected Documents");
-	mplist.showDocuments();
-	break;
-    }
+    var targetDeVList=this.getTargetDeVList();
+    targetDeVList.setMasked(false);
+    targetDeVList.setDisabled(true);
   }
 });

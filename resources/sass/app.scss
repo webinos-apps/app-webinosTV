@@ -62,6 +62,19 @@ $list-pressed-color:$hl-color;
   background-color: lighten($base-color,10%);
 }
 
+div.nav-selected, div.x-container .x-unsized .x-dataview{
+  border: 3px solid $csel-color;
+}
+
+
+
+/*.nav-selected{
+  .x-container .x-unsized .x-dataview{
+    border: 3px solid $csel-color;
+  }
+}*/
+
+
 @include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
 
 .tile-btn{
@@ -117,6 +130,9 @@ $list-pressed-color:$hl-color;
   text-align:center;
   font-size:0.7em;
   color:$fg-color;
+  border: 2px solid transparent;
+  margin: 3px;
+/*   padding:1px; */
 }
 
 
@@ -157,11 +173,11 @@ $list-pressed-color:$hl-color;
 }
 
 .tile-icon-play{
-  -webkit-mask: 0 0 inline-image('play2.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/play_on.svg') no-repeat;
 }
 
 .tile-icon-queue{
-  -webkit-mask: 0 0 inline-image('add_black.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/add_queue.svg') no-repeat;
   -webkit-mask-size: 20px;
   width:20px;
   height:20px;
@@ -176,44 +192,48 @@ $list-pressed-color:$hl-color;
 }
 
 .tile-icon-pc{
-  -webkit-mask: 0 0 inline-image('pc.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/pc.svg') no-repeat;
 }
 
 .tile-icon-list{
   margin: auto 0.5em auto 1.5em;
-  -webkit-mask: 0 0 inline-image('list.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
+}
+
+.tile-icon-tvchannels{
+  -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
 }
 
 .tile-icon-phone{
-  -webkit-mask: 0 0 inline-image('smartphone.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/phone.svg') no-repeat;
 }
 
 .tile-icon-tablet{
-  -webkit-mask: 0 0 inline-image('tablet.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/tablet.svg') no-repeat;
 }
 
 .tile-icon-tv{
-  -webkit-mask: 0 0 inline-image('tv.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/tv.svg') no-repeat;
 }
 
 .tile-icon-laptop{
-  -webkit-mask: 0 0 inline-image('laptop.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/laptop.svg') no-repeat;
 }
 
 .tile-icon-music{
-  -webkit-mask: 0 0 inline-image('music.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/music.svg') no-repeat;
 }
 
 .tile-icon-videos{
-  -webkit-mask: 0 0 inline-image('video.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/movie.svg') no-repeat;
 }
 
 .tile-icon-images{
-  -webkit-mask: 0 0 inline-image('pictures.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/image.svg') no-repeat;
 }
 
 .tile-icon-docs{
-  -webkit-mask: 0 0 inline-image('documents.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/folder.svg') no-repeat;
 }
 
 //Sliding text

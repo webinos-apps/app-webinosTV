@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <title>webinosTV</title>
     <style type="text/css">
+        @font-face { font-family: texgyreadventor; font-weight: bold; src: url('resources/fonts/texgyreadventor-bold.otf'); } 
+        @font-face { font-family: texgyreadventor; src: url('resources/fonts/texgyreadventor-regular.otf'); }
+        @font-face { font-family: texgyreadventor; font-style: italic; src: url('resources/fonts/texgyreadventor-italic.otf'); }
+
+        .caption, .caption2 {
+            font-family: texgyreadventor;
+            font-size: 3em;
+            color: white;
+            text-shadow: 0 0 10px black;
+        }
+        .caption2{
+            font-weight: bold;
+            font-style: italic;
+            font-size: 4em;
+        }
+        .centering{
+            margin-left: auto ;
+            margin-right: auto ;
+            width: 100%;
+            text-align: center;
+        }
          /**
          * Example of an initial loading indicator.
          * It is recommended to keep this as minimal as possible to provide instant feedback
@@ -53,7 +74,10 @@
     <script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
 </head>
 <body>
+
     <div id="appLoadingIndicator">
+        <div class="centering"><span class="caption">webinos</span><span class="caption2">TV</span></div>
+
         <div></div>
         <div></div>
         <div></div>
