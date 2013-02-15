@@ -1,10 +1,13 @@
-var run_events_connect = function(){
+// var run_events_connect = 
+function run_events_connect(){
 
 if(typeof webinosTV==="undefined"){
 	console.log("error: UI not ready.");
 }
 
-webinosTV.uievents = (function(){
+/*webinosTV.uievents =*/ 
+//TODO may be making this code more readable?
+return (function(){
 
 	var _callbackRegistry = {};
 
