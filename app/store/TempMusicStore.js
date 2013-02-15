@@ -9,7 +9,7 @@ Ext.define('webinosTV.store.TempMusicStore', {
     model: 'webinosTV.model.Media',
     proxy: {
       type: 'ajax',
-      url : '/storage/music.json',
+      url : './storage/music.json',
       reader: {
 	type: 'json',
 	rootProperty: 'playlist'
