@@ -1,22 +1,86 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Zap and Shake</title>
-    <link rel="stylesheet" href="main.css" type="text/css" />
-  </head>
-  <body>
-	<img class="startup_logo" alt="webinos logo" src="tv/img/med-icon.png">
-	<div class="startup_log">loading <i>Zap and Shake</i> ...</div>
-	<br/>
-	<div id="tvconfig">
-		tv owner name: <input type="text" id="username">
-		<br/>
-		tv location: <input type="text" id="tvlocation">
-		<br />
-		<input type="button" id="go" value="start tv app">
-	</div>
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>webinosTV</title>
+    <style type="text/css">
+        @font-face { font-family: texgyreadventor; font-weight: bold; src: url('resources/fonts/texgyreadventor-bold.otf'); } 
+        @font-face { font-family: texgyreadventor; src: url('resources/fonts/texgyreadventor-regular.otf'); }
+        @font-face { font-family: texgyreadventor; font-style: italic; src: url('resources/fonts/texgyreadventor-italic.otf'); }
 
-	<script type="text/javascript" src="switch.js"></script>
-  </body>
+        .caption, .caption2 {
+            font-family: texgyreadventor;
+            font-size: 3em;
+            color: white;
+            text-shadow: 0 0 10px black;
+        }
+        .caption2{
+            font-weight: bold;
+            font-style: italic;
+            font-size: 4em;
+        }
+        .centering{
+            margin-left: auto ;
+            margin-right: auto ;
+            width: 100%;
+            text-align: center;
+        }
+         /**
+         * Example of an initial loading indicator.
+         * It is recommended to keep this as minimal as possible to provide instant feedback
+         * while other resources are still being loaded for the first time
+         */
+        html, body {
+            height: 100%;
+            background-color: #666
+        }
+
+        #appLoadingIndicator {
+            position: absolute;
+            top: 50%;
+            margin-top: -15px;
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            -webkit-animation-name: appLoadingIndicator;
+            -webkit-animation-duration: 0.5s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: linear;
+        }
+
+        #appLoadingIndicator > * {
+            background-color: #FFFFFF;
+            display: inline-block;
+            height: 30px;
+            -webkit-border-radius: 15px;
+            margin: 0 5px;
+            width: 30px;
+            opacity: 0.8;
+        }
+
+        @-webkit-keyframes appLoadingIndicator{
+            0% {
+                opacity: 0.8
+            }
+            50% {
+                opacity: 0
+            }
+            100% {
+                opacity: 0.8
+            }
+        }
+    </style>
+    <!-- The line below must be kept intact for Sencha Command to build your application -->
+    <script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
+</head>
+<body>
+
+    <div id="appLoadingIndicator">
+        <div class="centering"><span class="caption">webinos</span><span class="caption2">TV</span></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
 </html>

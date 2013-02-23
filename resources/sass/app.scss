@@ -1,0 +1,283 @@
+$base-color:#666;
+
+@import 'sencha-touch/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+@include sencha-panel;
+@include sencha-buttons;
+@include sencha-sheet;
+@include sencha-picker;
+@include sencha-tabs;
+@include sencha-toolbar;
+@include sencha-toolbar-forms;
+@include sencha-indexbar;
+@include sencha-list;
+@include sencha-layout;
+@include sencha-carousel;
+@include sencha-form;
+@include sencha-msgbox;
+
+// Your custom code goes here...
+@include pictos-iconmask('video');
+@include pictos-iconmask('music1');
+@include pictos-iconmask('photos2');
+@include pictos-iconmask('doc2');
+
+@include pictos-iconmask('tv');
+@include pictos-iconmask('phone2');
+@include pictos-iconmask('monitor1');
+
+@include pictos-iconmask('play2');
+@include pictos-iconmask('add_black');
+@include pictos-iconmask('list');
+
+@include pictos-iconmask('tv');
+@include pictos-iconmask('hot');
+@include pictos-iconmask('lab');
+@include pictos-iconmask('infinite');
+
+
+$bg-color: #333;//#337; //background color
+$fg-color:#ddd; //foreground color
+$sel-color:#006bb6; //selected items color
+$csel-color:complement($sel-color); //complementary of selected items color
+$hl-color:lighten($sel-color, 15%); //highlight or pressed color
+
+//List variables
+$list-zebrastripe:true;
+$list-bg-color:$bg-color;
+$list-color:$fg-color;
+$list-active-color:$sel-color;
+$list-pressed-color:$hl-color;
+
+
+@include sencha-list();
+
+.main-container{
+  background-color: darken($base-color,50%);
+}
+
+.title-container{
+  background-color: lighten($base-color,10%);
+}
+
+div.nav-selected, div.x-container .x-unsized .x-dataview{
+  border: 3px solid $csel-color;
+}
+
+
+
+/*.nav-selected{
+  .x-container .x-unsized .x-dataview{
+    border: 3px solid $csel-color;
+  }
+}*/
+
+
+@include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
+
+.tile-btn{
+  font-size:0.7em;
+  color:$fg-color;
+}
+
+//csc = complementary of selection color
+@include sencha-carousel-indicator-ui('csc-indicator',$csel-color,'glossy',lighten($csel-color,30%),'glossy');
+
+//Scroll indicator for the phone UI
+.phone-listview-indicator{
+  .x-scroll-indicator{
+    background-color:$csel-color;
+  }
+}
+
+//Playlist unselected item container
+.playlist{
+  max-width:100%;
+}
+
+.playlist div{
+  max-width:100%;
+}
+
+.playlist-container,.playlist-container-0,.playlist-container-1,.playlist-container-pressed,.playlist-container-selected{
+  text-align:left;
+  font-size:0.7em;
+  margin: 0.25em;
+  color:$fg-color;
+  white-space:nowrap;
+}
+
+.playlist-container-0{
+  background-color:darken($bg-color,10%);
+}
+
+.playlist-container-1{
+  background-color:$bg-color;
+}
+
+.playlist-container-pressed{
+  background-color:$hl-color;
+}
+
+.playlist-container-selected{
+  @include background-gradient($sel-color);
+}
+
+//Basic Tile class, much like abstract class
+.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{
+  text-align:center;
+  font-size:0.7em;
+  color:$fg-color;
+  border: 2px solid transparent;
+  margin: 3px;
+/*   padding:1px; */
+}
+
+
+//Tile unselected
+.tile-panel{
+  background-color:$bg-color;
+}
+
+//Tile selected
+.tile-panel-selected{
+  @include background-gradient($sel-color);
+}
+
+//Tile pressed
+.tile-panel-pressed{
+  background-color:$hl-color;
+}
+
+//Tile text
+.tile-text{
+/*   display:block; */
+  overflow-x:hidden;
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+//Tile icons
+.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs
+{
+  display:block;
+  margin: auto 1.5em auto 1.5em;
+  -webkit-mask-size: 32px;
+  background-image: none;
+  background-color:$fg-color;
+  width:32px;
+  height:32px;
+  padding:0.5em;
+  -webkit-transform: translateZ(0);
+}
+
+.tile-icon-play{
+  -webkit-mask: 0 0 inline-image('svg/play_on.svg') no-repeat;
+}
+
+.tile-icon-queue{
+  -webkit-mask: 0 0 inline-image('svg/add_queue.svg') no-repeat;
+  -webkit-mask-size: 20px;
+  width:20px;
+  height:20px;
+}
+
+.tile-icon-favorites{
+  -webkit-mask: 0 0 inline-image('favorites.png') no-repeat;
+}
+
+.tile-icon-webinos{
+  -webkit-mask: 0 0 inline-image('webinos_logo.png') no-repeat;
+}
+
+.tile-icon-pc{
+  -webkit-mask: 0 0 inline-image('svg/pc.svg') no-repeat;
+}
+
+.tile-icon-list{
+  margin: auto 0.5em auto 1.5em;
+  -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
+}
+
+.tile-icon-tvchannels{
+  -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
+}
+
+.tile-icon-phone{
+  -webkit-mask: 0 0 inline-image('svg/phone.svg') no-repeat;
+}
+
+.tile-icon-tablet{
+  -webkit-mask: 0 0 inline-image('svg/tablet.svg') no-repeat;
+}
+
+.tile-icon-tv{
+  -webkit-mask: 0 0 inline-image('svg/tv.svg') no-repeat;
+}
+
+.tile-icon-laptop{
+  -webkit-mask: 0 0 inline-image('svg/laptop.svg') no-repeat;
+}
+
+.tile-icon-music{
+  -webkit-mask: 0 0 inline-image('svg/music.svg') no-repeat;
+}
+
+.tile-icon-videos{
+  -webkit-mask: 0 0 inline-image('svg/movie.svg') no-repeat;
+}
+
+.tile-icon-images{
+  -webkit-mask: 0 0 inline-image('svg/image.svg') no-repeat;
+}
+
+.tile-icon-docs{
+  -webkit-mask: 0 0 inline-image('svg/folder.svg') no-repeat;
+}
+
+//Sliding text
+.sliding-text{
+  text-overflow:clip;
+  white-space:nowrap;
+  -webkit-animation-name: slider;
+  -webkit-animation-duration: 20s;
+  -webkit-animation-delay: -10s; //important! makes the text start from 0
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes slider{
+  0%{
+    -webkit-transform: translateX(100%);
+  }
+
+  50%{
+    -webkit-transform: translateX(0%);
+  }
+
+  100%{
+    -webkit-transform: translateX(-150%);
+  }
+}
+
+//For labels of not yet implemented features
+.not-implemented-yet {
+  -webkit-animation-name: rotateAndScale;
+  -webkit-animation-duration:5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function:ease-in-out;
+}
+@-webkit-keyframes rotateAndScale {
+  0% {
+    -webkit-transform:scale(1.0) rotate(0deg);
+  }
+  
+  60% {
+    -webkit-transform:scale(2.5) rotate(0deg);
+  }
+  
+  100% {
+    -webkit-transform:scale(1.0) rotate(360deg);
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "playlist":
+  [
+    { "title": "Top Song","artist":"Artist", "album":"Album" },
+    { "title": "Almost as Good" ,"artist":"Artist", "album":"Album"},
+    { "title": "A very long title for a song, don't you think so? I'm sure you agree..." ,"artist":"The Unknown", "album":"No title"},
+    { "title": "Another Great Song" ,"artist":"Artist", "album":"Album"},
+    { "title": "Love Song","artist":"Artist", "album":"Album" },
+    { "title": "Octopus\'s Garden" ,"artist":"Artist", "album":"Album"},
+    { "title": "Play It Now" ,"artist":"Artist", "album":"Album"},
+    { "title": "Sweet Dreams" ,"artist":"Artist", "album":"Album"},
+    { "title": "Home","artist":"Artist", "album":"Album" },
+    { "title": "Startup Theme" ,"artist":"Artist", "album":"Album"},
+    { "title": "webinos Anthem","artist":"Artist", "album":"Album" },
+    { "title": "Do The Media Share Dance","artist":"Artist", "album":"Album" },
+    { "title": "The Very Last Song","artist":"Artist", "album":"Album" }
+  ]
+}

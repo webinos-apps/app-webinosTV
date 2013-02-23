@@ -1,0 +1,11 @@
+{
+  "sourceDevs": [
+    {"id":"12", "type": "pc",  "counter": 100,"deviceName":"My PC"},
+    {"id":"13", "type": "tv",   "counter": 2,"deviceName":"Living Room TV"},
+    {"id":"14", "type": "phone", "counter": 0,"deviceName":"My Phone"},
+    {"id":"15", "type": "tablet", "counter": 24,"deviceName":"Ralph\'s tablet"},
+    {"id":"16", "type": "laptop", "counter": 24,"deviceName":"Mike\'s laptop"},
+    {"id":"17", "type": "tablet", "counter": 4,"deviceName":"My Tablet"},
+    {"id":"18", "type": "tv",   "counter": 6,"deviceName":"Kitchen TV"}
+  ]
+}
