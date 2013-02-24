@@ -1,0 +1,9 @@
+{
+  "playlist":
+  [
+    { "title": "Big Buck Bunny","artist":"Sacha Goedegebure", "album":"Blender Production", "file":"bbb.webm" },
+    { "title": "Gizmo Roboter","artist":"808.dk", "album":"U. D. Hansen", "file":"gizmo.mp4" },
+    { "title": "webinos 101 (HQ)","artist":"webinos project", "album":"webinos demo series", "file":"webinos_sub.mp4" },
+    { "title": "webinos 101","artist":"webinos project", "album":"webinos demo series", "file":"webinos.webm" }
+  ]
+}
