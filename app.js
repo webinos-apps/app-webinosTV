@@ -18,9 +18,9 @@ Ext.application({
 
     views: ['BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
 
-    models:['Device','Media'],
+    models:['Device','Media','VideoMedia'],
 
-    stores:['TempMusicStore','TempSourceDevsStore','TempDisplayDevsStore'],
+    stores:['TempMusicStore','TempVideoStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
     controllers:['PlayModeController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
 

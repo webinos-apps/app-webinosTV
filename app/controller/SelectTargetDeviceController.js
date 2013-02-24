@@ -15,9 +15,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     refs: {
 //       mplist: '#selectMedia',
       mcategory: '#mediaCategoryList',
-      sdevList: '#sourceDeviceList',
-      mtargetdevs: '#targetDevicesList',
-      mactions: '#playQueueSegmBtn'
+      sdevList: '#sourceDeviceList'
     }
   },
 
@@ -36,8 +34,6 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   {
     var mcategory=this.getMcategory();
     var sdevList=this.getSdevList();
-    var mtargetdevs=this.getMtargetdevs();
-    var mactions=this.getMactions();
 //     console.log("Count",sdevList.getSelectionCount());
     if(sdevList.getSelectionCount()==0)
     {
@@ -45,11 +41,6 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
       mcategory.setMasked(true);
       mcategory.setDisabled(true);
       mcategory.setDisableSelection(true);
-
-      mtargetdevs.setMasked(true);
-      mtargetdevs.setDisabled(false);
-      mactions.setMasked(true);
-      mactions.setDisabled(false);
     }
   }
 });
