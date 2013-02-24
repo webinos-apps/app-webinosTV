@@ -17,9 +17,9 @@ Ext.define('webinosTV.store.TempDisplayDevsStore', {
       }
     },
     listeners: {
-      load: function(store, records, successful, operation, eOpts){
+      addrecords: function( store, records, eOpts ){
         //auto loading store will unset mask, this is what we dont want
-        Ext.getCmp('targetDevicesList').container.setMasked(true);
+        Ext.getCmp('targetDevicesList').container.dataview.mask();
       }
     },
     refs: {

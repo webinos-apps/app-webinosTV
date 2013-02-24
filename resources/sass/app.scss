@@ -59,7 +59,8 @@ $list-pressed-color:$hl-color;
 }
 
 .title-container{
-  background-color: lighten($base-color,10%);
+  background-color: #000;
+  font-size: 80%;white-space: nowrap;overflow: hidden;
 }
 
 div.nav-selected, div.x-container .x-unsized .x-dataview{
