@@ -22,7 +22,7 @@ Ext.application({
 
     stores:['TempMusicStore','TempVideoStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
-    controllers:['PlayModeController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
+    controllers:['SelectTargetDeviceController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
 
     profiles:['Phone','LargeScreen'],
     

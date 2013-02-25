@@ -1,46 +1,53 @@
-Ext.define('webinosTV.controller.SelectSourceDeviceController', {
+Ext.define('webinosTV.controller.SelectTargetDeviceController', {
   extend: 'Ext.app.Controller',
-  xtype: 'selsourcectrl',
+  xtype: 'seltargetctrl',
 //   requires:[''],
 
   //TODO this controller should change shape depending on the selected media category
   config: {
     control:{
-      sdevList:
+      tdevList:
       {
-        select:'sourceDeviceSelected', //event = select, cb = mediaCategorySelected
-        deselect:'sourceDeviceDeselected'
+        select:'targetDeviceSelected', //event = select, cb = mediaCategorySelected
+        deselect:'targetDeviceDeselected'
       }
     },
     refs: {
 //       mplist: '#selectMedia',
-      mcategory: '#mediaCategoryList',
-      sdevList: '#sourceDeviceList'
+      mbtns: '#playQueueSegmBtn',
+      tdevList: '#targetDevicesList'
     }
   },
 
-  sourceDeviceSelected:function(sourceDeviceList, record, eOpts)
+  targetDeviceSelected:function(targetDeviceList, record, eOpts)
   {
-    var mcategory=this.getMcategory();
+    var mbtns=this.getMbtns();
 //     console.log(mcategory.getDisabled());
-    mcategory.setMasked(false);
-    mcategory.setDisabled(false);
-    mcategory.setDisableSelection(false);
+    mbtns.setMasked(false);
+    mbtns.setDisabled(false);
+    
 //     console.log("mcategory.getDisabled()",mcategory.getDisabled());
     
   },
   
-  sourceDeviceDeselected:function(sourceDeviceList, record, eOpts)
+  targetDeviceDeselected:function(targetDeviceList, record, eOpts)
   {
-    var mcategory=this.getMcategory();
-    var sdevList=this.getSdevList();
-//     console.log("Count",sdevList.getSelectionCount());
-    if(sdevList.getSelectionCount()==0)
-    {
-      mcategory.deselectAll(false);
-      mcategory.setMasked(true);
-      mcategory.setDisabled(true);
-      mcategory.setDisableSelection(true);
+    var mbtns=this.getMbtns();
+//     console.log(mcategory.getDisabled());
+
+
+
+    //unselect actions if no target dev is selected
+    var tdevList = this.getTdevList();
+    console.log(tdevList.innerItems[1].dataview.getSelectionCount());
+    if(tdevList.innerItems[1].dataview.getSelectionCount()==0){
+      mbtns.setMasked(true);
+      mbtns.setDisabled(true);
+      mbtns.innerItems.forEach(function(i){
+      i.unselect()});
     }
+
+    
+    
   }
 });

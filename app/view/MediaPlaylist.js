@@ -152,6 +152,28 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	  itemtap:{
 	    fn:function(pl, index,target, record){
 	      target.getSelected()? target.unselect():target.select();
+	      //now check if at least one item is selected
+	      var atLeastOneSelected = false;
+	      target.parent.dataview.items.items[0].items.items.forEach(function(e){
+	      	atLeastOneSelected = atLeastOneSelected || e.getSelected();
+	      });
+
+	      var targetDevList = Ext.getCmp('targetDevicesList');
+	      if(atLeastOneSelected){
+		    targetDevList.setMasked(false);
+		    targetDevList.setDisabled(false);
+	      }else{
+		    targetDevList.setMasked(true);
+		    targetDevList.setDisabled(true);
+			targetDevList.deselectAll();;
+		      
+		      var mbtns=Ext.getCmp('playQueueSegmBtn');
+		      mbtns.setMasked(true);
+		      mbtns.setDisabled(true);
+		      
+			    
+
+	      }
 	    }
 	  },
 	  resize:{

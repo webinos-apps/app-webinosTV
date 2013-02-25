@@ -33,8 +33,14 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     mplist.setDisabled(false);
     mtargetdevs.setMasked(true);
     mtargetdevs.setDisabled(false);
+    mtargetdevs.deselectAll();
     mactions.setMasked(true);
     mactions.setDisabled(false);
+
+          
+          
+
+        
   },
 
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
