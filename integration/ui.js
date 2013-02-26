@@ -186,38 +186,52 @@ function run_ui_connect(){
       },
       //toggle item selected/deselected
       toggleSelectItem:function(){
-        console.log("toggleSelectItem");
         var lrIndex=this.leftRightIndex;
         var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
         if(lrIndex<this.columns.length)
         {
           var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
           var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
-          if(index < numberOfRows-1)
+          var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
+          if(index < numberOfRows && isVisible)
           {
             if(index>-1)
             {
               var currCmp=currColumnCmp.getItemAt(index);
-              console.log(currCmp.id,currColumnCmp.id)
+              var record=currCmp.getRecord();
+              var isSelected=currColumnCmp.isSelected(record);
+              if(isSelected)
+              {
+                currColumnCmp.deselect(record);
+              }
+              else
+              {
+                currColumnCmp.select(record,true);
+              }
             }
           }
         }
       },
       //toggle item selected/deselected
       deselectItem:function(){
-        console.log("deselectItem");
         var lrIndex=this.leftRightIndex;
         var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
         if(lrIndex<this.columns.length)
         {
           var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
           var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
-          if(index < numberOfRows-1)
+          var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
+          if(index < numberOfRows && isVisible)
           {
             if(index>-1)
             {
               var currCmp=currColumnCmp.getItemAt(index);
-              console.log(currCmp.id,currColumnCmp.id)
+              var record=currCmp.getRecord();
+              var isSelected=currColumnCmp.isSelected(record);
+              if(isSelected)
+              {
+                currColumnCmp.deselect(record);
+              }
             }
           }
         }
