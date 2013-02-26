@@ -36,6 +36,11 @@
      */
     "js": [
         {
+            "path": "http://localhost:8080/webinos.js",
+            "remote": true,
+            "update": "full"
+        },
+        {
             "path": "touch/sencha-touch.js"
         },
         {
@@ -48,6 +53,9 @@
         },
         {
             "path": "integration/ui.js"
+        },
+        {
+            "path": "integration/connector.js"
         }
     ],
 
