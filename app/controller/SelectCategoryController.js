@@ -14,12 +14,16 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     },
     refs: {
       mplist: '#mediaPlaylist',
-      mcategory: '#mediaCategoryList'
+      mcategory: '#mediaCategoryList',
+      mtargetdevs: '#targetDevicesList',
+      mactions: '#playQueueSegmBtn'
     }
   },
   
   mediaCategoryDeselected:function(mediaCategoryList, record, eOpts){
     var mplist=this.getMplist();
+    var mtargetdevs=this.getMtargetdevs();
+    var mactions=this.getMactions();
     mplist.setItems({
       xtype:'tilepanel',
       cls:['tile-panel'],
@@ -27,6 +31,16 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     });
     mplist.setMasked(true);
     mplist.setDisabled(false);
+    mtargetdevs.setMasked(true);
+    mtargetdevs.setDisabled(false);
+    mtargetdevs.deselectAll();
+    mactions.setMasked(true);
+    mactions.setDisabled(false);
+
+          
+          
+
+        
   },
 
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)

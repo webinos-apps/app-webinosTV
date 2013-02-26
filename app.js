@@ -18,11 +18,11 @@ Ext.application({
 
     views: ['BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
 
-    models:['Device','Media'],
+    models:['Device','Media','VideoMedia'],
 
-    stores:['TempMusicStore','TempSourceDevsStore','TempDisplayDevsStore'],
+    stores:['TempMusicStore','TempVideoStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
-    controllers:['PlayModeController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
+    controllers:['SelectTargetDeviceController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
 
     profiles:['Phone','LargeScreen'],
     
@@ -50,6 +50,7 @@ Ext.application({
       //connect interface with ui
       webinosTV.app.connectUi=run_ui_connect();
       webinosTV.app.connectEvents=run_events_connect();
+      webinosTV.app.connectConnector=run_connector_connect();
       // Initialize the stores
       var tmpMusicStore=Ext.create('webinosTV.store.TempMusicStore');
 
@@ -75,11 +76,11 @@ Ext.application({
 
     addDisplayDevices:function(deviceItems){
       var dispDevStore=Ext.getStore('tmpdispdevstore-id');
-      dispDevStore.add(deviceItems);
+      //dispDevStore.add(deviceItems);
     },
 
     addSourceDevices:function(deviceItems){
       var srcDevStore=Ext.getStore('tmpsrcdevstore-id');
-      srcDevStore.add(deviceItems);
+      //srcDevStore.add(deviceItems);
     }
 });

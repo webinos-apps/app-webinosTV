@@ -59,7 +59,8 @@ $list-pressed-color:$hl-color;
 }
 
 .title-container{
-  background-color: lighten($base-color,10%);
+  background-color: #000;
+  font-size: 80%;white-space: nowrap;overflow: hidden;
 }
 
 div.nav-selected, div.x-container .x-unsized .x-dataview{
@@ -263,10 +264,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 //For labels of not yet implemented features
 .not-implemented-yet {
-  -webkit-animation-name: rotateAndScale;
-  -webkit-animation-duration:5s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function:ease-in-out;
+  
 }
 @-webkit-keyframes rotateAndScale {
   0% {
