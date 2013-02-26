@@ -16,13 +16,13 @@ Ext.application({
       autoMaximize: false
     },
 
-    views: ['BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
+    views: ['VideoPlayerView','BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
 
     models:['Device','Media','VideoMedia'],
 
     stores:['TempMusicStore','TempVideoStore','TempSourceDevsStore','TempDisplayDevsStore'],
 
-    controllers:['SelectTargetDeviceController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
+    controllers:['SelectPlayModeController','SelectTargetDeviceController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
 
     profiles:['Phone','LargeScreen'],
     

@@ -63,6 +63,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       {
 // 	xtype:'list',
 	xtype:'dataview',
+	mode:"MULTI",
 	flex:9,
 	margin:2,
 	scrollable:{
@@ -140,6 +141,8 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       {
 // 	xtype:'list',
 	xtype:'dataview',
+	mode:"MULTI",
+	id:"videoDataView",
 	flex:9,
 	margin:2,
 	scrollable:{
