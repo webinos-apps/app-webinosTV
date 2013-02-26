@@ -1,13 +1,6 @@
 // var run_ui_connect = 
 function run_ui_connect(){
 
-// if(typeof webinosTV==="undefined"){
-// 	console.log("error: UI not ready.");
-// }
-// 
-// webinosTV.updateui = (function(){
-
-
    var addQueue = function(){};
    var updateQueue = function(){};
    var addQueues = function(){};
@@ -190,6 +183,44 @@ function run_ui_connect(){
           currCmp.removeCls("nav-selected");
           this.upDownIndex=-1;
         }
+      },
+      //toggle item selected/deselected
+      toggleSelectItem:function(){
+        console.log("toggleSelectItem");
+        var lrIndex=this.leftRightIndex;
+        var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
+        if(lrIndex<this.columns.length)
+        {
+          var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          if(index < numberOfRows-1)
+          {
+            if(index>-1)
+            {
+              var currCmp=currColumnCmp.getItemAt(index);
+              console.log(currCmp.id,currColumnCmp.id)
+            }
+          }
+        }
+      },
+      //toggle item selected/deselected
+      deselectItem:function(){
+        console.log("deselectItem");
+        var lrIndex=this.leftRightIndex;
+        var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
+        if(lrIndex<this.columns.length)
+        {
+          var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          if(index < numberOfRows-1)
+          {
+            if(index>-1)
+            {
+              var currCmp=currColumnCmp.getItemAt(index);
+              console.log(currCmp.id,currColumnCmp.id)
+            }
+          }
+        }
       }
   };
 
@@ -216,6 +247,12 @@ function run_ui_connect(){
         break;
       case 32://space
         browse.stopBrowsing()
+        break;
+      case 83://space
+        browse.toggleSelectItem()
+        break;
+      case 68://space
+        browse.deselectItem()
         break;
 //           case 83://s key TODO also S
 //             browse.toggleSelect() //TODO select and deselect or toggle?
@@ -302,8 +339,5 @@ function run_ui_connect(){
 
     browse:browse
   };
-// })();
-
-
 };
 
