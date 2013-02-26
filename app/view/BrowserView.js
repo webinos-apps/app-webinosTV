@@ -166,7 +166,8 @@ Ext.define('webinosTV.view.BrowserView', {
                 width: '100%',
                 height: '100%',
                 disabled: true,
-                masked: true
+                masked: true,
+                mode: 'MULTI'
             }]
         },
 
