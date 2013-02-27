@@ -16,7 +16,23 @@ Ext.application({
       autoMaximize: false
     },
 
-    views: ['VideoPlayerView','BrowserView','TilesDataView','SourceDeviceDataViewItem','MediaCategoryDataViewItem','DefaultTilePanel','TargetDeviceDataViewItem','CustomSegmentedButton','MediaPlaylist','AudioMPListItem'],
+    views: [
+    'BrowserView', //main view
+    'TilesDataView', //generic component, list-like, whose elements are made of tiles
+    'DefaultTilePanel', //generic component, base element of the UI
+    'SourceDevicesColumn', //1st column of the browser view
+    'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
+    'CategoriesColumn', //2nd column of the browser view
+    'MediaCategoryDataViewItem', //represents a single media category tile
+    'MediaSelectionColumn', //3rd column of the browser view
+    'MediaPlaylist', //shows a list of media (e.g. mp3, videos)
+    'AudioMPListItem', //represents single audio item
+    'TargetDevicesColumn', //4th column of the browser view
+    'TargetDeviceDataViewItem',//represents a list of target devices
+    'ActionControlsColumn', //5th column of the browser view
+    'CustomSegmentedButton', //implements a segmented button with additional features //TODO use a TilesDataView instead?
+    'VideoPlayerView' //floating panel with Video Player
+    ],
 
     models:['Device','Media','VideoMedia'],
 

@@ -60,6 +60,13 @@ function run_ui_connect(){
     var store = Ext.StoreMgr.get('tmpdispdevstore-id');
     store.clearData();
    };
+   
+  //Play Media
+  var showModalVideo=function(/*url,posterUrl*/){
+    var videoPlayer = Ext.create('webinosTV.view.VideoPlayerView'/*,{url:url,posterUrl:posterUrl}*/);
+    Ext.Viewport.add(videoPlayer);
+    return videoPlayer;
+  };
 
   //Navigation
   var addTargetDevice = function(id,type,counter,name){
@@ -350,6 +357,8 @@ function run_ui_connect(){
     
     //TODO find a smarter name
     remoteEvents:remoteEvents,
+    
+    showModalVideo:showModalVideo,
 
     browse:browse
   };
