@@ -37,13 +37,15 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
         height: '100%',
         store: {
           storeId:'actionsstore-id',
-          fields: ['icon', 'text','action'],
+          fields: ['id','icon', 'text','action'],
           data: [{
+            id:1,
             icon: 'play',
             text: 'Play Now',
             action:function(){alert("Play it!");}
           },
           {
+            id:2,
             icon: 'queue',
             text: 'Add to Queue',
             action:function(){alert("Add to Q");}
@@ -53,8 +55,8 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
         },
         loadingText: "Loading actions...",
         scrollable:false,
-        //eg addNewRecord({icon:'tv',text:'watch',action:function(){alert("Video killed radio all stars");}})
-        addNewRecord:function(recordObject){
+        //eg addNewRecord({id:3,icon:'tv',text:'watch',action:function(){alert("Video killed radio all stars");}})
+        addNewRecord:function(recordObject){ //TODO reject objects with no id or increment biggest id
           var store=Ext.StoreManager.get('actionsstore-id');
           store.add(recordObject);
           this.refresh(); //seems not to get updated otherwise :( TODO maybe with dedicated model+store works

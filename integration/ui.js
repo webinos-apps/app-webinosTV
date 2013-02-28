@@ -17,10 +17,10 @@ function run_ui_connect(){
   var removeCategory = function(){};
   var clearCategories = function(){};
    
-  //example: addActionButton('tv','Watch',function(){alert("Video killed radio all stars");}})
-  var addActionButton = function(icon, text,actionCB){
+  //example: addActionButton(3,'tv','Watch',function(){alert("Video killed radio all stars");}})
+  var addActionButton = function(id,icon, text,actionCB){
     var actionColumnList=Ext.getCmp('actionsList');
-    actionColumnList.addNewRecord({icon:icon, text:text,action:actionCB});
+    actionColumnList.addNewRecord({id:id,icon:icon, text:text,action:actionCB});
   };
   var addActionButtons = function(){};
   var removeActionButton = function(){};
@@ -303,14 +303,14 @@ function run_ui_connect(){
           if(isVisible)
           {
             //clean nav status
-            this.cleanRowsNavigation();
-            if(this.lastVisitedColumnId){
-              var currCmp=Ext.getCmp(this.lastVisitedColumnId);
-              currCmp.removeCls("nav-selected");
-            }
+//             this.cleanRowsNavigation();
+//             if(this.lastVisitedColumnId){
+//               var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+//               currCmp.removeCls("nav-selected");
+//             }
 
-            this.lastVisitedColumnId=columnId;
-            destinationColumn.setCls(["nav-selected","phone-listview-indicator"]);
+//             this.lastVisitedColumnId=columnId;
+//             destinationColumn.setCls(["nav-selected","phone-listview-indicator"]);
             if(destinationColumn.$className==="webinosTV.view.TilesDataView")
             {
               var modelClassName= destinationColumn.getStore().getModel().$className;
