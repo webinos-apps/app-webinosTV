@@ -28,7 +28,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
     { //Container #4 - Actions
       xtype: 'tileslist',
       id: 'actionsList',
-        disabled: true,
+//         disabled: true,
         masked: true,
         mode: 'SINGLE',
         defaultType: 'actctrllistitem', //for display devices
@@ -36,6 +36,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
         width: '100%',
         height: '100%',
         store: {
+          storeId:'actionsstore-id',
           fields: ['icon', 'text','action'],
           data: [{
             icon: 'play',
@@ -46,35 +47,19 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
             icon: 'queue',
             text: 'Add to Queue',
             action:function(){alert("Add to Q");}
-          }]
+          }
+          ],
+          autoLoad: true 
         },
         loadingText: "Loading actions...",
-        scrollable:false
+        scrollable:false,
+        //eg addNewRecord({icon:'tv',text:'watch',action:function(){alert("Video killed radio all stars");}})
+        addNewRecord:function(recordObject){
+          var store=Ext.StoreManager.get('actionsstore-id');
+          store.add(recordObject);
+          this.refresh(); //seems not to get updated otherwise :( TODO maybe with dedicated model+store works
+        }
     }]
     }
-//     { //Container #4 - Actions
-//       xtype: 'customsegbutton',
-//       id: 'playQueueSegmBtn',
-//       disabled: true,
-//       masked: true,
-//       width: '100%',
-//       height: '100%',
-//       padding: 1,
-//       layout: {
-//         type: 'vbox'
-//       },
-//       items: [{
-//         xtype: 'tilepanel',
-//         cls: 'tile-panel',
-//         iconCls: 'play',
-//         text: 'Play Now'
-//       }, {
-//         xtype: 'tilepanel',
-//         cls: 'tile-panel',
-//         iconCls: 'queue',
-//         text: 'Add to Queue'
-//       }]
-//     }
-//     ]
-//   }
+
 });
