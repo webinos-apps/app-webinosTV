@@ -126,14 +126,20 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   @include background-gradient($sel-color);
 }
 
+.videoplayermask{
+  background-color:rgba(0,0,255,0.8);
+/*  -webkit-box-reflect: below 0
+   -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(blue)); */
+}
+
 //Basic Tile class, much like abstract class
-.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{
+.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed,.multi-tile-panel{
   text-align:center;
-  font-size:0.7em;
+  font-size:70%;
   color:$fg-color;
-  border: 2px solid transparent;
-  margin: 3px;
-/*   padding:1px; */
+/*   border: 0.1em solid transparent; */
+  margin: 0.1em;
+/*   padding:0.1em; */
 }
 
 
@@ -156,19 +162,53 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 .tile-text{
 /*   display:block; */
   overflow-x:hidden;
-  margin: 0.5em 0em 0.5em 0em;
+  /*margin: 0.5em 0em 0.5em 0em;*/
+  margin: 2% 0% 2% 0%;
 }
 
+//Panel with multiple panels inside
+.multi-tile-panel,.multi-tile-panel-selected,.multi-tile-panel-pressed{
+  color:transparent;
+  border: 0px;
+  margin: 0.1em;
+  padding: 0px;
+}
+
+div.multi-tile-panel div.tile-panel{
+/*   border: 0px; */
+  margin: 0px;
+/*   padding: 0px; */
+}
+
+div.multi-tile-panel div.tile-panel:first-child{
+  margin:0 0.15em 0 0;
+}
+
+div.multi-tile-panel-selected div.tile-panel{
+  @include background-gradient($sel-color);
+}
+
+div.multi-tile-panel-pressed div.tile-panel{
+  background-color:$hl-color;
+}
+
+.actionslist{
+  .x-inner, .x-body {
+    .x-unsized{
+      height:100%;
+    }
+  }
+}
 //Tile icons
-.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs
+.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs,.tile-icon-tvchannels
 {
   display:block;
-  margin: auto 1.5em auto 1.5em;
-  -webkit-mask-size: 32px;
+  margin: auto 6% auto 6%;//auto 1.5em auto 1.5em;
+  -webkit-mask-size: 40px;
   background-image: none;
   background-color:$fg-color;
-  width:32px;
-  height:32px;
+  width:40px;
+  height:40px;
   padding:0.5em;
   -webkit-transform: translateZ(0);
 }
@@ -179,9 +219,9 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 .tile-icon-queue{
   -webkit-mask: 0 0 inline-image('svg/add_queue.svg') no-repeat;
-  -webkit-mask-size: 20px;
-  width:20px;
-  height:20px;
+  -webkit-mask-size: 32px;
+/*  width:20px;
+  height:20px;*/
 }
 
 .tile-icon-favorites{
@@ -189,7 +229,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 }
 
 .tile-icon-webinos{
-  -webkit-mask: 0 0 inline-image('webinos_logo.png') no-repeat;
+  -webkit-mask: 0 0 inline-image('svg/apps.svg') no-repeat;
 }
 
 .tile-icon-pc{
@@ -197,7 +237,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 }
 
 .tile-icon-list{
-  margin: auto 0.5em auto 1.5em;
+  margin: auto 1.5em auto 1.5em;
   -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
 }
 
@@ -277,5 +317,79 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   
   100% {
     -webkit-transform:scale(1.0) rotate(360deg);
+  }
+}
+
+
+//BrowserView reduce/restore
+$scaleFactor:0.7;
+$offset:15%;
+$time:0.5s;
+.reduce-size{
+  top:$offset;
+  left:-$offset;
+  transform:scale($scaleFactor,$scaleFactor) translateZ(0); /* Safari and Chrome */
+  -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0); /* Safari and Chrome */
+}
+
+.restore-size{
+  top:0;
+  left:0;
+  transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
+  -webkit-transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
+}
+
+//reduce with transition: still some issues on some devices
+.reduce-size-wtransition
+{
+  top:$offset;
+  left:-$offset;
+  transform:scale($scaleFactor,$scaleFactor);
+  -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0); /* Safari and Chrome */
+  -webkit-animation-name: reduceSize;
+  -webkit-animation-duration: $time;
+  -webkit-animation-delay: 0s; //important! makes the text start from 0
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes reduceSize {
+  0% {
+    top:0;
+    left:0;
+    -webkit-transform:scale(1.0) translateZ(0);
+  }
+  
+  100% {
+    top:$offset;
+    left:-$offset;
+    -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0);
+  }
+}
+
+.restore-size-wtransition
+{
+  top:0;
+  left:0;
+  transform:scale(1.0,1.0);
+  -webkit-transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
+  -webkit-animation-name: restoreSize;
+  -webkit-animation-duration: $time;
+  -webkit-animation-delay: 0s; //important! makes the text start from 0
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes restoreSize {
+  0% {
+    top:$offset;
+    left:-$offset;
+    -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0);;
+  }
+  
+  100% {
+    top:0;
+    left:0;
+    -webkit-transform:scale(1.0,1.0) translateZ(0);
   }
 }
