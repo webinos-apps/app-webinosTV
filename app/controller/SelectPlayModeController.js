@@ -6,23 +6,24 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
   //TODO actions depending on media type - right now it's just masking/unmasking
   config: {
     control:{
-      pqSegBtn:
+      actionList:
       {
         select:'actionSelected'
       }
     },
     refs: {
-      pqSegBtn: '#playQueueSegmBtn',
+      actionList: '#actionsList',
       tdevList: '#targetDevicesList'
     }
   },
 
 
-  actionSelected:function(playQueueSegmBtn, record, eOpts)
+  actionSelected:function(actionList, record, eOpts)
   {
-    var pqSegBtn=this.getPqSegBtn();
-    var tdevList = this.getTdevList();
-    alert("Play!");
+    record.get('action')();
+//     var pqSegBtn=this.getPqSegBtn();
+//     var tdevList = this.getTdevList();
+//     alert("Play!");
 
   }
 

@@ -3,44 +3,63 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
     requires: ['Ext.Container','Ext.Panel'],
     xtype: 'mediacategorylistitem',
     config:{
-      mediaLabel:true,
-      selected:false
+      mediaLabel:{
+        xtype:'container',
+        layout:'hbox',
+        height:100,
+        items:[
+          {
+            xtype:'tilepanel',
+            iconCls :'',// iconClasses[mediaCategoryInfo.category],
+            text:''//,mediaCategoryInfo.mediaCategoryName}
+          }
+        ]
+      }
     },
-
+    
     applyMediaLabel:function(config)
     {
-      //TODO data handling here
-      var iconClasses={//associate a mediaType type with an icon name
-	'movies':'videos',
-	'music':'music',
-	'images':'images',
-	'channels':'tvchannels',//TODO find a suitable icon
-	'apps':'webinos',//TODO find a suitable icon
-	'docs':'docs'
-      };
-      var mediaCategoryInfo = this.getRecord().data; //a count of media queued and mediaCategory name + mediaCategory category
-
-      var itemContainer=Ext.create('Ext.Container',{
-	layout:'hbox',
-	height:100,
-	items:[
-	  {xtype:'tilepanel',iconCls : iconClasses[mediaCategoryInfo.category], text:mediaCategoryInfo.mediaCategoryName}
-	]
-      });
-      return itemContainer;
+      return Ext.factory(config,webinosTV.view.DefaultTilePanel,this.getMediaLabel())
     },
-
+    
+    updateRecord:function(newRecord)
+    {
+      var dataItem = this;
+      if (!newRecord) {
+        return;
+      }
+      
+      var iconClasses={//associate a mediaType type with an icon name
+        'movies':'videos',
+        'music':'music',
+        'images':'images',
+        'channels':'tvchannels',//TODO fix not displayed
+        'apps':'webinos',//TODO find a suitable SVG icon
+        'docs':'docs'
+      };
+      
+      dataItem._record = newRecord;
+      
+      var category=newRecord.get('category');
+      var categoryIconCls=category ? iconClasses[category] : null;
+      var categoryName=newRecord.get('mediaCategoryName');
+      var categoryText=categoryName? categoryName : null
+      var tile=dataItem.getMediaLabel().getAt(0);
+      tile.setIconCls(categoryIconCls);
+      tile.setText(categoryText);
+    },
+    
     updateMediaLabel:function(newLabel,oldLabel)
     {
       if (oldLabel) {
-	this.remove(oldLabel);
+        this.remove(oldLabel);
       }
 
       if (newLabel) {
-	this.add(newLabel);
+        this.add(newLabel);
       }
-    },
-
+    }
+  /*  NOT SURE WE NEED THESE ANYMORE
     select:function(){
       //getAt(1) returns this component container
       var mediaCategoryItem=this.getAt(1);
@@ -55,5 +74,5 @@ Ext.define('webinosTV.view.MediaCategoryDataViewItem', {
 
       mediaCategoryItem.getAt(0).unselect();
       this.setSelected(false);
-    }
+    }*/
 });

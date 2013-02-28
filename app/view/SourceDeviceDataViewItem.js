@@ -11,6 +11,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
         items:[
           {//counter
             xtype:'tilepanel', 
+            cls:'tile-panel',
             iconCls : '', 
             text:'',
             flex:1,
@@ -22,9 +23,8 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
             listeners:{
               tap:{
                 element:'element',
-//                 scope:this,
                 fn:function(){
-                  console.log("onTap",this.getParent())
+//                   console.log("onTap",this.getParent())
                   this.getParent().getParent().showDeviceQueue();
                 }
               }
@@ -32,6 +32,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
           },
           {//device
             xtype:'tilepanel', 
+            cls:'tile-panel',
             iconCls : '', 
             text:'',
             flex:1.5
