@@ -30,7 +30,8 @@ Ext.application({
     'TargetDevicesColumn', //4th column of the browser view
     'TargetDeviceDataViewItem',//represents a list of target devices
     'ActionControlsColumn', //5th column of the browser view
-    'CustomSegmentedButton', //implements a segmented button with additional features //TODO use a TilesDataView instead?
+    'ActionControlDataViewItem',
+//     'CustomSegmentedButton', //implements a segmented button with additional features //TODO use a TilesDataView instead?
     'VideoPlayerView' //floating panel with Video Player
     ],
 

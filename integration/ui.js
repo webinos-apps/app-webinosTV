@@ -81,7 +81,7 @@ function run_ui_connect(){
       
   var browse={
       browserView:'browserMainView',
-      columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','playQueueSegmBtn'],
+      columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','actionsList'],
       lastVisitedColumnId:null,
       leftRightIndex:-1,
       upDownIndex:-1,

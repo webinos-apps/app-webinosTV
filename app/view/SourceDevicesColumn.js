@@ -19,7 +19,7 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
             align: 'center',
             pack: 'center'
         },
-        items: [  {
+        items: [{
             xtype: 'panel',
             html: 'Queue',
             padding: 2,
@@ -40,6 +40,9 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
         xtype: 'tileslist',
         id: 'sourceDeviceList',
         defaultType: 'sourcedevlistitem', //for source devices
+        itemCls:'multi-tile-panel',
+        selectedCls:'multi-tile-panel-selected',
+        pressedCls:'multi-tile-panel-pressed',
         cls: 'phone-listview-indicator', //additional css class to highlight scrollbar
         width: '100%',
         store: 'tmpsrcdevstore-id'

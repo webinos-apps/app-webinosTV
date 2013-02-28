@@ -16,7 +16,7 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
       mplist: '#mediaPlaylist',
       mcategory: '#mediaCategoryList',
       mtargetdevs: '#targetDevicesList',
-      mactions: '#playQueueSegmBtn'
+      mactions: '#actionsList'
     }
   },
   

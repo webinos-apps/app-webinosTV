@@ -133,13 +133,13 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 }
 
 //Basic Tile class, much like abstract class
-.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed{
+.default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed,.multi-tile-panel{
   text-align:center;
   font-size:70%;
   color:$fg-color;
-  border: 1% solid transparent;
-  margin: 2%;
-/*   padding:1px; */
+/*   border: 0.1em solid transparent; */
+  margin: 0.1em;
+/*   padding:0.1em; */
 }
 
 
@@ -166,17 +166,50 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   margin: 2% 0% 2% 0%;
 }
 
+//Panel with multiple panels inside
+.multi-tile-panel,.multi-tile-panel-selected,.multi-tile-panel-pressed{
+  color:transparent;
+  border: 0px;
+  margin: 0.1em;
+  padding: 0px;
+}
+
+div.multi-tile-panel div.tile-panel{
+/*   border: 0px; */
+  margin: 0px;
+/*   padding: 0px; */
+}
+
+div.multi-tile-panel div.tile-panel:first-child{
+  margin:0 0.15em 0 0;
+}
+
+div.multi-tile-panel-selected div.tile-panel{
+  @include background-gradient($sel-color);
+}
+
+div.multi-tile-panel-pressed div.tile-panel{
+  background-color:$hl-color;
+}
+
+.actionslist{
+  .x-inner, .x-body {
+    .x-unsized{
+      height:100%;
+    }
+  }
+}
 //Tile icons
-.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs
+.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs,.tile-icon-tvchannels
 {
   display:block;
   margin: auto 6% auto 6%;//auto 1.5em auto 1.5em;
-  -webkit-mask-size: 32px;
+  -webkit-mask-size: 40px;
   background-image: none;
   background-color:$fg-color;
-  width:40%;//32px;
-  height:40%;//32px;
-  padding:15%;//0.5em;
+  width:40px;
+  height:40px;
+  padding:0.5em;
   -webkit-transform: translateZ(0);
 }
 
@@ -196,9 +229,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 }
 
 .tile-icon-webinos{
-  -webkit-mask: 0 0 inline-image('webinos_logo_s.png') no-repeat;
-  width:35%;//32px;
-  height:35%;//32px;
+  -webkit-mask: 0 0 inline-image('svg/apps.svg') no-repeat;
 }
 
 .tile-icon-pc{
@@ -206,7 +237,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 }
 
 .tile-icon-list{
-  margin: auto 6% auto 6%;//auto 1.5em auto 1.5em;
+  margin: auto 1.5em auto 1.5em;
   -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
 }
 
