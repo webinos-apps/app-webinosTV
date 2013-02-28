@@ -37,25 +37,37 @@ Ext.define('webinosTV.view.CategoriesColumn', {
         width: '100%',
         //      flex: 1.5,
         store: {
-            fields: ['category', 'mediaCategoryName'],
-            data: [{
-                category: 'music',
-                mediaCategoryName: 'Mp3 collection'
-            }, {
-                category: 'channels',
-                mediaCategoryName: 'DVB-T'
-            }, {
-                category: 'movies',
-                mediaCategoryName: 'Videos'
-            }, {
-                category: 'images',
-                mediaCategoryName: 'Pictures'
-            }, {
-                category: 'apps',
-                mediaCategoryName: 'webinos app store'
-            }, {
-                category: 'docs',
-                mediaCategoryName: 'Documents'
+            fields: ['id','category', 'mediaCategoryName'],
+            data: [
+            {
+              id:1,
+              category: 'music',
+              mediaCategoryName: 'Mp3 collection'
+            },
+           {
+              id:2,
+              category: 'channels',
+              mediaCategoryName: 'DVB-T'
+            },
+           {
+              id:3,
+              category: 'movies',
+              mediaCategoryName: 'Videos'
+            }, 
+           {
+              id:4,
+              category: 'images',
+              mediaCategoryName: 'Pictures'
+            },
+           {
+             id:5,
+              category: 'apps',
+              mediaCategoryName: 'webinos app store'
+            }, 
+           {
+             id:6,
+              category: 'docs',
+              mediaCategoryName: 'Documents'
             }]
         }
     }]

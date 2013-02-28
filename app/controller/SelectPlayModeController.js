@@ -21,10 +21,6 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
   actionSelected:function(actionList, record, eOpts)
   {
     record.get('action')();
-//     var pqSegBtn=this.getPqSegBtn();
-//     var tdevList = this.getTdevList();
-//     alert("Play!");
-
   }
 
 });
