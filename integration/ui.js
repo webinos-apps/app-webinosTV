@@ -1,28 +1,30 @@
 // var run_ui_connect = 
 function run_ui_connect(){
 
-// if(typeof webinosTV==="undefined"){
-// 	console.log("error: UI not ready.");
-// }
-// 
-// webinosTV.updateui = (function(){
+  var addQueue = function(){};
+  var updateQueue = function(){};
+  var addQueues = function(){};
+  var removeQueue = function(){};
+  var clearQueues = function(){};
 
+  var addFileItem = function(){};
+  var addFileItems = function(){};
+  var removeFileItem = function(){};
+  var clearFileItems = function(){};
 
-   var addQueue = function(){};
-   var updateQueue = function(){};
-   var addQueues = function(){};
-   var removeQueue = function(){};
-   var clearQueues = function(){};
-
-   var addFileItem = function(){};
-   var addFileItems = function(){};
-   var removeFileItem = function(){};
-   var clearFileItems = function(){};
-
-   var addCategory = function(){};
-   var addCategories = function(){};
-   var removeCategory = function(){};
-   var clearCategories = function(){};
+  var addCategory = function(){};
+  var addCategories = function(){};
+  var removeCategory = function(){};
+  var clearCategories = function(){};
+   
+  //example: addActionButton(3,'tv','Watch',function(){alert("Video killed radio all stars");}})
+  var addActionButton = function(id,icon, text,actionCB){
+    var actionColumnList=Ext.getCmp('actionsList');
+    actionColumnList.addNewRecord({id:id,icon:icon, text:text,action:actionCB});
+  };
+  var addActionButtons = function(){};
+  var removeActionButton = function(){};
+  var clearActionButtons = function(){};
 
    var addSourceDevice= function(id,type,counter,name){
     var store = Ext.StoreMgr.get('tmpsrcdevstore-id');
@@ -67,6 +69,13 @@ function run_ui_connect(){
     var store = Ext.StoreMgr.get('tmpdispdevstore-id');
     store.clearData();
    };
+   
+  //Play Media
+  var showModalVideo=function(/*url,posterUrl*/){
+    var videoPlayer = Ext.create('webinosTV.view.VideoPlayerView'/*,{url:url,posterUrl:posterUrl}*/);
+    Ext.Viewport.add(videoPlayer);
+    return videoPlayer;
+  };
 
   //Navigation
   var addTargetDevice = function(id,type,counter,name){
@@ -81,7 +90,7 @@ function run_ui_connect(){
       
   var browse={
       browserView:'browserMainView',
-      columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','playQueueSegmBtn'],
+      columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','actionsList'],
       lastVisitedColumnId:null,
       leftRightIndex:-1,
       upDownIndex:-1,
@@ -182,13 +191,170 @@ function run_ui_connect(){
         }
       },//remove border from rows components
       cleanRowsNavigation:function(){
-        var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
-        var index=this.upDownIndex;
-        if(index>-1 && currColumnCmp.$className === "webinosTV.view.TilesDataView")
+        if(this.lastVisitedColumnId){
+          var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
+          var index=this.upDownIndex;
+          if(index>-1 && currColumnCmp.$className === "webinosTV.view.TilesDataView")
+          {
+            var currCmp=currColumnCmp.getItemAt(index);
+            currCmp.removeCls("nav-selected");
+            this.upDownIndex=-1;
+          }
+        }
+      },
+      //toggle item selected/deselected
+      toggleSelectItem:function(){
+        var lrIndex=this.leftRightIndex;
+        var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
+        if(lrIndex<this.columns.length)
         {
-          var currCmp=currColumnCmp.getItemAt(index);
-          currCmp.removeCls("nav-selected");
-          this.upDownIndex=-1;
+          var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
+          if(index < numberOfRows && isVisible)
+          {
+            if(index>-1)
+            {
+              var currCmp=currColumnCmp.getItemAt(index);
+              var record=currCmp.getRecord();
+              var isSelected=currColumnCmp.isSelected(record);
+              if(isSelected)
+              {
+                currColumnCmp.deselect(record);
+              }
+              else
+              {
+                currColumnCmp.select(record,true);
+              }
+            }
+          }
+        }
+      },
+      /**
+       * position on a column and optionally on one items
+       * @param columnId a valid column id
+       * @param recordId a valid record id - if it is an array, only the last element is considered
+       */
+      moveTo:function(columnId,recordId){
+        var bw=Ext.get('browserView');
+        var index = this.columns.indexOf(columnId);
+        console.log("GoTo",columnId,index);
+        if(index>-1)
+        {
+          var destinationColumn=Ext.getCmp(columnId);
+          var isVisible=destinationColumn.getMasked().getHidden(); //false if the column is masked
+          if(isVisible)
+          {
+            //clean nav status
+            this.cleanRowsNavigation();
+            if(this.lastVisitedColumnId){
+              var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+              currCmp.removeCls("nav-selected");
+            }
+
+            this.lastVisitedColumnId=columnId;
+            destinationColumn.setCls(["nav-selected","phone-listview-indicator"]);
+            if(recordId && destinationColumn.$className==="webinosTV.view.TilesDataView")
+            {
+              var destinationRowIndex=-1;
+              var _recordId;
+              if(recordId instanceof Array) //multiple
+              {
+                _recordId=recordId[recordId.length-1];
+              }
+              else
+              {
+                _recordId=recordId;
+              }
+              
+              var indexes=destinationColumn.getViewItems().filter(function(dataViewItem,index,array){
+//                 console.log("FILTH ",dataViewItem.get('record'),recordId)
+                return dataViewItem.get('record').internalId===recordId;
+              });
+              var viewItemIndex = destinationColumn.getItemIndex(indexes.pop());
+              if(typeof viewItemIndex === 'number'){
+                if(this.upDownIndex>-1)
+                {
+                  var currItem=destinationColumn.getItemAt(this.upDownIndex);
+                  currItem.removeCls("nav-selected");
+                }
+                this.upDownIndex=viewItemIndex;
+                var destinationItem=destinationColumn.getItemAt(this.upDownIndex);
+                destinationItem.addCls(["nav-selected"]);
+              }
+            }
+          }
+        }
+      },
+      /**
+       * select an item in a column
+       * if a column is not valid or disabled (masked) do nothing
+       * @param columnId a valid column id
+       * @param recordId a valid record id
+       */
+      selectAt:function(columnId,recordId){
+        var bw=Ext.get('browserView');
+        var index = this.columns.indexOf(columnId);
+        console.log("Select At",columnId,index);
+        if(recordId && index>-1)
+        {
+          var destinationColumn=Ext.getCmp(columnId);
+          var isVisible=destinationColumn.getMasked().getHidden(); //false if the column is masked
+          if(isVisible)
+          {
+            //clean nav status
+//             this.cleanRowsNavigation();
+//             if(this.lastVisitedColumnId){
+//               var currCmp=Ext.getCmp(this.lastVisitedColumnId);
+//               currCmp.removeCls("nav-selected");
+//             }
+
+//             this.lastVisitedColumnId=columnId;
+//             destinationColumn.setCls(["nav-selected","phone-listview-indicator"]);
+            if(destinationColumn.$className==="webinosTV.view.TilesDataView")
+            {
+              var modelClassName= destinationColumn.getStore().getModel().$className;
+              var selection;
+              if(recordId instanceof Array) //multiple
+              {
+                var length=recordId.length;
+                selection= new Array(length);
+                for (var i=0; i<length; i++)
+                {
+                  selection[i]=Ext.create(modelClassName,{id:recordId[i]});
+                }
+              }
+              else //single
+              {
+                selection=Ext.create(modelClassName,{id:recordId});
+              }
+              destinationColumn.select(selection);
+            }
+          }
+        }
+      },
+      //toggle item selected/deselected
+      deselectItem:function(){
+        var lrIndex=this.leftRightIndex;
+        var index=this.upDownIndex===-1 ? 0 :this.upDownIndex;
+        if(lrIndex<this.columns.length)
+        {
+          var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
+          if(index < numberOfRows && isVisible)
+          {
+            if(index>-1)
+            {
+              var currCmp=currColumnCmp.getItemAt(index);
+              var record=currCmp.getRecord();
+              var isSelected=currColumnCmp.isSelected(record);
+              if(isSelected)
+              {
+                currColumnCmp.deselect(record);
+              }
+            }
+          }
         }
       }
   };
@@ -216,6 +382,12 @@ function run_ui_connect(){
         break;
       case 32://space
         browse.stopBrowsing()
+        break;
+      case 83://space
+        browse.toggleSelectItem()
+        break;
+      case 68://space
+        browse.deselectItem()
         break;
 //           case 83://s key TODO also S
 //             browse.toggleSelect() //TODO select and deselect or toggle?
@@ -270,40 +442,52 @@ function run_ui_connect(){
   /* interface */
   return {
 
+    //Queues control
     addQueue:addQueue,
     addQueues:addQueues,
     updateQueue:updateQueue,
     removeQueue:removeQueue,
     clearQueues:clearQueues,
 
+    //Media control
     addFileItem:addFileItem,
     addFileItems:addFileItems,
     removeFileItem:removeFileItem,
     clearFileItems:clearFileItems,
 
+    //Categories control
     addCategory:addCategory,
     addCategories:addCategories,
     removeCategory:removeCategory,
     clearCategories:clearCategories,
 
+    //Source devices control
     addSourceDevice:addSourceDevice,
     updateSourceDevice:updateSourceDevice,
     addSourceDevices:addSourceDevices,
     removeSourceDevice:removeSourceDevice,
     clearSourceDevices:clearSourceDevices,
 
+    //Target devices control
     addTargetDevice:addTargetDevice,
     addTargetDevices:addTargetDevices,
     removeTargetDevice:removeTargetDevice,
     clearTargetDevices:clearTargetDevices,
     
+    //TODO actions control?
+    addActionButton:addActionButton,
+    addActionButtons:addActionButtons,
+    removeActionButton:removeActionButton,
+    clearActionButtons:clearActionButtons,
+
+    
     //TODO find a smarter name
     remoteEvents:remoteEvents,
+    
+    showModalVideo:showModalVideo,
 
+    //Navigation
     browse:browse
   };
-// })();
-
-
 };
 

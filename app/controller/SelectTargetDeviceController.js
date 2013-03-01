@@ -14,14 +14,14 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
     },
     refs: {
 //       mplist: '#selectMedia',
-      mbtns: '#playQueueSegmBtn',
+      mActions: '#actionsList',
       tdevList: '#targetDevicesList'
     }
   },
 
   targetDeviceSelected:function(targetDeviceList, record, eOpts)
   {
-    var mbtns=this.getMbtns();
+    var mbtns=this.getMActions();
 //     console.log(mcategory.getDisabled());
     mbtns.setMasked(false);
     mbtns.setDisabled(false);
@@ -32,7 +32,7 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
   
   targetDeviceDeselected:function(targetDeviceList, record, eOpts)
   {
-    var mbtns=this.getMbtns();
+    var mActions=this.getMActions();
 //     console.log(mcategory.getDisabled());
 
 
@@ -41,10 +41,11 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
     var tdevList = this.getTdevList();
     console.log(tdevList.innerItems[1].dataview.getSelectionCount());
     if(tdevList.innerItems[1].dataview.getSelectionCount()==0){
-      mbtns.setMasked(true);
-      mbtns.setDisabled(true);
-      mbtns.innerItems.forEach(function(i){
-      i.unselect()});
+      mActions.setMasked(true);
+      mActions.setDisabled(true);
+      mActions.deselectAll();
+//       mActions.innerItems.forEach(function(i){
+//       i.unselect()});
     }
 
     

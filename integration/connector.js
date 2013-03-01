@@ -63,13 +63,11 @@ var discoverWebNotification = function(){
                 	 	}
                 	 );*/
            		
-                }
-            },
-            {onLost: function(service){
+                },
+            onLost: function(service){
                 	console.log("LOST ", service);
-                }
-            },
-            {onError: function(error){
+                },
+            onError: function(error){
                 	console.log("error ", error);
                 }
             }
