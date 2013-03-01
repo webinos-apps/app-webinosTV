@@ -20,7 +20,32 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       }
     ]
   },
+  
+  //mimic dataview methods by using wrappers on the inner dataview
+  getStore:function(){
+    return this.query('dataview')[0].getStore();
+  },
+  
+  getItemAt:function(index){
+    return this.query('dataview')[0].getItemAt(index);
+  },
+  
+  isSelected:function(record){
+    return this.query('dataview')[0].isSelected(record);
+  },
+  
+  select:function(record){
+    return this.query('dataview')[0].select(record);
+  },
 
+  deselect:function(record,flag){
+    return this.query('dataview')[0].deselect(record,flag);
+  },
+
+//   getMasked:function(){
+//     return this.query('dataview')[0].getMasked();
+//   },
+  
   showMusic:function(){
     var mediaPL=this;
     mediaPL.setItems([
@@ -84,7 +109,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	      var items= pl.getInnerItems()[0].innerItems;
 // 	      console.log("<<<<<<<<<RESIZE")
 	      items.forEach(function(audioListItem){
-		audioListItem.checkTextOverflow()
+            audioListItem.checkTextOverflow()
 	      })
 
 	    }
@@ -183,9 +208,8 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 	    fn:function(elem){
 	      var pl = this;
 	      var items= pl.getInnerItems()[0].innerItems;
-// 	      console.log("<<<<<<<<<RESIZE")
 	      items.forEach(function(audioListItem){
-		audioListItem.checkTextOverflow()
+            audioListItem.checkTextOverflow()
 	      })
 
 	    }

@@ -1,36 +1,3 @@
-// Ext.define('webinosTV.view.AudioMPListItem', {
-//     extend: 'Ext.dataview.component.ListItem',
-//     requires:['Ext.field.Checkbox'],
-//     xtype: 'audiolistitem',
-//     config: {
-//       dataMap: {
-// 	getTitle: {
-// 	  setHtml:'title'
-// 	},
-//       },
-//       layout:'hbox',
-//       title: true,
-//       items: [
-// 	{
-// 	  xtype: 'panel',
-// 	  cls:'sliding-text',
-// 	  itemId: 'title',
-// // 	  style:'background-color:orange;'
-// 	},
-// 	{
-// 	  cls:'tile-panel',
-// 	  xtype:'checkboxfield',
-// 	  docked:'right'
-// 	}
-//       ]
-//     },
-//     applyTitle: function () {
-// //       console.log(this.child('#title'))
-//       return this.child('#title');
-//     }
-// });
-
-
 //  *Using DataView inspite of list
 //  * 
 Ext.define('webinosTV.view.AudioMPListItem', {
