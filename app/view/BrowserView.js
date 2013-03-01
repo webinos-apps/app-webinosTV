@@ -6,6 +6,8 @@ Ext.define('webinosTV.view.BrowserView', {
       'Ext.Panel', 'Ext.Button', 'Ext.data.Store', 'Ext.Img', 'Ext.SegmentedButton'],
     config: {
       id: 'browserMainView',
+      top:0,
+      left:0,
       currentSourceDeviceQueue: null, //private attribute - see showSourceDeviceQueue
       width: '100%',
       height: '100%',
@@ -20,31 +22,36 @@ Ext.define('webinosTV.view.BrowserView', {
       {
         xtype: 'srcdevscol',
         flex: 2.5,
-        height: '100%'
+        height: '100%',
+        id:'sourceDevicesColumn'
       },
       // Categories 
       {
           xtype: 'categscol',
           flex: 1.5,
-          height: '100%'
+          height: '100%',
+          id:'categoriesColumn'
       },
       // Media selection
       {
         xtype: 'mediaselcol',
         flex: 3,
-        height: '100%'
+        height: '100%',
+        id:'mediaSelectionColumn'
       },
       // Target devices
       {
         xtype: 'tgtdevscol',
         flex: 1.5,
-        height: '100%'
+        height: '100%',
+        id:'targetDevicesColumn'
       },
       // Actions
       {
         xtype: 'actctrlscol',
         flex: 1.5,
-        height: '100%'
+        height: '100%',
+        id:'actionControlsColumn'
       }]
     },
 

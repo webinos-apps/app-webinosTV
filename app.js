@@ -35,11 +35,27 @@ Ext.application({
     'VideoPlayerView' //floating panel with Video Player
     ],
 
-    models:['Device','Media','VideoMedia'],
+    models:[
+    'Device',
+    'Media',
+    'VideoMedia',
+    'AudioMedia'
+    ],
 
-    stores:['TempMusicStore','TempVideoStore','TempSourceDevsStore','TempDisplayDevsStore'],
+    stores:[
+    'TempMusicStore',
+    'TempVideoStore',
+    'TempSourceDevsStore',
+    'TempDisplayDevsStore'
+    ],
 
-    controllers:['SelectPlayModeController','SelectTargetDeviceController','SelectCategoryController','SelectMediaController','SelectSourceDeviceController'],
+    controllers:[
+    'SelectPlayModeController',
+    'SelectTargetDeviceController',
+    'SelectCategoryController',
+    'SelectMediaController',
+    'SelectSourceDeviceController'
+    ],
 
     profiles:['Phone','LargeScreen'],
     
