@@ -1,5 +1,15 @@
 // var run_ui_connect = 
 function run_ui_connect(){
+  
+  var categoryStoreIdMap={ //WARNING this should be populated at setup time, or passed to run_ui_connect
+    //associate a mediaType type with an icon name
+      'videos':'tmpvideostore-id',
+      'music':'tmpmusicstore-id',
+      'images':null,
+      'tvchannels':null,//TODO fix not displayed
+      'webinos':null,//TODO find a suitable SVG icon
+      'docs':null
+  }
 
   var addQueue = function(){};
   var updateQueue = function(){};
@@ -7,17 +17,67 @@ function run_ui_connect(){
   var removeQueue = function(){};
   var clearQueues = function(){};
 
-  var addFileItem = function(){
-    
+  //mediaItem = object with same fields of Media model or derived class
+  //if exists, updates it
+  var addMediaItem = function(mediaItem,category){
+    var store=Ext.StoreManager.get(categoryStoreIdMap[category]);
+//     console.log("Add",mediaItem.file,"of category",category,"to store", store);
+    if(store)
+    {
+      var index=store.findBy(function(record,id){
+        var condition = (record.get('file')===mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId===mediaItem.id)
+        return condition;
+      });
+      
+      var record;
+      if(index!==-1)
+      {//perform update
+        record=store.getAt(index);
+        for (var key in mediaItem)
+        {
+          if(key!=='id')
+          {
+            record.set(key,mediaItem[key]);
+          }
+        }
+      }
+      else
+      {//add
+        record=Ext.create(store.getModel().$className,mediaItem);
+        store.add(record);
+      }
+    }
   };
-  var addFileItems = function(){
-    
+  
+  //objects = array[{mediaItem:item,category:category}]
+  var addMediaItems = function(objects){
+    objects.forEach(function(object){
+      addMediaItem(object.mediaItem,object.category)
+    });
   };
-  var removeFileItem = function(){
-    
+  
+  //mediaItem = object with same fields of Media model or derived class
+  var removeMediaItem = function(mediaItem,category){
+    var store=Ext.StoreManager.get(categoryStoreIdMap[category]);
+//     console.log("Remove",mediaItem.file,"of category",category,"from store", store);
+    if(store)
+    {
+      var index=store.findBy(function(record,id){
+        var condition = (record.get('file')===mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId===mediaItem.id)
+        return condition;
+      });
+      store.removeAt(index);
+    }
   };
-  var clearFileItems = function(){
-    
+  
+  //clear all items in a category store
+  var clearMediaItems = function(category){
+    var store=Ext.StoreManager.get(categoryStoreIdMap[category]);
+//     console.log("Clear category",category,"from store", store);
+    if(store)
+    {
+      store.remove(store.getRange());
+    }
   };
 
   var addCategory = function(){};
@@ -538,10 +598,10 @@ function run_ui_connect(){
     clearQueues:clearQueues,
 
     //Media control
-    addFileItem:addFileItem,
-    addFileItems:addFileItems,
-    removeFileItem:removeFileItem,
-    clearFileItems:clearFileItems,
+    addMediaItem:addMediaItem,
+    addMediaItems:addMediaItems,
+    removeMediaItem:removeMediaItem,
+    clearMediaItems:clearMediaItems,
 
     //Categories control
     addCategory:addCategory,
