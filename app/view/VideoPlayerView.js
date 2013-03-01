@@ -16,10 +16,7 @@ Ext.define('webinosTV.view.VideoPlayerView',{
           preload:false,
           width:'100%',
           height:'100%',
-          centered:true,
-//           url: 'resources/BigBen/bb1.mov',
-//           posterUrl: 'resources/BigBen/bb1.JPG'
-//           loop: true
+          centered:true
         }
       ],
       listeners:{
