@@ -54,6 +54,27 @@ $list-pressed-color:$hl-color;
 
 @include sencha-list();
 
+/**
+ * carbon theme http://lea.verou.me/css3patterns/#carbon
+ */
+@mixin background-carbon(
+    $background-color: $background-carbon-base-color,
+    $dot-size: 5px
+) {
+    @include background(
+      -webkit-linear-gradient(27deg, $background-color+#020202 $dot-size, rgba(#fff, 0) $dot-size) 0 $dot-size,
+      -webkit-linear-gradient(207deg, $background-color+#020202 $dot-size, rgba(#fff, 0) $dot-size) 2*$dot-size 0px,
+      -webkit-linear-gradient(27deg,  $background-color+#0F0F0F $dot-size, rgba(#fff, 0) $dot-size) 0px $dot-size,
+      -webkit-linear-gradient(207deg, $background-color+#0F0F0F $dot-size, rgba(#fff, 0) $dot-size) 2*$dot-size $dot-size,
+      -webkit-linear-gradient(90deg, $background-color+#080808 2*$dot-size, rgba(#fff, 0) 2*$dot-size),
+      -webkit-linear-gradient($background-color+#0A0A0A 25%, $background-color+#070707 25%, $background-color+#070707 50%, rgba(#fff, 0) 50%, rgba(#fff, 0) 75%, $background-color+#111111 75%, $background-color+#111111)
+    );
+
+    background-repeat: repeat;
+    background-color: $background-color;
+    background-size: (4*$dot-size) (4*$dot-size);
+}
+
 .main-container{
   background-color: darken($base-color,50%);
 }
@@ -132,34 +153,18 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   background-color:$bg-color;
 }
 
-/*.playlist-container,.playlist-container-0,.playlist-container-1,.playlist-container-pressed,.playlist-container-selected{
-  text-align:left;
-  font-size:0.7em;
-  margin: 0.25em;
-  color:$fg-color;
-  white-space:nowrap;
-}
-
-.playlist-container-0{
-  background-color:darken($bg-color,10%);
-}
-
-.playlist-container-1{
-  background-color:$bg-color;
-}
-
-.playlist-container-pressed{
-  background-color:$hl-color;
-}
-
-.playlist-container-selected{
-  @include background-gradient($sel-color);
-}*/
 
 .videoplayermask{
-  background-color:rgba(0,0,255,0.8);
+  background-color:darken($bg-color,10%);
+  opacity:0.8;
 /*  -webkit-box-reflect: below 0
    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(blue)); */
+}
+
+.embedded-videobox
+{
+  margin:0.25em;
+  border:0.25em solid darken($bg-color,10%);
 }
 
 //Basic Tile class, much like abstract class
@@ -363,8 +368,8 @@ $time:0.5s;
 }
 
 .restore-size{
-  top:0;
-  left:0;
+/*  top:0;
+  left:0;*/
   transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
   -webkit-transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
 }
@@ -372,8 +377,8 @@ $time:0.5s;
 //reduce with transition: still some issues on some devices
 .reduce-size-wtransition
 {
-  top:$offset;
-  left:-$offset;
+/*  top:$offset;
+  left:-$offset;*/
   transform:scale($scaleFactor,$scaleFactor);
   -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0); /* Safari and Chrome */
   -webkit-animation-name: reduceSize;
@@ -385,22 +390,22 @@ $time:0.5s;
 
 @-webkit-keyframes reduceSize {
   0% {
-    top:0;
-    left:0;
+/*    top:0;
+    left:0;*/
     -webkit-transform:scale(1.0) translateZ(0);
   }
   
   100% {
-    top:$offset;
-    left:-$offset;
+/*    top:$offset;
+    left:-$offset;*/
     -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0);
   }
 }
 
 .restore-size-wtransition
 {
-  top:0;
-  left:0;
+/*  top:0;
+  left:0;*/
   transform:scale(1.0,1.0);
   -webkit-transform:scale(1.0,1.0) translateZ(0); /* Safari and Chrome */
   -webkit-animation-name: restoreSize;
@@ -412,14 +417,14 @@ $time:0.5s;
 
 @-webkit-keyframes restoreSize {
   0% {
-    top:$offset;
-    left:-$offset;
+/*    top:$offset;
+    left:-$offset;*/
     -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0);;
   }
   
   100% {
-    top:0;
-    left:0;
+/*    top:0;
+    left:0;*/
     -webkit-transform:scale(1.0,1.0) translateZ(0);
   }
 }

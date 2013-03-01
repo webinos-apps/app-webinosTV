@@ -19,7 +19,7 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   },
   
   mediaPLDeselected:function(mediaPlaylist, record, eOpts){
-    console.log("mediaPLDeselected")
+//     console.log("mediaPLDeselected")
     var mplaylist=this.getMplaylist();
     var targetDevList=this.getTargetDevList();
     if(mplaylist.getSelectionCount()===0)
@@ -32,7 +32,7 @@ Ext.define('webinosTV.controller.SelectMediaController', {
 
   mediaPLSelected:function(mediaPlaylist, record, eOpts)
   {
-    console.log("mediaSelected")
+//     console.log("mediaSelected")
     var targetDevList=this.getTargetDevList();
     targetDevList.setMasked(false);
     targetDevList.setDisabled(false);

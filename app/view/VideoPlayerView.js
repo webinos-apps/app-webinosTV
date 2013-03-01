@@ -3,7 +3,7 @@ Ext.define('webinosTV.view.VideoPlayerView',{
 	requires: [
       'Ext.Video'
 	],
-    xtype:'videoplayerview',
+    xtype:'modalvideoplayer',
 	config: {
       width:'90%',
       height:'90%',
@@ -13,11 +13,12 @@ Ext.define('webinosTV.view.VideoPlayerView',{
       items:[
         {
           xtype:'video',
+          preload:false,
           width:'100%',
           height:'100%',
           centered:true,
-          url: 'resources/BigBen/bb1.mov',
-          posterUrl: 'resources/BigBen/bb1.JPG'
+//           url: 'resources/BigBen/bb1.mov',
+//           posterUrl: 'resources/BigBen/bb1.JPG'
 //           loop: true
         }
       ],
@@ -33,10 +34,10 @@ Ext.define('webinosTV.view.VideoPlayerView',{
 	},
     
     setUrl:function(url){
-      this.getAt(0).setUrl(url);
+      return this.query('video')[0].setUrl(url);
     },
     
     setPosterUrl:function(url){
-      this.getAt(0).setPosterUrl(url);
+      return this.query('video')[0].setPosterUrl(url);
     }
 });

@@ -6,6 +6,8 @@ Ext.define('webinosTV.view.BrowserView', {
       'Ext.Panel', 'Ext.Button', 'Ext.data.Store', 'Ext.Img', 'Ext.SegmentedButton'],
     config: {
       id: 'browserMainView',
+      top:0,
+      left:0,
       currentSourceDeviceQueue: null, //private attribute - see showSourceDeviceQueue
       width: '100%',
       height: '100%',

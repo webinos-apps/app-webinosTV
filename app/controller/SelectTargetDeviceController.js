@@ -39,7 +39,7 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
 
     //unselect actions if no target dev is selected
     var tdevList = this.getTdevList();
-    console.log(tdevList.innerItems[1].dataview.getSelectionCount());
+//     console.log(tdevList.innerItems[1].dataview.getSelectionCount());
     if(tdevList.innerItems[1].dataview.getSelectionCount()===0){
       mActions.setMasked(true);
       mActions.setDisabled(true);

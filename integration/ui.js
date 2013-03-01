@@ -7,10 +7,18 @@ function run_ui_connect(){
   var removeQueue = function(){};
   var clearQueues = function(){};
 
-  var addFileItem = function(){};
-  var addFileItems = function(){};
-  var removeFileItem = function(){};
-  var clearFileItems = function(){};
+  var addFileItem = function(){
+    
+  };
+  var addFileItems = function(){
+    
+  };
+  var removeFileItem = function(){
+    
+  };
+  var clearFileItems = function(){
+    
+  };
 
   var addCategory = function(){};
   var addCategories = function(){};
@@ -70,23 +78,73 @@ function run_ui_connect(){
     store.clearData();
    };
    
-  //Play Media
-  var showModalVideo=function(/*url,posterUrl*/){
-    var videoPlayer = Ext.create('webinosTV.view.VideoPlayerView'/*,{url:url,posterUrl:posterUrl}*/);
-    Ext.Viewport.add(videoPlayer);
-    return videoPlayer;
+  //Play Video full screen
+  var showModalVideo=function(url,posterUrl){
+    if(Ext.Viewport.query('modalvideoplayer').length>0)
+    {
+      console.warn("VideoPlayerView already exists");
+      return null
+    }
+    else{
+    
+      var videoPlayer = Ext.create('webinosTV.view.VideoPlayerView',{//TODO use some more webinoish and meaningful for defaults
+        id:'theModalVideoPlayer',
+      });
+      var _url= url!==undefined? url:'resources/BigBen/bb1.mov';
+      var _posterUrl= posterUrl!==undefined? posterUrl:'resources/BigBen/bb1.JPG';
+      videoPlayer.setUrl(_url);
+      videoPlayer.setPosterUrl(_posterUrl);
+      Ext.Viewport.add(videoPlayer);
+      return videoPlayer;
+    }
+  };
+  
+  //Play Video in a small box
+  var showVideoPreview=function(url,posterUrl){
+    var bv=Ext.Viewport.query('#browserMainView')[0];
+    bv.replaceCls('restore-size','reduce-size');
+    bv.setTop('15%');
+    bv.setLeft('-15%');
+    Ext.Viewport.add({
+      id:'embedded-video',
+      xtype:'container',
+      preload:false,
+      cls:'embedded-videobox',
+      top:0,
+      left:'70%',
+      width:'28%',
+      height:'28%',//TODO use some more webinoish and meaningful for defaults
+      items:[{
+      xtype:'video',
+      width:'100%',
+      height:'100%',
+      centered:true,
+      url: url!==undefined? url:'resources/BigBen/bb1.mov',
+      posterUrl: posterUrl!==undefined? posterUrl:'resources/BigBen/bb1.JPG'
+      }]
+    })
+  };
+  
+  //Play Video in a small box
+  var hideVideoPreview=function(){
+    var bv=Ext.Viewport.query('#browserMainView')[0];
+    bv.replaceCls('reduce-size','restore-size');
+    bv.setTop(0);
+    bv.setLeft(0);
+    var ev=Ext.Viewport.query('#embedded-video')[0];
+    Ext.Viewport.remove(ev,true);
   };
 
   //Navigation
   var addTargetDevice = function(id,type,counter,name){
-        var store = Ext.StoreMgr.get('tmpdispdevstore-id');
-        store.add({"id": id, "type": type, "counter": counter,"deviceName":name});
-      };
+    var store = Ext.StoreMgr.get('tmpdispdevstore-id');
+    store.add({"id": id, "type": type, "counter": counter,"deviceName":name});
+  };
       
-      var clearTargetDevices = function(){
-        var store = Ext.StoreMgr.get('tmpdispdevstore-id');
-        store.clearData();
-      };
+  var clearTargetDevices = function(){
+    var store = Ext.StoreMgr.get('tmpdispdevstore-id');
+    store.clearData();
+  };
       
   var browse={
       browserView:'browserMainView',//TODO use columns!!!
@@ -514,8 +572,11 @@ function run_ui_connect(){
     //TODO find a smarter name
     remoteEvents:remoteEvents,
     
+    //show video in a modal window
     showModalVideo:showModalVideo,
     //show multiple video items
+    showVideoPreview:showVideoPreview,
+    hideVideoPreview:hideVideoPreview,
 
     //Navigation
     browse:browse
