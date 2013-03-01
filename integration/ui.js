@@ -515,6 +515,7 @@ function run_ui_connect(){
     remoteEvents:remoteEvents,
     
     showModalVideo:showModalVideo,
+    //show multiple video items
 
     //Navigation
     browse:browse

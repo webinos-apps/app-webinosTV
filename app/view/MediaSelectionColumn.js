@@ -94,7 +94,24 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
           return dv.deselect(record,flag);
         else
           return null;
+      },
+      
+      getSelection:function(){
+        var dv=this.query('dataview')[0];
+        if(dv)
+          return dv.getSelection();
+        else
+          return null;
+      },
+      
+      getSelectionCount:function(){
+        var dv=this.query('dataview')[0];
+        if(dv)
+          return dv.getSelectionCount();
+        else
+          return null;
       }
+
     }
     ]
   },
