@@ -60,14 +60,14 @@ $list-pressed-color:$hl-color;
 
 .title-container{
   background-color: #000;
-  font-size: 80%;white-space: nowrap;overflow: hidden;
+  font-size: 80%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 div.nav-selected, div.x-container .x-unsized .x-dataview{
   border: 3px solid $csel-color;
 }
-
-
 
 /*.nav-selected{
   .x-container .x-unsized .x-dataview{
@@ -102,7 +102,37 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   max-width:100%;
 }
 
-.playlist-container,.playlist-container-0,.playlist-container-1,.playlist-container-pressed,.playlist-container-selected{
+.playlist-disclosure{
+  background-color:darken($bg-color,5%);
+  color:darken($fg-color,10%);;
+  text-align:center;
+}
+
+.playlist-item{
+  text-align:left;
+  font-size:0.7em;
+  margin: 0.25em;
+  color:$fg-color;
+  white-space:nowrap;
+}
+
+.playlist-item-pressed{
+  background-color:$hl-color;
+}
+
+.playlist-item-selected{
+  @include background-gradient($sel-color);
+}
+
+.playlist-item:nth-child(odd){
+  background-color:darken($bg-color,10%);
+}
+
+.playlist-item:nth-child(even){
+  background-color:$bg-color;
+}
+
+/*.playlist-container,.playlist-container-0,.playlist-container-1,.playlist-container-pressed,.playlist-container-selected{
   text-align:left;
   font-size:0.7em;
   margin: 0.25em;
@@ -124,7 +154,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 .playlist-container-selected{
   @include background-gradient($sel-color);
-}
+}*/
 
 .videoplayermask{
   background-color:rgba(0,0,255,0.8);

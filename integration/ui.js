@@ -89,7 +89,7 @@ function run_ui_connect(){
       };
       
   var browse={
-      browserView:'browserMainView',
+      browserView:'browserMainView',//TODO use columns!!!
       columns:['sourceDeviceList','mediaCategoryList','mediaPlaylist','targetDevicesList','actionsList'],
       lastVisitedColumnId:null,
       leftRightIndex:-1,
@@ -125,7 +125,7 @@ function run_ui_connect(){
           this.leftRightIndex--;
           index=this.leftRightIndex;
           var nextCmp=Ext.getCmp(this.columns[index]);
-          nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+          nextCmp.addCls(["nav-selected","phone-listview-indicator"]);
           this.lastVisitedColumnId=this.columns[index];
           console.log("Move LEFT");
         }
@@ -141,7 +141,7 @@ function run_ui_connect(){
           this.leftRightIndex++;
           index=this.leftRightIndex;
           var nextCmp=Ext.getCmp(this.columns[index]);
-          nextCmp.setCls(["nav-selected","phone-listview-indicator"]);
+          nextCmp.addCls(["nav-selected","phone-listview-indicator"]);
           this.lastVisitedColumnId=this.columns[index];
           console.log("Move RIGHT");
         }
@@ -152,7 +152,7 @@ function run_ui_connect(){
         var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
         if(lrIndex<this.columns.length && currColumnCmp)
         {
-          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.$className ==="webinosTV.view.MediaPlaylist") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.id==='mediaPlaylist') ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
           if(index < numberOfRows)
           {
             var currCmp=currColumnCmp.getItemAt(index);
@@ -174,7 +174,7 @@ function run_ui_connect(){
         var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
         if(lrIndex<this.columns.length && currColumnCmp)
         {
-          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.$className ==="webinosTV.view.MediaPlaylist") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.id==='mediaPlaylist') ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
           if(index < numberOfRows-1)
           {
             if(index>-1)
@@ -194,7 +194,7 @@ function run_ui_connect(){
         if(this.lastVisitedColumnId){
           var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
           var index=this.upDownIndex;
-          if(index>-1 && (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.$className ==="webinosTV.view.MediaPlaylist"))
+          if(index>-1 && (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.id==='mediaPlaylist'))
           {
             var currCmp=currColumnCmp.getItemAt(index);
             currCmp.removeCls("nav-selected");
@@ -209,7 +209,7 @@ function run_ui_connect(){
         if(lrIndex<this.columns.length)
         {
           var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
-          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.$className ==="webinosTV.view.MediaPlaylist") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.id==='mediaPlaylist') ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
           var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
           if(index < numberOfRows && isVisible)
           {
@@ -253,8 +253,8 @@ function run_ui_connect(){
             }
 
             this.lastVisitedColumnId=columnId;
-            destinationColumn.setCls(["nav-selected","phone-listview-indicator"]);
-            if(recordId && (destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.$className ==="webinosTV.view.MediaPlaylist"))
+            destinationColumn.addCls(["nav-selected","phone-listview-indicator"]);
+            if(recordId && (destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.id==='mediaPlaylist'))
             {
               var destinationRowIndex=-1;
               var _recordId;
@@ -302,9 +302,10 @@ function run_ui_connect(){
           var isVisible=destinationColumn.getMasked().getHidden(); //false if the column is masked
           if(isVisible)
           {
-            if(destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.$className ==="webinosTV.view.MediaPlaylist")
+            if(destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.id==='mediaPlaylist')
             {
               var modelClassName= destinationColumn.getStore().getModel().$className;
+              console.log("modelClassName",modelClassName)
               var selection;
               if(recordId instanceof Array) //multiple
               {
@@ -321,8 +322,11 @@ function run_ui_connect(){
               }
               destinationColumn.select(selection);
             }
+            else {console.log("$CLASSNAME",destinationColumn.$className);}
           }
+          else {console.log("Not vis");}
         }
+        else {console.log("RecordID",recordId,"index",index);}
       },
       /**
        * select an item in a column
@@ -333,14 +337,14 @@ function run_ui_connect(){
       deselectAt:function(columnId,recordId){
         var bw=Ext.get('browserView');
         var index = this.columns.indexOf(columnId);
-        console.log("Select At",columnId,index);
+        console.log("DEselect At",columnId,index);
         if(recordId && index>-1)
         {
           var destinationColumn=Ext.getCmp(columnId);
           var isVisible=destinationColumn.getMasked().getHidden(); //false if the column is masked
           if(isVisible)
           {
-            if(destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.$className ==="webinosTV.view.MediaPlaylist")
+            if(destinationColumn.$className==="webinosTV.view.TilesDataView" || destinationColumn.id==='mediaPlaylist')
             {
               var modelClassName= destinationColumn.getStore().getModel().$className;
               var selection;
@@ -369,7 +373,7 @@ function run_ui_connect(){
         if(lrIndex<this.columns.length)
         {
           var currColumnCmp=Ext.getCmp(this.lastVisitedColumnId);
-          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.$className ==="webinosTV.view.MediaPlaylist") ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
+          var numberOfRows = (currColumnCmp.$className === "webinosTV.view.TilesDataView" || currColumnCmp.id==='mediaPlaylist') ? currColumnCmp.getStore().getCount():0; //TODO find a clean way to browse in columns 3 and 5
           var isVisible=currColumnCmp.getMasked().getHidden(); //false if the column is masked
           if(index < numberOfRows && isVisible)
           {
@@ -412,15 +416,12 @@ function run_ui_connect(){
       case 32://space
         browse.stopBrowsing()
         break;
-      case 83://space
+      case 83://s key
         browse.toggleSelectItem()
         break;
-      case 68://space
+      case 68://d key
         browse.deselectItem()
         break;
-//           case 83://s key TODO also S
-//             browse.toggleSelect() //TODO select and deselect or toggle?
-//             break;
       default:
         console.log("Unhandled key",key);
     }

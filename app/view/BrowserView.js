@@ -20,31 +20,36 @@ Ext.define('webinosTV.view.BrowserView', {
       {
         xtype: 'srcdevscol',
         flex: 2.5,
-        height: '100%'
+        height: '100%',
+        id:'sourceDevicesColumn'
       },
       // Categories 
       {
           xtype: 'categscol',
           flex: 1.5,
-          height: '100%'
+          height: '100%',
+          id:'categoriesColumn'
       },
       // Media selection
       {
         xtype: 'mediaselcol',
         flex: 3,
-        height: '100%'
+        height: '100%',
+        id:'mediaSelectionColumn'
       },
       // Target devices
       {
         xtype: 'tgtdevscol',
         flex: 1.5,
-        height: '100%'
+        height: '100%',
+        id:'targetDevicesColumn'
       },
       // Actions
       {
         xtype: 'actctrlscol',
         flex: 1.5,
-        height: '100%'
+        height: '100%',
+        id:'actionControlsColumn'
       }]
     },
 
