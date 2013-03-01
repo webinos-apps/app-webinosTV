@@ -1,7 +1,7 @@
 Ext.define('webinosTV.model.VideoMedia', {
-  extend: 'Ext.data.Model',
+  extend: 'webinosTV.model.Media',
 
   config: {
-    fields: ['id','title','artist', 'album', 'file']
+    fields: ['format','length']
   }
 });

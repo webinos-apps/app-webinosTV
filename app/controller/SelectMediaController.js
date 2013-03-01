@@ -19,14 +19,20 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   },
   
   mediaPLDeselected:function(mediaPlaylist, record, eOpts){
+//     console.log("mediaPLDeselected")
+    var mplaylist=this.getMplaylist();
     var targetDevList=this.getTargetDevList();
-    targetDevList.setMasked(true);
-    targetDevList.setDisabled(true);
-     targetDevList.setDisableSelection(true);
+    if(mplaylist.getSelectionCount()===0)
+    {
+      targetDevList.setMasked(true);
+      targetDevList.setDisabled(true);
+      targetDevList.setDisableSelection(true);
+    }
   },
 
   mediaPLSelected:function(mediaPlaylist, record, eOpts)
   {
+//     console.log("mediaSelected")
     var targetDevList=this.getTargetDevList();
     targetDevList.setMasked(false);
     targetDevList.setDisabled(false);

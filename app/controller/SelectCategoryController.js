@@ -8,11 +8,12 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     control:{
       mcategory:
       {
-    select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
-  deselect:'mediaCategoryDeselected'
+        select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
+        deselect:'mediaCategoryDeselected'
       }
     },
     refs: {
+      smColumn:'#mediaSelectionColumn',
       mplist: '#mediaPlaylist',
       mcategory: '#mediaCategoryList',
       mtargetdevs: '#targetDevicesList',
@@ -21,31 +22,31 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
   },
   
   mediaCategoryDeselected:function(mediaCategoryList, record, eOpts){
-    var mplist=this.getMplist();
+//     var mplist=this.getMplist();
+    var smColumn=this.getSmColumn();
     var mtargetdevs=this.getMtargetdevs();
     var mactions=this.getMactions();
-    mplist.setItems({
-      xtype:'tilepanel',
-      cls:['tile-panel'],
-      text: 'please select a media type...'
-    });
-    mplist.setMasked(true);
-    mplist.setDisabled(false);
+//     mplist.setItems({
+//       xtype:'tilepanel',
+//       cls:['tile-panel'],
+//       text: 'please select a media type...'
+//     });
+//     mplist.setMasked(true);
+//     mplist.setDisabled(false);
+    smColumn.setEmptyContent();
+    smColumn.setContentMasked(true);
     mtargetdevs.setMasked(true);
     mtargetdevs.setDisabled(false);
     mtargetdevs.deselectAll();
     mactions.setMasked(true);
     mactions.setDisabled(false);
-
-          
-          
-
-        
   },
 
   mediaCategorySelected:function(mediaCategoryList, record, eOpts)
   {
-    var mplist=this.getMplist();
+//     var mplist=this.getMplist();
+    var smColumn=this.getSmColumn();
+
 //     console.log("mediaCategorySelected",mplist)
 //     var mcategoryList=this.getMcategory();
 //     console.log("mediaCategorySelected",mcategoryList.getSelectionCount(),record)
@@ -55,30 +56,30 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     {
       case 'movies':
 //  console.log("selected movies");
-    mplist.showVideos();
+    smColumn.showVideos();
     break;
       case 'music':
 //  console.log("selected mp3");
-    mplist.showMusic();
+    smColumn.showMusic();
     break;
       case 'images':
 //  console.log("selected pictures");
-    mplist.showImages();
+    smColumn.showImages();
     break;
       case 'channels':
 //  console.log("selected TV");
-    mplist.showTV();
+    smColumn.showTV();
     break;
       case 'apps':
 //  console.log("selected Apps");
-    mplist.showApps();
+    smColumn.showApps();
     break;
       case 'docs':
 //  console.log("selected Documents");
-    mplist.showDocuments();
+    smColumn.showDocuments();
     break;
     }
-    mplist.setMasked(false);
-    mplist.setDisabled(true);
+//     mplist.setMasked(false);
+//     mplist.setDisabled(true);
   }
 });

@@ -6,7 +6,7 @@ Ext.define('webinosTV.store.TempMusicStore', {
   config:
   {
     storeId:'tmpmusicstore-id',
-    model: 'webinosTV.model.Media',
+    model: 'webinosTV.model.AudioMedia',
     proxy: {
       type: 'ajax',
       url : './storage/music.json',
