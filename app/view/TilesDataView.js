@@ -22,7 +22,7 @@ Ext.define('webinosTV.view.TilesDataView',{
     allowDeselect: true,
     itemCls:'tile-panel',
     selectedCls:'tile-panel-selected',
-    pressedDelay:300,
+    pressedDelay:100,
     pressedCls:'tile-panel-pressed',
     listeners:{
       itemdoubletap:{

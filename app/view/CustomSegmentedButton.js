@@ -2,7 +2,7 @@ Ext.define('webinosTV.view.CustomSegmentedButton', {
   extend: 'Ext.Container',
   xtype: 'customsegbutton',
   requires: [
-    'Ext.Panel'
+    'Ext.Panel', 'Ext.Video'
   ],
   config:
   {
@@ -37,5 +37,30 @@ Ext.define('webinosTV.view.CustomSegmentedButton', {
       segButton.getAt(prevIndex).unselect();
     }
     segButton.getAt(index).select();
+    //FIXME: move to controller 
+    //alert(index);
+
+    //get files to be played
+    var files = Ext.getCmp('mediaPlaylist');
+    var fileNames = [];
+    files.items.items[2].innerItems[0].dataview.getSelection().forEach(function(e){
+      fileNames.push(e.data.file);
+    });
+    console.log(fileNames);
+
+
+    //get selected target devices
+    var tar = Ext.getCmp('targetDevicesList');
+    var targetIds = [];
+    tar.getSelection().forEach(function(e){targetIds.push(e.data.id);});
+    console.log(targetIds);
+
+    for (var i = 0; targetIds.length > i ; i++) {
+     // targetIds
+    };
+  
+  
+
   }
 });
+

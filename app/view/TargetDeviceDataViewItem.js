@@ -5,7 +5,11 @@ Ext.define('webinosTV.view.TargetDeviceDataViewItem', {
     config:{
       layout:'hbox',
       height:100,
-      deviceLabel:{xtype:'tilepanel', iconCls : '', text:''}
+      deviceLabel:{
+        xtype:'tilepanel',
+        iconCls : '',
+        text:''
+      }
     },
 
     applyDeviceLabel:function(config)

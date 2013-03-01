@@ -63,6 +63,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       {
 // 	xtype:'list',
 	xtype:'dataview',
+	mode:"MULTI",
 	flex:9,
 	margin:2,
 	scrollable:{
@@ -140,6 +141,8 @@ Ext.define('webinosTV.view.MediaPlaylist', {
       {
 // 	xtype:'list',
 	xtype:'dataview',
+	mode:"MULTI",
+	id:"videoDataView",
 	flex:9,
 	margin:2,
 	scrollable:{
@@ -167,7 +170,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
 		    targetDevList.setDisabled(true);
 			targetDevList.deselectAll();;
 		      
-		      var mbtns=Ext.getCmp('playQueueSegmBtn');
+		      var mbtns=Ext.getCmp('actionsList');
 		      mbtns.setMasked(true);
 		      mbtns.setDisabled(true);
 		      
