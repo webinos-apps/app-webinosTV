@@ -76,7 +76,13 @@ $list-pressed-color:$hl-color;
 }
 
 .main-container{
-  background-color: darken($base-color,50%);
+/*   background-color: darken($base-color,50%); */
+/*   @include background-carbon(darken($base-color,50%),5px); */
+  $background-carbon-fiber-base-color:darken($base-color,37%);
+  @include background-carbon-fiber($background-carbon-fiber-base-color,$dot-color: scale-lightness($background-carbon-fiber-base-color, -50),
+  $highlight-color: rgba($highlight_color, .1),
+  $spacing-size: 12px,
+  $dot-size: 1.5px);
 }
 
 .title-container{
@@ -117,6 +123,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 //Playlist unselected item container
 .playlist{
   max-width:100%;
+  background-color:rgba(darken($bg-color,50%),0.4);
 }
 
 .playlist div{
@@ -137,22 +144,47 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   white-space:nowrap;
 }
 
+.playlist-item{
+/*   background-color:$bg-color; */
+  @include background-gradient($bg-color);
+}
+
+.playlist-item:nth-child(odd){
+/*   background-color:darken($bg-color,10%); */
+  @include background-gradient(darken($bg-color,10%));
+}
+
+.playlist-item:nth-child(even){
+/*   background-color:$bg-color; */
+  @include background-gradient($bg-color);
+}
+
 .playlist-item-pressed{
-  background-color:$hl-color;
+/*   background-color:$hl-color; */
+  @include background-gradient($hl-color);
+}
+
+.playlist-item-pressed:nth-child(even){
+/*   background-color:$hl-color; */
+  @include background-gradient($hl-color);
+}
+
+.playlist-item-pressed:nth-child(odd){
+/*   background-color:$hl-color; */
+  @include background-gradient($hl-color);
 }
 
 .playlist-item-selected{
   @include background-gradient($sel-color);
 }
 
-.playlist-item:nth-child(odd){
-  background-color:darken($bg-color,10%);
+.playlist-item-selected:nth-child(even){
+  @include background-gradient($sel-color);
 }
 
-.playlist-item:nth-child(even){
-  background-color:$bg-color;
+.playlist-item-selected:nth-child(odd){
+  @include background-gradient($sel-color);
 }
-
 
 .videoplayermask{
   background-color:darken($bg-color,10%);
@@ -180,7 +212,8 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 //Tile unselected
 .tile-panel{
-  background-color:$bg-color;
+/*   background-color:$bg-color; */
+  @include background-gradient($bg-color);
 }
 
 //Tile selected
@@ -190,7 +223,8 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 //Tile pressed
 .tile-panel-pressed{
-  background-color:$hl-color;
+/*   background-color:$hl-color; */
+  @include background-gradient($hl-color);
 }
 
 //Tile text
