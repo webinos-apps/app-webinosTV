@@ -514,6 +514,7 @@ function run_ui_connect(){
   //TODO: keys shall be bound only for the PC profile
   var bindKey=function(evt)
   {
+    return;
     var key = evt.keyCode;
     switch(key){
       case 37://left arrow key
@@ -587,6 +588,54 @@ function run_ui_connect(){
     }
   };
 
+  var requestsCache = {};
+  var requestDevNameAndType = function(serviceAdr, notifyCB, resultCB){
+    if(!requestsCache[serviceAdr]){
+      requestsCache[serviceAdr]={n:notifyCB,r:resultCB};
+    }
+    processRequests();
+  }
+
+  var _sendNotification = function(adr){
+    if(requestsCache[adr]){
+      console.log(12)
+      requestsCache[adr].n();
+    }
+  }
+
+  var _showDialog = function(i){
+          Ext.Msg.show({
+          title:'New device detected!',
+          html: '<div style="text-align:center; width:100%;">Choose a name <input id="selectedDevName" style="color:black;text-align:center;" type="text" /><br/>and select the type<br/><select style="color:black;text-align:center;"  id="selectedDevType"><option name="phone">phone</option><option name="tablet">tablet</option><option name="pc">pc</option><option name="tv">tv</option><<option name="laptop">laptop</option></select> <br/>Hint: For eased assignment <input type="button" style="color:black;" value="Send" onclick="webinosTV.app.connectUi._sendNotification(\''+i+'\')"> notification to device.</div>',
+          height: "70%",
+          minHeight: 400,
+          width: "50%",
+          scrollable: {
+          direction: 'vertical',
+          directionLock: true
+          },
+          fn: function(okBtn){
+            if(Ext.get('selectedDevName').dom.value && Ext.get('selectedDevType').dom.value){
+              console.log(Ext.get('selectedDevName').dom.value);
+              console.log(Ext.get('selectedDevType').dom.value);
+              requestsCache[i].r({type:Ext.get('selectedDevType').dom.value,name:Ext.get('selectedDevName').dom.value});
+              delete requestsCache[i];
+            }
+            
+          }
+      });
+  }
+
+  var processRequests = function(){
+    console.log(Ext.Msg.isHidden());
+    if(Ext.Msg.isHidden()!=null  && !Ext.Msg.isHidden()){
+      return;
+    }
+    for(var i in requestsCache){
+      _showDialog(i);
+    }
+  }
+
   /* interface */
   return {
 
@@ -639,7 +688,11 @@ function run_ui_connect(){
     hideVideoPreview:hideVideoPreview,
 
     //Navigation
-    browse:browse
+    browse:browse,
+
+    //misc ui bindings
+    requestDevNameAndType:requestDevNameAndType,
+    _sendNotification:_sendNotification
   };
 };
 
