@@ -42,13 +42,43 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
             id:1,
             icon: 'play',
             text: 'Play Now',
-            action:function(){alert("Play it!");}
+            action:function(mode){
+                if(mode==="play"){
+                  //get files to be played
+                  var files = Ext.getCmp('mediaPlaylist');
+                  var fileNames = [];
+                  files.getSelection().forEach(function(e){
+                    fileNames.push(e.data.file);
+                  });
+                  console.log(fileNames);
+
+
+                  //get selected target devices
+                  var tar = Ext.getCmp('targetDevicesList');
+                  var targetIds = [];
+                  tar.getSelection().forEach(function(e){targetIds.push(e.data.id);});
+                  console.log(targetIds);
+
+
+                  //get selected source device
+                  var sou = Ext.getCmp('sourceDeviceList');
+                  var source = "";
+                  sou.getSelection().forEach(function(e){source = e.data.id;});
+                  console.log(source);
+
+                  webinosTV.app.connectEvents.notify("playFiles",{source:source, targets:targetIds, files:fileNames});
+                }
+                if(mode==="stop"){
+                  webinosTV.app.connectEvents.notify("stopFiles",{});
+                }
+                  
+            }
           },
           {
             id:2,
             icon: 'queue',
             text: 'Add to Queue',
-            action:function(){alert("Add to Q");}
+            action:function(){console.log("Add to Q");}
           }
           ],
           autoLoad: true 

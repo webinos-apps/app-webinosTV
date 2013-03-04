@@ -161,6 +161,7 @@ function run_ui_connect(){
   
   //Play Video in a small box
   var showVideoPreview=function(url,posterUrl){
+    hideVideoPreview();
     var bv=Ext.Viewport.query('#browserMainView')[0];
     bv.replaceCls('restore-size','reduce-size');
     bv.setTop('15%');
@@ -176,13 +177,18 @@ function run_ui_connect(){
       height:'28%',//TODO use some more webinoish and meaningful for defaults
       items:[{
       xtype:'video',
+      initialize: function(video,eopts){
+        //this.play();
+    },
       width:'100%',
       height:'100%',
       centered:true,
       url: url!==undefined? url:'resources/BigBen/bb1.mov',
       posterUrl: posterUrl!==undefined? posterUrl:'resources/BigBen/bb1.JPG'
       }]
-    })
+    });
+    //console.log(Ext.get('embedded-video'));
+    //Ext.getCmp('embedded-video').items.items[0].media.play();
   };
   
   //Play Video in a small box

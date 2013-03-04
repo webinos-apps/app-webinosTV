@@ -8,7 +8,8 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
     control:{
       actionList:
       {
-        select:'actionSelected'
+        select:'actionSelected',
+        deselect:'actionDeSelected'
       }
     },
     refs: {
@@ -20,7 +21,11 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
 
   actionSelected:function(actionList, record, eOpts)
   {
-    record.get('action')();
+    record.get('action')("play");
+  },
+  actionDeSelected:function(actionList, record, eOpts)
+  {
+    record.get('action')("stop");
   }
 
 });
