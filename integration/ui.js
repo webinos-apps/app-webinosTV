@@ -143,12 +143,12 @@ function run_ui_connect(){
     if(Ext.Viewport.query('modalvideoplayer').length>0)
     {
       console.warn("VideoPlayerView already exists");
-      return null
+      return null;
     }
     else{
     
       var videoPlayer = Ext.create('webinosTV.view.VideoPlayerView',{//TODO use some more webinoish and meaningful for defaults
-        id:'theModalVideoPlayer',
+        id:'theModalVideoPlayer'
       });
       var _url= url!==undefined? url:'resources/BigBen/bb1.mov';
       var _posterUrl= posterUrl!==undefined? posterUrl:'resources/BigBen/bb1.JPG';
@@ -162,14 +162,14 @@ function run_ui_connect(){
   //Play Video in a small box
   var showVideoPreview=function(url,posterUrl){
     hideVideoPreview();
-    var bv=Ext.Viewport.query('#browserMainView')[0];
-    bv.replaceCls('restore-size','reduce-size');
-    bv.setTop('15%');
-    bv.setLeft('-15%');
+    var browserView=Ext.Viewport.query('#browserMainView')[0];
+//    browserView.replaceCls('restore-size','reduce-size');
+//    browserView.setTop('15%');
+//    browserView.setLeft('-15%');
     Ext.Viewport.add({
-      id:'embedded-video',
+      id:'embedded-video-container',
       xtype:'container',
-      preload:false,
+//      preload:false,
       cls:'embedded-videobox',
       top:0,
       left:'70%',
@@ -177,9 +177,9 @@ function run_ui_connect(){
       height:'28%',//TODO use some more webinoish and meaningful for defaults
       items:[{
       xtype:'video',
-      initialize: function(video,eopts){
-        //this.play();
-    },
+//      initialize: function(video,eopts){
+//        //this.play();
+//    },
       width:'100%',
       height:'100%',
       centered:true,
@@ -187,18 +187,26 @@ function run_ui_connect(){
       posterUrl: posterUrl!==undefined? posterUrl:'resources/BigBen/bb1.JPG'
       }]
     });
+//    browserView.replaceCls('restore-size','reduce-size'); BUGGY!
+    browserView.setCls(['main-container', 'reduce-size']);
+    browserView.setTop('15%');
+    browserView.setLeft('-15%');
+    Ext.Viewport.query('#embedded-video-container')[0].query('video')[0].play();
     //console.log(Ext.get('embedded-video'));
     //Ext.getCmp('embedded-video').items.items[0].media.play();
   };
   
   //Play Video in a small box
   var hideVideoPreview=function(){
-    var bv=Ext.Viewport.query('#browserMainView')[0];
-    bv.replaceCls('reduce-size','restore-size');
-    bv.setTop(0);
-    bv.setLeft(0);
-    var ev=Ext.Viewport.query('#embedded-video')[0];
-    Ext.Viewport.remove(ev,true);
+
+    var browserView=Ext.Viewport.query('#browserMainView')[0];
+    browserView.setTop(0);
+    browserView.setLeft(0);
+//    browserView.replaceCls('reduce-size','restore-size');
+    browserView.setCls(['main-container', 'restore-size']);
+    var embeddedVideoPlayer=Ext.Viewport.query('#embedded-video-container')[0];
+    Ext.Viewport.remove(embeddedVideoPlayer,true);
+
   };
 
   //Navigation

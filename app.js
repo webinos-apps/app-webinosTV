@@ -13,7 +13,12 @@ Ext.application({
     ],
 
     viewport: {
-      autoMaximize: false
+      autoMaximize: false,
+      top:0,
+      left:0,
+      layout:'float',
+      width:'100%',
+      height:'100%'
     },
 
     views: [

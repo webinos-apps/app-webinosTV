@@ -7,7 +7,9 @@ Ext.define('webinosTV.view.VideoPlayerView',{
 	config: {
       width:'90%',
       height:'90%',
-      modal: { cls:'videoplayermask' },
+      modal: { 
+        cls:'videoplayermask' 
+      },
       hideOnMaskTap:true,
       centered: true,
       items:[
@@ -24,6 +26,7 @@ Ext.define('webinosTV.view.VideoPlayerView',{
           fn:function(videoPlayerPanel, eOpts){
             //TODO destroy? notify? ...
             console.log("Video Player Panel Hidden",videoPlayerPanel);
+           // alert("Hiding player  - Hidden ?"+videoPlayerPanel.getHidden());
             Ext.Viewport.remove(videoPlayerPanel,true);
           }
         }
