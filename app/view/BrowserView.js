@@ -11,7 +11,7 @@ Ext.define('webinosTV.view.BrowserView', {
       currentSourceDeviceQueue: null, //private attribute - see showSourceDeviceQueue
       width: '100%',
       height: '100%',
-      cls: 'main-container',
+      cls: ['main-container', 'restore-size'],
       layout: {
           type: 'hbox', //Main component
           align: 'center',
