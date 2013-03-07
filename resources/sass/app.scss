@@ -193,7 +193,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(blue)); */
 }
 
-.embedded-videobox
+.videobox
 {
   margin:0.25em;
   border:0.25em solid darken($bg-color,10%);
@@ -373,17 +373,17 @@ div.multi-tile-panel-pressed div.tile-panel{
 
 //For labels of not yet implemented features
 .not-implemented-yet {
-  
+
 }
 @-webkit-keyframes rotateAndScale {
   0% {
     -webkit-transform:scale(1.0) rotate(0deg);
   }
-  
+
   60% {
     -webkit-transform:scale(2.5) rotate(0deg);
   }
-  
+
   100% {
     -webkit-transform:scale(1.0) rotate(360deg);
   }
@@ -428,7 +428,7 @@ $time:0.5s;
     left:0;*/
     -webkit-transform:scale(1.0) translateZ(0);
   }
-  
+
   100% {
 /*    top:$offset;
     left:-$offset;*/
@@ -455,7 +455,7 @@ $time:0.5s;
     left:-$offset;*/
     -webkit-transform:scale($scaleFactor,$scaleFactor) translateZ(0);;
   }
-  
+
   100% {
 /*    top:0;
     left:0;*/
