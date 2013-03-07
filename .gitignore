@@ -5,3 +5,4 @@ build
 packager.json
 packager.temp.json
 *.kate-swp
+nbproject

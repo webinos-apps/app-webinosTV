@@ -9,7 +9,7 @@ function run_ui_connect() {
     'tvchannels': null, //TODO fix not displayed
     'webinos': null, //TODO find a suitable SVG icon
     'docs': null
-  }
+  };
 
   var addQueue = function() {
   };
@@ -30,7 +30,7 @@ function run_ui_connect() {
     if (store)
     {
       var index = store.findBy(function(record, id) {
-        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id)
+        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id);
         return condition;
       });
 
@@ -57,7 +57,7 @@ function run_ui_connect() {
   //objects = array[{mediaItem:item,category:category}]
   var addMediaItems = function(objects) {
     objects.forEach(function(object) {
-      addMediaItem(object.mediaItem, object.category)
+      addMediaItem(object.mediaItem, object.category);
     });
   };
 
@@ -68,7 +68,7 @@ function run_ui_connect() {
     if (store)
     {
       var index = store.findBy(function(record, id) {
-        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id)
+        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id);
         return condition;
       });
       store.removeAt(index);
@@ -150,77 +150,162 @@ function run_ui_connect() {
     store.clearData();
   };
 
-  //Play Video full screen
-  var showModalVideo = function(url, posterUrl) {
-    var videoPlayer = null;
-    var queryVideoPlayer = Ext.Viewport.query('#theModalVideoPlayer');
-    if (queryVideoPlayer.length > 0)
-    {
-      console.warn("VideoPlayerView already exists");
-      videoPlayer = queryVideoPlayer[0];
-      videoPlayer.setUrl(url !== undefined ? url : 'resources/BigBen/bb1.mov');
-      videoPlayer.setHidden(false);
-    }
-    else {
-      videoPlayer = Ext.create('webinosTV.view.VideoWrapper', {//TODO use some more webinoish and meaningful for defaults
-        id: 'theModalVideoPlayer',
-        autoplay: false,
-        loop: false,
-        preload: 'auto',
-        useControls: true,
-        tapToControl: false,
-        width: '90%',
-        height: '90%',
-        centered: true,
-        hideOnMaskTap: true,
-        modal: {
-          cls: 'videoplayermask'
-        },
-        url: url !== undefined ? url : 'resources/BigBen/bb1.mov'
-      });
-      Ext.Viewport.add(videoPlayer);
-    }
-    return videoPlayer;
-  };
 
-  //Play Video in a small box
-  var showVideoPreview = function(url, posterUrl) {
-    hideVideoPreview();
+  var _reduceBrowserView = function() {
     var browserView = Ext.Viewport.query('#browserMainView')[0];
-    Ext.Viewport.add({
-      id: 'embedded-video-container',
-      xtype: 'videowrap',
-      autoplay: true,
-      loop: false,
-      preload: 'auto',
-      useControls: false,
-      tapToControl: true,
-      top: 0,
-      left: '70%',
-      width: '28%',
-      height: '28%', //TODO use some more webinoish and meaningful for defaults
-      centered: true,
-      url: url !== undefined ? url : 'resources/BigBen/bb1.mov'//,
-    });
-//    browserView.replaceCls('restore-size','reduce-size'); BUGGY!
     browserView.setCls(['main-container', 'reduce-size']);
     browserView.setTop('15%');
     browserView.setLeft('-15%');
-    // Ext.Viewport.query('#embedded-video-container')[0].play();
   };
 
-  //Play Video in a small box
-  var hideVideoPreview = function() {
-
+  var _restoreBrowserView = function() {
     var browserView = Ext.Viewport.query('#browserMainView')[0];
     browserView.setTop(0);
     browserView.setLeft(0);
-//    browserView.replaceCls('reduce-size','restore-size');
     browserView.setCls(['main-container', 'restore-size']);
-    var embeddedVideoPlayer = Ext.Viewport.query('#embedded-video-container')[0];
-    Ext.Viewport.remove(embeddedVideoPlayer, true);
-
   };
+
+  /***
+   * show the media player given a configuration object
+   * @param {object} mediaPlayerConfig
+   * {
+   *    mode:{string}, - 'modal' or 'preview'
+   *    mediaType:{string}, - 'audio' or 'video'
+   *    url:{string}, - media url
+   *    posterUrl:{string} - media poster (still image) url OPTIONAL
+   *  }
+   *
+   *
+   * @returns {Class} mediaPlayer
+   */
+  var showMediaPlayer = function(mediaPlayerConfig) {
+    var _mode = mediaPlayerConfig.mode === undefined ? 'modal' : mediaPlayerConfig.mode;
+    var _mediaType = mediaPlayerConfig.mediaType === undefined ? 'video' : mediaPlayerConfig.mediaType;
+
+    //TODO set to something more "webinoish" or drop after debugging phase
+    var _defaultUrl = _mediaType === 'video' ? 'resources/BigBen/bb1.mov' : 'resources/BigBen/Skill_Borrower_-_Ain_t_Gonna_Ask_You.mp3';
+    var _defaultPosterUrl = _mediaType === 'video' ? 'resources/BigBen/bb1.JPG' : 'resources/BigBen/Skill_Borrower_album_art.jpg';
+
+    var _url = mediaPlayerConfig.url === undefined ? _defaultUrl : mediaPlayerConfig.url;
+    var _posterUrl = mediaPlayerConfig.posterUrl === undefined ? _defaultPosterUrl : mediaPlayerConfig.posterUrl;
+    var mediaPlayer = null;
+    var queryMediaPlayer = Ext.Viewport.query('#theMediaPlayer');
+    var mediaPlayerAlreadyExists = queryMediaPlayer.length > 0;
+
+    if (!mediaPlayerAlreadyExists)
+    {
+      mediaPlayer = Ext.create('webinosTV.view.MediaWrapper', {
+        id: 'theMediaPlayer',
+        mediaType: _mediaType,
+        url: _url,
+        poster: _posterUrl,
+        autoplay: true, //useless on android
+        preload: 'true', //useless on android
+        loop: false,
+        centered: true
+      });
+    }
+    else {
+      mediaPlayer = queryMediaPlayer[0];
+    }
+    if (_mode === 'modal') {
+      mediaPlayer.setWidth('90%');
+      mediaPlayer.setHeight('90%');
+      mediaPlayer.setUseControls(true);
+      mediaPlayer.setTapToControl(false);
+      mediaPlayer.setHideOnMaskTap(true);
+      mediaPlayer.setModal({
+        cls: 'videoplayermask'
+      });
+
+    }
+    else if (_mode === 'preview') {
+      mediaPlayer.setTop(0);
+      mediaPlayer.setLeft('70%');
+      mediaPlayer.setWidth('28%');
+      mediaPlayer.setHeight('28%');
+      mediaPlayer.setUseControls(_mediaType === 'audio');
+      mediaPlayer.setTapToControl(_mediaType !== 'audio');
+      mediaPlayer.setHideOnMaskTap(false);
+      mediaPlayer.setModal(false);
+      _reduceBrowserView();
+    }
+    if (!mediaPlayerAlreadyExists)
+      Ext.Viewport.add(mediaPlayer);
+    mediaPlayer.play();
+
+    return mediaPlayer;
+  };
+
+  ///hideMediaPlayer()
+  var hideMediaPlayer = function() {
+    var mediaPlayer = null;
+    var queryMediaPlayer = Ext.Viewport.query('#theMediaPlayer');
+    if (queryMediaPlayer.length > 0)
+    {
+      mediaPlayer = queryMediaPlayer[0];
+      //getModal should return boolean, but it actually return an object
+      if (mediaPlayer.getModal().getCls() === null)
+      {
+        _restoreBrowserView();
+      }
+      mediaPlayer.pause();
+      mediaPlayer.setUrl('');
+      mediaPlayer.setHidden(true);
+    }
+  };
+
+  //TODO Deprecate?
+  var showModalVideo = function(url, posterUrl) {
+    showMediaPlayer({
+      mode: 'modal',
+      mediaType: 'video',
+      url: url,
+      posterUrl: posterUrl
+    });
+  };
+  var hideModalVideo = function() {
+    hideMediaPlayer();
+  };
+
+  var showModalAudio = function(url, posterUrl) {
+    showMediaPlayer({
+      mode: 'modal',
+      mediaType: 'audio',
+      url: url,
+      posterUrl: posterUrl
+    });
+  };
+  var hideModalAudio = function() {
+    hideMediaPlayer();
+  };
+
+
+  //TODO Deprecate?
+  var showVideoPreview = function(url, posterUrl) {
+    showMediaPlayer({
+      mode: 'preview',
+      mediaType: 'video',
+      url: url,
+      posterUrl: posterUrl
+    });
+  };
+  var hideVideoPreview = function() {
+    hideMediaPlayer();
+  };
+
+  var showAudioPreview = function(url, posterUrl) {
+    showMediaPlayer({
+      mode: 'preview',
+      mediaType: 'audio',
+      url: url,
+      posterUrl: posterUrl
+    });
+  };
+  var hideAudioPreview = function() {
+    hideMediaPlayer();
+  };
+
 
   //Navigation
   var addTargetDevice = function(id, type, counter, name) {
@@ -450,7 +535,7 @@ function run_ui_connect() {
           if (destinationColumn.$className === "webinosTV.view.TilesDataView" || destinationColumn.id === 'mediaPlaylist')
           {
             var modelClassName = destinationColumn.getStore().getModel().$className;
-            console.log("modelClassName", modelClassName)
+//            console.log("modelClassName", modelClassName)
             var selection;
             if (recordId instanceof Array) //multiple
             {
@@ -563,16 +648,16 @@ function run_ui_connect() {
         browse.moveUp();
         break;
       case 13://return
-        browse.startBrowsing()
+        browse.startBrowsing();
         break;
       case 32://space
-        browse.stopBrowsing()
+        browse.stopBrowsing();
         break;
       case 83://s key
-        browse.toggleSelectItem()
+        browse.toggleSelectItem();
         break;
       case 68://d key
-        browse.deselectItem()
+        browse.deselectItem();
         break;
       default:
         console.log("Unhandled key", key);
@@ -627,14 +712,14 @@ function run_ui_connect() {
       requestsCache[serviceAdr] = {n: notifyCB, r: resultCB};
     }
     processRequests();
-  }
+  };
 
   var _sendNotification = function(adr) {
     if (requestsCache[adr]) {
-      console.log(12)
+      console.log(12);
       requestsCache[adr].n();
     }
-  }
+  };
 
   var _showDialog = function(i) {
     Ext.Msg.show({
@@ -657,17 +742,17 @@ function run_ui_connect() {
 
       }
     });
-  }
+  };
 
   var processRequests = function() {
     console.log(Ext.Msg.isHidden());
-    if (Ext.Msg.isHidden() != null && !Ext.Msg.isHidden()) {
+    if (Ext.Msg.isHidden() !== null && !Ext.Msg.isHidden()) {
       return;
     }
     for (var i in requestsCache) {
       _showDialog(i);
     }
-  }
+  };
 
   /* interface */
   return {
@@ -705,11 +790,21 @@ function run_ui_connect() {
     clearActionButtons: clearActionButtons,
     //TODO find a smarter name
     remoteEvents: remoteEvents,
-    //show video in a modal window
+    //Media Player
+    showMediaPlayer: showMediaPlayer,
+    hideMediaPlayer: hideMediaPlayer,
+    //TODO Deprecate?
     showModalVideo: showModalVideo,
-    //show multiple video items
+    hideModalVideo: hideModalVideo,
+    //TODO Deprecate?
     showVideoPreview: showVideoPreview,
     hideVideoPreview: hideVideoPreview,
+    //TODO Deprecate?
+    showModalAudio: showModalAudio,
+    hideModalAudio: hideModalAudio,
+    //TODO Deprecate?
+    showAudioPreview: showAudioPreview,
+    hideAudioPreview: hideAudioPreview,
     //Navigation
     browse: browse,
     //misc ui bindings
