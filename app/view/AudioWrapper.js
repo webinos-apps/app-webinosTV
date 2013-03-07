@@ -3,19 +3,18 @@
  * see http://www.w3schools.com/tags/ref_av_dom.asp
  *
  * */
-Ext.define('webinosTV.view.VideoWrapper', {
+Ext.define('webinosTV.view.AudioWrapper', {
   extend: 'Ext.Container',
-  xtype: 'videowrap',
+  xtype: 'audiowrap',
   config: {
     autoplay: false,
     loop: false,
-    poster: '',
-    preload: 'auto',
+//    preload: 'auto',
     cls: ['videobox', 'main-container'],
     useControls: false,
     tapToControl: true,
     url: '',
-//    type: '',
+    type: '',
     //TODO allow multiple alternative sources?
     innerVideoElement: document.createElement('video'),
     innerSourceElement: document.createElement('source'),
@@ -39,7 +38,7 @@ Ext.define('webinosTV.view.VideoWrapper', {
     var typeMap = {
       'ogg': 'video/ogg',
       'mp4': 'video/mp4',
-      'mov': '',
+      'mov': 'video/mp4',
       'webm': 'video/webm'
     };
     var type = typeMap[url.split('.').pop()];
@@ -47,7 +46,6 @@ Ext.define('webinosTV.view.VideoWrapper', {
     videoElement.appendChild(srcElement);
     videoElement.setAttribute('width', '100%');
     videoElement.setAttribute('height', '100%');
-//    videoElement.setAttribute('preload', true);
     //Set Video Event handlers - TODO use or delete
 //    videoElement.setAttribute('onloadstart', '(' + vw.onLoadStart + ')("' + vw.getId() + '")');
 //    videoElement.setAttribute('durationchange', '(' + vw.onDurationChange + ')("' + vw.getId() + '")');
@@ -77,18 +75,18 @@ Ext.define('webinosTV.view.VideoWrapper', {
   applyPreload: function(value)
   {
     var vw = this;
-    var allowedValues = ['true', 'auto', 'metadata', 'none'];
+    var allowedValues = ['auto', 'metadata', 'none'];
     if (allowedValues.indexOf(value) !== -1) {
       vw.getInnerVideoElement().preload = value;
     }
     return value;
   },
-//  applyType: function(type)
-//  {
-//    var vw = this;
-//    vw.getInnerSourceElement().type = type;
-//    return type;
-//  },
+  applyType: function(type)
+  {
+    var vw = this;
+    vw.getInnerSourceElement().type = type;
+    return type;
+  },
   applyUseControls: function(showControls) {
     var vw = this;
     if (showControls)
@@ -115,11 +113,6 @@ Ext.define('webinosTV.view.VideoWrapper', {
       vw.getInnerVideoElement().removeAttribute('onclick');
     }
     return tapToControl;
-  },
-  applyPoster: function(poster) {
-    var vw = this;
-    vw.getInnerVideoElement().setAttribute('poster', poster); //.poster = poster;
-    return poster;
   },
   hasControls: function() {
     var vw = this;

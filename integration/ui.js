@@ -9,7 +9,7 @@ function run_ui_connect() {
     'tvchannels': null, //TODO fix not displayed
     'webinos': null, //TODO find a suitable SVG icon
     'docs': null
-  }
+  };
 
   var addQueue = function() {
   };
@@ -30,7 +30,7 @@ function run_ui_connect() {
     if (store)
     {
       var index = store.findBy(function(record, id) {
-        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id)
+        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id);
         return condition;
       });
 
@@ -57,7 +57,7 @@ function run_ui_connect() {
   //objects = array[{mediaItem:item,category:category}]
   var addMediaItems = function(objects) {
     objects.forEach(function(object) {
-      addMediaItem(object.mediaItem, object.category)
+      addMediaItem(object.mediaItem, object.category);
     });
   };
 
@@ -68,7 +68,7 @@ function run_ui_connect() {
     if (store)
     {
       var index = store.findBy(function(record, id) {
-        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id)
+        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id);
         return condition;
       });
       store.removeAt(index);
@@ -156,7 +156,7 @@ function run_ui_connect() {
     var queryVideoPlayer = Ext.Viewport.query('#theModalVideoPlayer');
     if (queryVideoPlayer.length > 0)
     {
-      console.warn("VideoPlayerView already exists");
+//      console.warn("VideoPlayerView already exists");
       videoPlayer = queryVideoPlayer[0];
       videoPlayer.setUrl(url !== undefined ? url : 'resources/BigBen/bb1.mov');
       videoPlayer.setHidden(false);
@@ -164,11 +164,12 @@ function run_ui_connect() {
     else {
       videoPlayer = Ext.create('webinosTV.view.VideoWrapper', {//TODO use some more webinoish and meaningful for defaults
         id: 'theModalVideoPlayer',
-        autoplay: false,
+        autoplay: true,
         loop: false,
         preload: 'auto',
+        poster: posterUrl !== undefined ? posterUrl : '',
         useControls: true,
-        tapToControl: false,
+        tapToControl: true,
         width: '90%',
         height: '90%',
         centered: true,
@@ -180,7 +181,21 @@ function run_ui_connect() {
       });
       Ext.Viewport.add(videoPlayer);
     }
+    videoPlayer.play();
     return videoPlayer;
+  };
+
+  //Play Video in a small box
+  var hideModalVideo = function() {
+    var videoPlayer = null;
+    var queryVideoPlayer = Ext.Viewport.query('#theModalVideoPlayer');
+    if (queryVideoPlayer.length > 0)
+    {
+      videoPlayer = queryVideoPlayer[0];
+      videoPlayer.pause();
+      videoPlayer.setUrl('');
+      videoPlayer.setHidden(true);
+    }
   };
 
   //Play Video in a small box
@@ -192,7 +207,8 @@ function run_ui_connect() {
       xtype: 'videowrap',
       autoplay: true,
       loop: false,
-      preload: 'auto',
+      preload: 'true',
+      poster: posterUrl !== undefined ? posterUrl : '',
       useControls: false,
       tapToControl: true,
       top: 0,
@@ -707,6 +723,7 @@ function run_ui_connect() {
     remoteEvents: remoteEvents,
     //show video in a modal window
     showModalVideo: showModalVideo,
+    hideModalVideo: hideModalVideo,
     //show multiple video items
     showVideoPreview: showVideoPreview,
     hideVideoPreview: hideVideoPreview,

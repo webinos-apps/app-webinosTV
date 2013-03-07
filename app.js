@@ -33,7 +33,8 @@ Ext.application({
     'TargetDeviceDataViewItem', //represents a list of target devices
     'ActionControlsColumn', //5th column of the browser view
     'ActionControlDataViewItem', //represents a customizable action button
-    'VideoWrapper' //replaces Ext.Video by wrapping HTML5 video tag/dom obkect
+    'VideoWrapper', //replaces Ext.Video by wrapping HTML5 video tag/dom object
+    'AudioWrapper' //replaces Ext.Video by wrapping HTML5 video tag/dom obkect
   ],
   models: [
     'Device',
