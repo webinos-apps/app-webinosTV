@@ -16,201 +16,200 @@ Ext.define('webinosTV.view.AudioWrapper', {
     url: '',
     type: '',
     //TODO allow multiple alternative sources?
-    innerVideoElement: document.createElement('video'),
+    innerAudioElement: document.createElement('audio'),
     innerSourceElement: document.createElement('source'),
     listeners: {
       hide: {
-        fn: function(videoPlayerPanel, eOpts) {
+        fn: function(audioPlayerPanel, eOpts) {
           //TODO destroy? notify? ...
-          //console.log("Video Player Panel Hidden", videoPlayerPanel);
-          // alert("Hiding player  - Hidden ?"+videoPlayerPanel.getHidden());
-          Ext.Viewport.remove(videoPlayerPanel, true);
+          //console.log("Video Player Panel Hidden", audioPlayerPanel);
+          // alert("Hiding player  - Hidden ?"+audioPlayerPanel.getHidden());
+          Ext.Viewport.remove(audioPlayerPanel, true);
         }
       }
     }
   },
   applyUrl: function(url)
   {
-    var vw = this;
-    var srcElement = vw.getInnerSourceElement();
-    var videoElement = vw.getInnerVideoElement();
+    var aw = this;
+    var srcElement = aw.getInnerSourceElement();
+    var audioElement = aw.getInnerAudioElement();
     srcElement.src = url;
     var typeMap = {
-      'ogg': 'video/ogg',
-      'mp4': 'video/mp4',
-      'mov': 'video/mp4',
-      'webm': 'video/webm'
+      'ogg': 'audio/ogg',
+      'mp3': 'audio/mp3',
+      'wav': 'audio/wav'
     };
     var type = typeMap[url.split('.').pop()];
-    srcElement.type = type;
-    videoElement.appendChild(srcElement);
-    videoElement.setAttribute('width', '100%');
-    videoElement.setAttribute('height', '100%');
+    srcElement.type = type ? type : '';
+    audioElement.appendChild(srcElement);
+    audioElement.setAttribute('width', '100%');
+    audioElement.setAttribute('height', '100%');
     //Set Video Event handlers - TODO use or delete
-//    videoElement.setAttribute('onloadstart', '(' + vw.onLoadStart + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('durationchange', '(' + vw.onDurationChange + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('onloadedmetadata', '(' + vw.onLoadedMetaData + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('onloadeddata', '(' + vw.onLoadedData + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('progress', '(' + vw.onProgress + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('canplay', '(' + vw.onCanPlay + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('canplaythrough', '(' + vw.onCanPlayThrough + ')("' + vw.getId() + '")');
-//    videoElement.setAttribute('error', '(' + vw.onLoadError + ')("' + vw.getId() + '")');
+//    audioElement.setAttribute('onloadstart', '(' + aw.onLoadStart + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('durationchange', '(' + aw.onDurationChange + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('onloadedmetadata', '(' + aw.onLoadedMetaData + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('onloadeddata', '(' + aw.onLoadedData + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('progress', '(' + aw.onProgress + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('canplay', '(' + aw.onCanPlay + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('canplaythrough', '(' + aw.onCanPlayThrough + ')("' + aw.getId() + '")');
+//    audioElement.setAttribute('error', '(' + aw.onLoadError + ')("' + aw.getId() + '")');
     //Set HTML for this component
-    vw.setHtml(videoElement);
+    aw.setHtml(audioElement);
     return url;
   },
   applyAutoplay: function(autoPlay)
   {
-    var vw = this;
-    vw.getInnerVideoElement().autoplay = autoPlay;
-    //vw.getInnerVideoElement().setAttribute('autoplay', autoPlay);
+    var aw = this;
+    aw.getInnerAudioElement().autoplay = autoPlay;
+    //aw.getInnerAudioElement().setAttribute('autoplay', autoPlay);
     return autoPlay;
   },
   applyLoop: function(loop)
   {
-    var vw = this;
-    vw.getInnerVideoElement().loop = loop;
+    var aw = this;
+    aw.getInnerAudioElement().loop = loop;
     return loop;
   },
   applyPreload: function(value)
   {
-    var vw = this;
+    var aw = this;
     var allowedValues = ['auto', 'metadata', 'none'];
     if (allowedValues.indexOf(value) !== -1) {
-      vw.getInnerVideoElement().preload = value;
+      aw.getInnerAudioElement().preload = value;
     }
     return value;
   },
   applyType: function(type)
   {
-    var vw = this;
-    vw.getInnerSourceElement().type = type;
+    var aw = this;
+    aw.getInnerSourceElement().type = type;
     return type;
   },
   applyUseControls: function(showControls) {
-    var vw = this;
+    var aw = this;
     if (showControls)
     {
-      vw.enableControls();
+      aw.enableControls();
     }
     else
     {
-      vw.disableControls();
+      aw.disableControls();
     }
     return showControls;
   },
   applyTapToControl: function(tapToControl) {
-    var vw = this;
+    var aw = this;
     if (tapToControl)
     {
-      vw.setUseControls(false);
+      aw.setUseControls(false);
       //This is necessary to give the proper scope
-      vw.getInnerVideoElement().setAttribute('onclick', '(' + vw.togglePlay + ')("' + vw.getId() + '")');
+      aw.getInnerAudioElement().setAttribute('onclick', '(' + aw.togglePlay + ')("' + aw.getId() + '")');
     }
     else
     {
-//      vw.setUseControls(true); - NOT set to true: explicitly set useControls to true instead
-      vw.getInnerVideoElement().removeAttribute('onclick');
+//      aw.setUseControls(true); - NOT set to true: explicitly set useControls to true instead
+      aw.getInnerAudioElement().removeAttribute('onclick');
     }
     return tapToControl;
   },
   hasControls: function() {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    return videoElement;
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    return audioElement;
   },
   isPaused: function() {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    return videoElement.paused;
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    return audioElement.paused;
   },
   maySupportMediaType: function(videoType, codecType)
   {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    var isSupported = videoElement.canPlayType(videoType + ';codecs="' + codecType + '"') === "" ? true : false;
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    var isSupported = audioElement.canPlayType(videoType + ';codecs="' + codecType + '"') === "" ? true : false;
     return isSupported;
   },
   play: function() {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    videoElement.play();
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    audioElement.play();
   },
   pause: function() {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    videoElement.pause();
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    audioElement.pause();
   },
   togglePlay: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-    var vw = elementId === undefined ? this : Ext.getCmp(elementId);
+    var aw = elementId === undefined ? this : Ext.getCmp(elementId);
 
-    if (vw.isPaused()) {
-      vw.play();
+    if (aw.isPaused()) {
+      aw.play();
     }
     else
     {
-      vw.pause();
+      aw.pause();
     }
   },
   load: function() {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    videoElement.reload();
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    audioElement.reload();
   },
   enableControls: function()
   {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    vw.setTapToControl(false);
-    videoElement.controls = true;
-    videoElement.load();
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    aw.setTapToControl(false);
+    audioElement.controls = true;
+    audioElement.load();
   },
   disableControls: function()
   {
-    var vw = this;
-    var videoElement = vw.getInnerVideoElement();
-    videoElement.controls = false;
-    videoElement.load();
+    var aw = this;
+    var audioElement = aw.getInnerAudioElement();
+    audioElement.controls = false;
+    audioElement.load();
   },
   onLoadStart: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Load START");
   },
   onDurationChange: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Duration CHANGE");
   },
   onLoadedMetaData: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Loaded METADATA");
   },
   onLoadedData: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Loaded DATA");
   },
   onProgress: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Progress");
   },
   onCanPlay: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Can PLAY");
   },
   onCanPlayThrough: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("Can PLAY THROUGH");
   },
   onLoadError: function(elementId) {
     //toggle play/pause - TODO check media type, raise errors/exceptions etc?
-//    var vw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
+//    var aw = typeof elementId === undefined ? this : Ext.getCmp(elementId);
     console.log("LOAD ERROR");
   }
 });

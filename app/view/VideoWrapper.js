@@ -43,7 +43,7 @@ Ext.define('webinosTV.view.VideoWrapper', {
       'webm': 'video/webm'
     };
     var type = typeMap[url.split('.').pop()];
-    srcElement.type = type;
+    srcElement.type = type ? type : '';
     videoElement.appendChild(srcElement);
     videoElement.setAttribute('width', '100%');
     videoElement.setAttribute('height', '100%');
