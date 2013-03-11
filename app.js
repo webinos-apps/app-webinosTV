@@ -1,14 +1,21 @@
 //<debug>
 Ext.Loader.setPath({
   'Ext': 'touch/src',
-  'webinosTV': 'app'
+  'webinosTV': 'app',
+  'integration': 'integration'
 });
 //</debug>
 
 Ext.application({
   name: 'webinosTV',
   requires: [
-    'Ext.MessageBox'
+    'Ext.MessageBox'//,
+//    'integration.Ui.*',
+//    'integration.Ui'
+//    'integration.Ui.MediaPlayerManager',
+//    'integration.Ui.DeviceManager', //both source and target
+//    'integration.Ui.UiNavigator',
+//    'integration.Ui'
   ],
   viewport: {
     autoMaximize: false,
@@ -72,12 +79,16 @@ Ext.application({
     '1496x2048': 'resources/startup/1496x2048.png'
   },
   launch: function() {
+    Ext.require('integration.Ui');
     // Destroy the #appLoadingIndicator element
     Ext.fly('appLoadingIndicator').destroy();
+
     //connect interface with ui
-    webinosTV.app.connectUi = run_ui_connect();
+//    webinosTV.app.connectUi = run_ui_connect();
     webinosTV.app.connectEvents = run_events_connect();
     webinosTV.app.connectConnector = run_connector_connect();
+//    var uiTest = Ext.create('integration.UI.mediaPlayer');
+//    console.log("uiTest", uiTest)
     // Initialize the stores
     var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
 
