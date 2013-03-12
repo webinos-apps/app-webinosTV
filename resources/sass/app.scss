@@ -134,6 +134,7 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   $bg-inner-color:darken($bg-color,15%);
   border-top: 0.25em solid $bg-inner-color;
   background-color:$bg-inner-color;
+  margin: 0.15em;
 }
 
 .playlist div{
