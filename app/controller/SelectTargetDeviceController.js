@@ -5,34 +5,37 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
 
   //TODO this controller should change shape depending on the selected media category
   config: {
-    control:{
+    control: {
       tdevList:
-      {
-        select:'targetDeviceSelected', //event = select, cb = mediaCategorySelected
-        deselect:'targetDeviceDeselected'
-      }
+        {
+          select: 'targetDeviceSelected', //event = select, cb = mediaCategorySelected
+          deselect: 'targetDeviceDeselected'
+        }
     },
     refs: {
+      targetDevColumn: '#targetDevicesColumn',
 //       mplist: '#selectMedia',
       mActions: '#actionsList',
       tdevList: '#targetDevicesList'
     }
   },
-
-  targetDeviceSelected:function(targetDeviceList, record, eOpts)
+  targetDeviceSelected: function(targetDeviceList, record, eOpts)
   {
-    var mbtns=this.getMActions();
+    var selectedColumn = this.getTargetDevColumn();
+    selectedColumn.getAt(0).addCls('selected-column-header');
+    var mbtns = this.getMActions();
 //     console.log(mcategory.getDisabled());
     mbtns.setMasked(false);
     mbtns.setDisabled(false);
-    
+
 //     console.log("mcategory.getDisabled()",mcategory.getDisabled());
-    
+
   },
-  
-  targetDeviceDeselected:function(targetDeviceList, record, eOpts)
+  targetDeviceDeselected: function(targetDeviceList, record, eOpts)
   {
-    var mActions=this.getMActions();
+    var selectedColumn = this.getTargetDevColumn();
+
+    var mActions = this.getMActions();
 //     console.log(mcategory.getDisabled());
 
 
@@ -40,7 +43,8 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
     //unselect actions if no target dev is selected
     var tdevList = this.getTdevList();
 //     console.log(tdevList.innerItems[1].dataview.getSelectionCount());
-    if(tdevList.innerItems[1].dataview.getSelectionCount()===0){
+    if (tdevList.innerItems[1].dataview.getSelectionCount() === 0) {
+      selectedColumn.getAt(0).removeCls('selected-column-header');
       mActions.setMasked(true);
       mActions.setDisabled(true);
       mActions.deselectAll();
@@ -48,7 +52,7 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
 //       i.unselect()});
     }
 
-    
-    
+
+
   }
 });

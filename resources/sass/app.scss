@@ -53,7 +53,7 @@ $list-pressed-color:$hl-color;
 
 
 @include sencha-list();
-
+@include sencha-msgbox();
 /**
  * carbon theme http://lea.verou.me/css3patterns/#carbon
  */
@@ -78,7 +78,7 @@ $list-pressed-color:$hl-color;
 .main-container{
 /*   background-color: darken($base-color,50%); */
 /*   @include background-carbon(darken($base-color,50%),5px); */
-  $background-carbon-fiber-base-color:darken($base-color,37%);
+  $background-carbon-fiber-base-color:darken($base-color,30%);
   @include background-carbon-fiber($background-carbon-fiber-base-color,$dot-color: scale-lightness($background-carbon-fiber-base-color, -50),
   $highlight-color: rgba($highlight_color, .1),
   $spacing-size: 12px,
@@ -102,6 +102,11 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   }
 }*/
 
+.selected-column-header{
+  color:lighten($hl-color,20%);
+  text-shadow: 0 0 20px $hl-color;
+}
+
 
 @include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
 
@@ -123,7 +128,13 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 //Playlist unselected item container
 .playlist{
   max-width:100%;
-  background-color:rgba(darken($bg-color,50%),0.4);
+}
+
+.playlist div .x-dataview{
+  $bg-inner-color:darken($bg-color,15%);
+  border-top: 0.25em solid $bg-inner-color;
+  background-color:$bg-inner-color;
+  margin: 0.15em;
 }
 
 .playlist div{
@@ -196,7 +207,12 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 .videobox
 {
   margin:0.25em;
-  border:0.25em solid darken($bg-color,10%);
+  border:0.25em solid darken($base-color,35%);
+  $background-carbon-fiber-base-color:darken($base-color,45%);
+  @include background-carbon-fiber($background-carbon-fiber-base-color,$dot-color: scale-lightness($background-carbon-fiber-base-color, -50),
+  $highlight-color: rgba($highlight_color, .1),
+  $spacing-size: 12px,
+  $dot-size: 1.5px);
 }
 
 //Basic Tile class, much like abstract class
