@@ -30,7 +30,7 @@ Ext.define('webinosTV.view.MediaWrapper', {
       hide: {
         fn: function(videoPlayerPanel, eOpts) {
           //TODO destroy? notify? ...
-          console.warn("Hide & destroy", videoPlayerPanel);
+          //console.warn("Hide & destroy", videoPlayerPanel);
           // alert("Hiding player  - Hidden ?"+videoPlayerPanel.getHidden());
           Ext.Viewport.remove(videoPlayerPanel, true);
         }
@@ -139,7 +139,6 @@ Ext.define('webinosTV.view.MediaWrapper', {
   },
   applyPoster: function(poster) {
     var mw = this;
-    console.warn("ApplyPoster", mw.getMediaType());
     if (mw.getMediaType() === 'video')
     {
       mw.getInnerMediaElement().setAttribute('poster', poster); //.poster = poster;
