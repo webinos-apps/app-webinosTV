@@ -44,16 +44,6 @@
 "path": "app.js",
         "bundle": true, /* Indicates that all class dependencies are concatenated into this file when build */
         "update": "delta"
-},
-{
-"path": "integration/events.js"
-},
-        /**{
-* "path": "integration/ui.js"
-        * },
-        */
-{
-"path": "integration/connector.js"
 }
 ],
         /**
@@ -105,13 +95,17 @@
         "resources": [
         "resources/images",
         "resources/icons",
-        "resources/startup"
+        "resources/startup",
+        "resources/fonts",
+        "resources/BigBen",
+        "storage"
 ],
         /**
         * File / directory name matchers to ignore when copying to the builds, must be valid regular expressions
         */
         "ignore": [
-        "\.svn$"
+        "\.svn$",
+        "\.*~"
 ],
         /**
         * Directory path to store all previous production builds. Note that the content generated inside this directory
