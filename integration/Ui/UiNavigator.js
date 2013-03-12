@@ -55,7 +55,7 @@ Ext.define('integration.Ui.UiNavigator', {
     var navi = this;
     var _startCmpIdIndex = startCmpId === undefined ? 0 : navi.getColumns().indexOf(startCmpId);
     var _startCmpId = navi.getColumns()[_startCmpIdIndex];
-    console.warn("XXX", startCmpId, _startCmpId, _startCmpIdIndex);
+
     var startCmp = Ext.getCmp(_startCmpId);
     console.log("Started Ui Browsing", startCmp.getCls());
     startCmp.setCls(["nav-selected", "phone-listview-indicator"]);
@@ -163,7 +163,7 @@ Ext.define('integration.Ui.UiNavigator', {
    * @param recordId a valid record id - if it is an array, only the last element is considered
    */
   moveTo: function(columnId, recordId) {
-    var navi = this;
+    var navi = this;//TODO fix behavior
     var bw = Ext.get('browserView');
     var index = navi.getColumns().indexOf(columnId);
     if (index > -1)

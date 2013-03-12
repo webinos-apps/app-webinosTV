@@ -31,7 +31,7 @@ Ext.define('integration.Ui', {
   },
   _bindKey: function(kbEvt) {
     var ui = this;
-    var key = evt.keyCode;
+    var key = kbEvt.keyCode;
     switch (key) {
       case 37://left arrow key
         ui.getUiNavigator().moveLeft();
@@ -62,7 +62,10 @@ Ext.define('integration.Ui', {
     }
   },
   enableKeyboardNavigation: function() {
-    document.onkeydown = this._bindKey;
+    var ui = this;
+    document.onkeydown = function(event) {
+      ui._bindKey(event);
+    };
   }
 
 });
