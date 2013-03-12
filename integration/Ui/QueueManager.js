@@ -13,5 +13,16 @@ Ext.define('integration.Ui.QueueManager', {
   // We need to initialize the config options when the class is instantiated
   constructor: function(config) {
     this.initConfig(config);
+  },
+  addQueue: function() {
+  },
+  updateQueue: function() {
+  },
+  addQueues: function() {
+  },
+  removeQueue: function() {
+  },
+  clearQueues: function() {
   }
+
 });

@@ -13,5 +13,13 @@ Ext.define('integration.Ui.MediaCatergoriesManager', {
   // We need to initialize the config options when the class is instantiated
   constructor: function(config) {
     this.initConfig(config);
+  },
+  addCategory: function() {
+  },
+  addCategories: function() {
+  },
+  removeCategory: function() {
+  },
+  clearCategories: function() {
   }
 });
