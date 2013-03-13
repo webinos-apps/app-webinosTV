@@ -10,7 +10,9 @@ Ext.application({
   name: 'webinosTV',
   requires: [
     'Ext.MessageBox',
-    'integration.Ui'
+    'integration.Ui',
+    'integration.EventsConnector',
+    'integration.PZPConnector'
   ],
   viewport: {
     autoMaximize: false,
@@ -74,24 +76,24 @@ Ext.application({
     '1496x2048': 'resources/startup/1496x2048.png'
   },
   launch: function() {
-    // Ext.require('integration.Ui');
     // Destroy the #appLoadingIndicator element
     Ext.fly('appLoadingIndicator').destroy();
 
-    //connect interface with ui
+    //connect webinos platform
     webinosTV.app.connectUi = Ext.create('integration.Ui');
-    webinosTV.app.connectEvents = run_events_connect();
-    webinosTV.app.connectConnector = run_connector_connect();
-//    var uiTest = Ext.create('integration.UI.mediaPlayer');
-//    console.log("uiTest", uiTest)
+    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+
     // Initialize the stores
     var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
 
   },
-  //connect interface with ui.js
+  //connect interface with ui
   connectUi: null,
-  //connect interface with events.js
+  //connect interface with events
   connectEvents: null,
+  //connect interface with PZP
+  connectConnector: null,
   onUpdated: function() {
     Ext.Msg.confirm(
       "Application Update",

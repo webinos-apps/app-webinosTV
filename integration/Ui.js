@@ -16,7 +16,7 @@ Ext.define('integration.Ui', {
      actionsManager: Ext.create('integration.Ui.ActionsManager', {})*/
   },
   constructor: function(config) {
-    console.warn("CFG", config);
+//    console.warn("CFG", config);
     var cfg = {
       mediaPlayerManager: Ext.create('integration.Ui.MediaPlayerManager', {}),
       sourceDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpsrcdevstore-id'}),
