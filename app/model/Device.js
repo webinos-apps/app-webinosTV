@@ -15,6 +15,9 @@ Ext.define('webinosTV.model.Device', {
       {type: 'inclusion', field: 'type', list: ['pc', 'tv', 'tablet', 'phone', 'laptop']}
     ]
   },
+  getDeviceId: function() {
+    return this.get('id');
+  },
   getName: function() {
     return this.get('deviceName');
   },

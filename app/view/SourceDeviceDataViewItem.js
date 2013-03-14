@@ -23,8 +23,13 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
             tap: {
               element: 'element',
               fn: function() {
-//                   console.log("onTap",this.getParent())
-                this.getParent().getParent().showDeviceQueue();
+                var elem = this;
+                var srcDevItem = elem.getParent().getParent();
+//                console.log("Src dev q elem tap", srcDevItem);
+                var srcDevList = srcDevItem.getDataview();
+                var device = srcDevItem.getRecord();
+                var browserMainView = Ext.getCmp('browserMainView');
+                srcDevList.fireEvent('queueitemtapped', browserMainView, srcDevList, device);
               }
             }
           }
@@ -40,7 +45,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
   },
   applyDeviceLabel: function(config)
   {
-    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getDeviceLabel())
+    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getDeviceLabel());
   },
   updateRecord: function(newRecord)
   {
@@ -50,13 +55,11 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     }
 
     dataItem._record = newRecord;
-
     //counter
     var counterIconCls = newRecord.getCounter === undefined ? null : 'list';
     var counterText = newRecord.getCounter === undefined ? null : newRecord.getCounter();
     dataItem.getDeviceLabel().getAt(0).setIconCls(counterIconCls);
     dataItem.getDeviceLabel().getAt(0).setText(counterText);
-
     //device
     dataItem.getDeviceLabel().getAt(1).setIconCls(newRecord.get('type'));
     dataItem.getDeviceLabel().getAt(1).setText(newRecord.get('deviceName'));
@@ -70,11 +73,14 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     if (newLabel) {
       this.add(newLabel);
     }
-  },
-  showDeviceQueue: function() {
-    var deviceInfo = this.getRecord().data;
-    var browserMainView = Ext.getCmp('browserMainView');
-    var deviceID = deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
-    browserMainView.showSourceDeviceQueue(deviceID);
   }
+//  toggleDeviceQueue: function(deviceItem) {
+//
+//  },
+//  showDeviceQueue: function() {
+//    var deviceInfo = this.getRecord().get('deviceName');
+//    var browserMainView = Ext.getCmp('browserMainView');
+//    var deviceID = deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
+//    browserMainView.toggleSourceDeviceQueue(deviceID);
+//  }
 });

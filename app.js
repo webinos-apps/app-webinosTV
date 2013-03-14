@@ -28,6 +28,7 @@ Ext.application({
     'DefaultTilePanel', //generic component, base element of the UI
     'SourceDevicesColumn', //1st column of the browser view
     'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
+    'DeviceQueueColumn', //Shows item in the currently selected source device
     'CategoriesColumn', //2nd column of the browser view
     'MediaCategoryDataViewItem', //represents a single media category tile
     'MediaSelectionColumn', //3rd column of the browser view
