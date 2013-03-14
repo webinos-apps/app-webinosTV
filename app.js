@@ -89,6 +89,7 @@ Ext.application({
 
     //Unified media store
     //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
+    //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
     var mediaStore = Ext.create('webinosTV.store.MediaStore', {
       substores: [
         'audio',

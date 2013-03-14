@@ -30,7 +30,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
 //  },
   /**
    * Add a new media item or updates it if it already exists
-   * @param mediaItem Object or webinosTV.model.Media record
+   * @param {Object} mediaItem or webinosTV.model.Media record
    */
   addMediaItem: function(mediaItem) {
     var mimgr = this;
@@ -64,7 +64,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
   },
   /**
    * Add an array of media items
-   * @param objects array of Object or webinosTV.model.Media record
+   * @param {[Object]} objects array of Object or webinosTV.model.Media record
    */
   addMediaItems: function(objects) {
     var mimgr = this;
@@ -74,7 +74,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
   },
   /**
    * Remove a media item
-   * @param mediaItem Object or webinosTV.model.Media record
+   * @param {Object} mediaItem or webinosTV.model.Media record
    */
   removeMediaItem: function(mediaItem) {
     var mimgr = this;
@@ -91,7 +91,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
   },
   /**
    * clear all items or all items of a given category (if type is passed)
-   * @param type string must be equal to the group/category/media type, i.e. 'video', 'audio','images','tvchannel','app','doc'
+   * @param {string} type must be equal to the group/category/media type, i.e. 'video', 'audio','images','tvchannel','app','doc'
    *
    */
   clearMediaItems: function(type) {
