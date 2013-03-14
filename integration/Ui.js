@@ -2,7 +2,11 @@ Ext.define('integration.Ui', {
   requires: [
     'integration.Ui.MediaPlayerManager',
     'integration.Ui.DeviceManager',
-    'integration.Ui.UiNavigator'
+    'integration.Ui.UiNavigator',
+    'integration.Ui.MediaItemsManager'
+      //'integration.Ui.QueueManager',
+      //'integration.Ui.MediaCategoriesManager',
+//    'integration.Ui.ActionsManager'
   ],
   mixins: ['Ext.mixin.Observable'], //can fire or listen to events
   alternateClassName: ['Ui', 'WebinosUi'],
@@ -10,7 +14,8 @@ Ext.define('integration.Ui', {
     mediaPlayerManager: null, //; Ext.create('integration.Ui.MediaPlayerManager', {}),
     sourceDevicesManager: null, // Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpsrcdevstore-id'}),
     targetDevicesManager: null, // Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpdispdevstore-id'}),
-    uiNavigator: null /*,
+    uiNavigator: null,
+    mediaItemsManager: null/*
      mediaCategoriesManager: Ext.create('integration.Ui.MediaCategoriesManager', {}),
      queuesManager: Ext.create('integration.Ui.QueueManager', {}),
      actionsManager: Ext.create('integration.Ui.ActionsManager', {})*/
@@ -19,9 +24,10 @@ Ext.define('integration.Ui', {
 //    console.warn("CFG", config);
     var cfg = {
       mediaPlayerManager: Ext.create('integration.Ui.MediaPlayerManager', {}),
-      sourceDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpsrcdevstore-id'}),
-      targetDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpdispdevstore-id'}),
-      uiNavigator: Ext.create('integration.Ui.UiNavigator', {})
+      sourceDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}),
+      targetDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}), //TODO drop??
+      uiNavigator: Ext.create('integration.Ui.UiNavigator', {}),
+      mediaItemsManager: Ext.create('integration.Ui.MediaItemsManager', {mediaStoreId: 'mediastore-id'})
         /*,
          mediaCategoriesManager: Ext.create('integration.Ui.MediaCategoriesManager', {}),
          queuesManager: Ext.create('integration.Ui.QueueManager', {}),

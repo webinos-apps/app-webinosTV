@@ -37,8 +37,7 @@ Ext.application({
     'TargetDeviceDataViewItem', //represents a list of target devices
     'ActionControlsColumn', //5th column of the browser view
     'ActionControlDataViewItem', //represents a customizable action button
-//    'VideoWrapper', //replaces Ext.Video by wrapping HTML5 video tag/dom object
-    'MediaWrapper' //replaces Ext.Video by wrapping HTML5 video tag/dom obkect
+    'MediaWrapper' //replaces Ext.Video and Ext.Audio by wrapping HTML5 video and audio tag/dom obkect
   ],
   models: [
     'Device',
@@ -47,10 +46,9 @@ Ext.application({
     'AudioMedia'
   ],
   stores: [
-    'TempMusicStore',
-    'TempVideoStore',
-    'TempSourceDevsStore',
-    'TempDisplayDevsStore'
+    'MediaStore',
+    'MediaGroupStore',
+    'DevicesStore'
   ],
   controllers: [
     'SelectPlayModeController',
@@ -85,7 +83,15 @@ Ext.application({
     webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
 
     // Initialize the stores
-    var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
+    //var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
+    var devicesStore = Ext.create('webinosTV.store.DevicesStore');
+    var mediaStore = Ext.create('webinosTV.store.MediaStore', {
+      substores: [
+        'audio',
+        'video'
+          //Add others here
+      ]
+    });
 
   },
   //connect interface with ui
@@ -104,13 +110,14 @@ Ext.application({
         }
       }
     );
-  },
-  addDisplayDevices: function(deviceItems) {
-    var dispDevStore = Ext.getStore('tmpdispdevstore-id');
-    //dispDevStore.add(deviceItems);
-  },
-  addSourceDevices: function(deviceItems) {
-    var srcDevStore = Ext.getStore('tmpsrcdevstore-id');
-    //srcDevStore.add(deviceItems);
   }
+//  ,
+//  addDisplayDevices: function(deviceItems) {
+//    var dispDevStore = Ext.getStore('tmpdispdevstore-id');
+//    //dispDevStore.add(deviceItems);
+//  },
+//  addSourceDevices: function(deviceItems) {
+//    var srcDevStore = Ext.getStore('tmpsrcdevstore-id');
+//    //srcDevStore.add(deviceItems);
+//  }
 });

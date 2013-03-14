@@ -194,11 +194,13 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
           ]
       }
     );
+//    var audioGroup = Ext.StoreManager.get('mediastore-id').getGroups('audio');
+//    var audioData = audioGroup === undefined ? [] : audioGroup.children;
     this.setMediaContentView({//Playlist
       id: 'musicDataView',
       flex: 9,
       xtype: 'mediaplaylist',
-      store: 'tmpmusicstore-id',
+      store: 'audiostore-id',
       defaultType: 'audiolistitem',
       listeners: {
         resize: {
@@ -265,7 +267,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       id: 'videoDataView',
       flex: 9,
       xtype: 'mediaplaylist',
-      store: 'tmpvideostore-id',
+      store: 'videostore-id',
       defaultType: 'audiolistitem', //TODO a videolistitem with small video previews?
       listeners: {
         resize: {
@@ -273,8 +275,8 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
             var pl = this;
             var items = pl.getInnerItems()[0].innerItems;
             items.forEach(function(audioListItem) {
-              audioListItem.checkTextOverflow()
-            })
+              audioListItem.checkTextOverflow();
+            });
           }
         },
         //echoing the select and deselect events
