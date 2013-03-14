@@ -57,27 +57,27 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     var mediaCategory = record.get('category');
     switch (mediaCategory)
     {
-      case 'movies':
+      case 'video':
 //  console.log("selected movies");
         smColumn.showVideos();
         break;
-      case 'music':
+      case 'audio':
 //  console.log("selected mp3");
         smColumn.showMusic();
         break;
-      case 'images':
+      case 'image':
 //  console.log("selected pictures");
         smColumn.showImages();
         break;
-      case 'channels':
+      case 'tvchannel':
 //  console.log("selected TV");
         smColumn.showTV();
         break;
-      case 'apps':
+      case 'app':
 //  console.log("selected Apps");
         smColumn.showApps();
         break;
-      case 'docs':
+      case 'doc':
 //  console.log("selected Documents");
         smColumn.showDocuments();
         break;

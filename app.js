@@ -83,13 +83,20 @@ Ext.application({
     webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
 
     // Initialize the stores
-    //var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
+
+    //Unified device store (both source and target)
     var devicesStore = Ext.create('webinosTV.store.DevicesStore');
+
+    //Unified media store
+    //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
     var mediaStore = Ext.create('webinosTV.store.MediaStore', {
       substores: [
         'audio',
-        'video'
-          //Add others here
+        'video',
+        'images',
+        'tvchannel',
+        'app',
+        'doc'
       ]
     });
 

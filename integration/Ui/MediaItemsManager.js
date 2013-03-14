@@ -97,7 +97,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
   clearMediaItems: function(type) {
     var mimgr = this;
     //TODO get this from category store or from mediastore.getGroups labels?
-    var types = ['video', 'audio', 'images', 'tvchannel', 'app', 'doc'];
+    var types = ['video', 'audio', 'image', 'tvchannel', 'app', 'doc'];
     var store = Ext.getStore(mimgr.getMediaStoreId());
     var records = [];
     if (type !== undefined)

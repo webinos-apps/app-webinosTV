@@ -19,7 +19,7 @@ $base-color:#666;
 @include sencha-msgbox;
 
 // Your custom code goes here...
-@include pictos-iconmask('video');
+/*@include pictos-iconmask('video');
 @include pictos-iconmask('music1');
 @include pictos-iconmask('photos2');
 @include pictos-iconmask('doc2');
@@ -35,7 +35,7 @@ $base-color:#666;
 @include pictos-iconmask('tv');
 @include pictos-iconmask('hot');
 @include pictos-iconmask('lab');
-@include pictos-iconmask('infinite');
+@include pictos-iconmask('infinite');*/
 
 
 $bg-color: #333;//#337; //background color
@@ -285,7 +285,7 @@ div.multi-tile-panel-pressed div.tile-panel{
   }
 }
 //Tile icons
-.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-videos,.tile-icon-images,.tile-icon-music,.tile-icon-docs,.tile-icon-tvchannels
+.default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-video,.tile-icon-image,.tile-icon-audio,.tile-icon-doc,.tile-icon-tvchannel
 {
   display:block;
   margin: auto 6% auto 6%;//auto 1.5em auto 1.5em;
@@ -326,7 +326,7 @@ div.multi-tile-panel-pressed div.tile-panel{
   -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
 }
 
-.tile-icon-tvchannels{
+.tile-icon-tvchannel{
   -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
 }
 
@@ -346,19 +346,19 @@ div.multi-tile-panel-pressed div.tile-panel{
   -webkit-mask: 0 0 inline-image('svg/laptop.svg') no-repeat;
 }
 
-.tile-icon-music{
+.tile-icon-audio{
   -webkit-mask: 0 0 inline-image('svg/music.svg') no-repeat;
 }
 
-.tile-icon-videos{
+.tile-icon-video{
   -webkit-mask: 0 0 inline-image('svg/movie.svg') no-repeat;
 }
 
-.tile-icon-images{
+.tile-icon-image{
   -webkit-mask: 0 0 inline-image('svg/image.svg') no-repeat;
 }
 
-.tile-icon-docs{
+.tile-icon-doc{
   -webkit-mask: 0 0 inline-image('svg/folder.svg') no-repeat;
 }
 
