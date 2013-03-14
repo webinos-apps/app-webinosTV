@@ -194,8 +194,6 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
           ]
       }
     );
-//    var audioGroup = Ext.StoreManager.get('mediastore-id').getGroups('audio');
-//    var audioData = audioGroup === undefined ? [] : audioGroup.children;
     this.setMediaContentView({//Playlist
       id: 'musicDataView',
       flex: 9,
@@ -268,7 +266,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       flex: 9,
       xtype: 'mediaplaylist',
       store: 'videostore-id',
-      defaultType: 'audiolistitem', //TODO a videolistitem with small video previews?
+      defaultType: 'videolistitem', //TODO a videolistitem with small video previews?
       listeners: {
         resize: {
           fn: function(elem) {

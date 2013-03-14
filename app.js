@@ -33,6 +33,8 @@ Ext.application({
     'MediaCategoryDataViewItem', //represents a single media category tile
     'MediaSelectionColumn', //3rd column of the browser view
     'MediaPlaylist', //shows a list of media (e.g. mp3, videos)
+    'MPListItem', //represents single generic media item
+    'VideoMPListItem', //represents single video item
     'AudioMPListItem', //represents single audio item
     'TargetDevicesColumn', //4th column of the browser view
     'TargetDeviceDataViewItem', //represents a list of target devices
@@ -48,6 +50,7 @@ Ext.application({
   ],
   stores: [
     'MediaStore',
+    'GenericMediaSubStore',
     'MediaGroupStore',
     'DevicesStore'
   ],

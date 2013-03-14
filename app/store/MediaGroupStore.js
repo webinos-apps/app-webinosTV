@@ -5,21 +5,11 @@
  *
  */
 Ext.define('webinosTV.store.MediaGroupStore', {
-  extend: 'Ext.data.Store',
+  extend: 'webinosTV.store.GenericMediaSubStore',
   config:
     {
       groupName: '', //mandatory and must be === model.type
-      model: 'webinosTV.model.Media',
-      data: [],
-      autoLoad: true
     },
-  destroy: function() {
-    var mediaStore = Ext.StoreManager.get('mediastore-id');
-    mediaStore.unregisterSubStore(this._storeId);
-//Unregister to media store events
-    Ext.data.StoreManager.unregister(this);
-    this.callParent(arguments);
-  },
   //override
   insert: function(index, records) {
     var subStore = this;

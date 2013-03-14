@@ -31,7 +31,7 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
         ]
       },
       {
-        //Container #2 - Queue Info with header
+//Container #2 - Queue Info with header
         id: 'deviceq-info',
         xtype: 'container',
         name: 'mediaContent',
@@ -55,31 +55,54 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
             {//Content Panel
               flex: 9,
               id: 'deviceq-status',
-              xtype: 'tilepanel',
-              cls: 'tile-panel',
-              text: 'please select a media type...'
+              xtype: 'panel',
+              cls: 'tile-panel'//,
+                // text: 'please select a media type...'
             }
           ]
       }
-//      {//device queue info
-//        id: 'deviceq-status',
-//        xtype: 'tilepanel',
-//        cls: 'tile-panel',
-//        width: '100%',
-//        flex: 9,
-//        text: ('Device queue to be displayed here')
-//      }
     ]
+  },
+  destroy: function() {
+    var qstoreId = this.getDevice().getDeviceId() + '-queuestore-id';
+    var s = Ext.getStore(qstoreId);
+    if (s)
+      s.destroy();
+    //TODO rm queue store
+    this.callParent(arguments);
   },
   applyDevice: function(device) {
     var deviceName = this.query('#deviceq-name')[0];
     if (deviceName)
       deviceName.setText("Device: " + device.getName());
-
     var deviceInfo = this.query('#deviceq-status')[0];
-    if (deviceInfo)
-      deviceInfo.setText("items in queue: " + (device.getCounter() + "").fontcolor('orange'));
-
+    if (deviceInfo) {
+      deviceInfo.removeAll(true);
+      //mediaPlaylist
+      deviceInfo.add({
+        width: '100%',
+        height: '100%',
+        id: 'deviceq-status-plist-' + device.getDeviceId(),
+        xtype: 'mediaplaylist',
+        defaultType: 'mplistitem',
+        store: this.getQueueStore(device.getDeviceId(), device.getQueue())
+      });
+    }
+    //deviceInfo.setStore(this.getQueueStore(device.getDeviceId(), device.getQueue()));
     return device;
+  },
+  getQueueStore: function(deviceId, mediaIdQueue) {
+    var allData = Ext.getStore('mediastore-id').getData().items;
+
+//Get only elements that are referenced by this device
+    var mediaItems = allData.filter(function(item) {
+      return mediaIdQueue.indexOf(item.getId()) !== -1;
+    });
+
+    var qs = Ext.create('webinosTV.store.GenericMediaSubStore', {
+      storeId: deviceId + '-queuestore-id',
+      data: mediaItems
+    });
+    return qs;
   }
 });
