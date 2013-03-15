@@ -26,7 +26,11 @@ Ext.define('webinosTV.controller.SelectMediaController', {
     var targetDevList = this.getTargetDevList();
     if (mplaylist.getSelectionCount() === 0)
     {
-      selectedColumn.getAt(0).removeCls('selected-column-header');
+      var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+      if (header) {
+        header.removeCls('selected-column-header');
+      }
+      //selectedColumn.getAt(0).removeCls('selected-column-header');
       targetDevList.deselectAll();
       targetDevList.setMasked(true);
       targetDevList.setDisabled(true);
@@ -37,7 +41,12 @@ Ext.define('webinosTV.controller.SelectMediaController', {
   mediaPLSelected: function(mediaPlaylist, record, eOpts)
   {
     var selectedColumn = this.getMediaSColumn();
-    selectedColumn.getAt(0).addCls('selected-column-header');
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.addCls('selected-column-header');
+    }
+
+    //selectedColumn.getAt(0).addCls('selected-column-header');
 //    console.log("mediaSelected")
     var targetDevList = this.getTargetDevList();
     targetDevList.setMasked(false);

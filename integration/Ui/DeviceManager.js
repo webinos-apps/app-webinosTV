@@ -15,6 +15,11 @@ Ext.define('integration.Ui.DeviceManager', {
   constructor: function(config) {
     this.initConfig(config);
   },
+  getDevice: function(deviceId) {
+    var storeId = this.getDevicesSID();
+    var store = Ext.StoreMgr.get(storeId);
+    return store.getById(deviceId);
+  },
   addDevice: function(id, type, counter, name) {
     var storeId = this.getDevicesSID();
     var store = Ext.StoreMgr.get(storeId);

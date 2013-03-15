@@ -21,13 +21,19 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
   actionSelected: function(actionList, record, eOpts)
   {
     var selectedColumn = this.getActionsColumn();
-    selectedColumn.getAt(0).addCls('selected-column-header');
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.addCls('selected-column-header');
+    }
     record.get('action')("play");
   },
   actionDeSelected: function(actionList, record, eOpts)
   {
     var selectedColumn = this.getActionsColumn();
-    selectedColumn.getAt(0).removeCls('selected-column-header');
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.removeCls('selected-column-header');
+    }
     record.get('action')("stop");
   }
 

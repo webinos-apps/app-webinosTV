@@ -28,17 +28,19 @@ Ext.application({
     'DefaultTilePanel', //generic component, base element of the UI
     'SourceDevicesColumn', //1st column of the browser view
     'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
+    'DeviceQueueColumn', //Shows item in the currently selected source device
     'CategoriesColumn', //2nd column of the browser view
     'MediaCategoryDataViewItem', //represents a single media category tile
     'MediaSelectionColumn', //3rd column of the browser view
     'MediaPlaylist', //shows a list of media (e.g. mp3, videos)
+    'MPListItem', //represents single generic media item
+    'VideoMPListItem', //represents single video item
     'AudioMPListItem', //represents single audio item
     'TargetDevicesColumn', //4th column of the browser view
     'TargetDeviceDataViewItem', //represents a list of target devices
     'ActionControlsColumn', //5th column of the browser view
     'ActionControlDataViewItem', //represents a customizable action button
-//    'VideoWrapper', //replaces Ext.Video by wrapping HTML5 video tag/dom object
-    'MediaWrapper' //replaces Ext.Video by wrapping HTML5 video tag/dom obkect
+    'MediaWrapper' //replaces Ext.Video and Ext.Audio by wrapping HTML5 video and audio tag/dom obkect
   ],
   models: [
     'Device',
@@ -47,10 +49,10 @@ Ext.application({
     'AudioMedia'
   ],
   stores: [
-    'TempMusicStore',
-    'TempVideoStore',
-    'TempSourceDevsStore',
-    'TempDisplayDevsStore'
+    'MediaStore',
+    'GenericMediaSubStore',
+    'MediaGroupStore',
+    'DevicesStore'
   ],
   controllers: [
     'SelectPlayModeController',
@@ -85,7 +87,23 @@ Ext.application({
     webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
 
     // Initialize the stores
-    var tmpMusicStore = Ext.create('webinosTV.store.TempMusicStore');
+
+    //Unified device store (both source and target)
+    var devicesStore = Ext.create('webinosTV.store.DevicesStore');
+
+    //Unified media store
+    //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
+    //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
+    var mediaStore = Ext.create('webinosTV.store.MediaStore', {
+      substores: [
+        'audio',
+        'video',
+        'images',
+        'tvchannel',
+        'app',
+        'doc'
+      ]
+    });
 
   },
   //connect interface with ui
@@ -104,13 +122,14 @@ Ext.application({
         }
       }
     );
-  },
-  addDisplayDevices: function(deviceItems) {
-    var dispDevStore = Ext.getStore('tmpdispdevstore-id');
-    //dispDevStore.add(deviceItems);
-  },
-  addSourceDevices: function(deviceItems) {
-    var srcDevStore = Ext.getStore('tmpsrcdevstore-id');
-    //srcDevStore.add(deviceItems);
   }
+//  ,
+//  addDisplayDevices: function(deviceItems) {
+//    var dispDevStore = Ext.getStore('tmpdispdevstore-id');
+//    //dispDevStore.add(deviceItems);
+//  },
+//  addSourceDevices: function(deviceItems) {
+//    var srcDevStore = Ext.getStore('tmpsrcdevstore-id');
+//    //srcDevStore.add(deviceItems);
+//  }
 });

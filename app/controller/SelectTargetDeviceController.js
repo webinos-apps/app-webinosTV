@@ -22,7 +22,10 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
   targetDeviceSelected: function(targetDeviceList, record, eOpts)
   {
     var selectedColumn = this.getTargetDevColumn();
-    selectedColumn.getAt(0).addCls('selected-column-header');
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.addCls('selected-column-header');
+    }
     var mbtns = this.getMActions();
 //     console.log(mcategory.getDisabled());
     mbtns.setMasked(false);
@@ -37,19 +40,18 @@ Ext.define('webinosTV.controller.SelectTargetDeviceController', {
 
     var mActions = this.getMActions();
 //     console.log(mcategory.getDisabled());
-
-
-
     //unselect actions if no target dev is selected
     var tdevList = this.getTdevList();
 //     console.log(tdevList.innerItems[1].dataview.getSelectionCount());
     if (tdevList.innerItems[1].dataview.getSelectionCount() === 0) {
-      selectedColumn.getAt(0).removeCls('selected-column-header');
+      var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+      if (header) {
+        header.removeCls('selected-column-header');
+      }
       mActions.setMasked(true);
       mActions.setDisabled(true);
       mActions.deselectAll();
-//       mActions.innerItems.forEach(function(i){
-//       i.unselect()});
+
     }
 
 
