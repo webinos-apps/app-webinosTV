@@ -8,7 +8,7 @@ Ext.define('webinosTV.store.MediaGroupStore', {
   extend: 'webinosTV.store.GenericMediaSubStore',
   config:
     {
-      groupName: '', //mandatory and must be === model.type
+      groupName: '' //mandatory and must be === model.type
     },
   //override
   insert: function(index, records) {
