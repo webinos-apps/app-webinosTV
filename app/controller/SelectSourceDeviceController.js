@@ -142,7 +142,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   hideSourceDeviceQueueColumn: function(browserView) {
     console.log("HIDE ");
     browserView.setCurrentSourceDeviceQueue(null);
-    var qc = browserView.removeAt(0);
+    var qc = Ext.getCmp('queuecol-id');
     qc.destroy();
   }
 
