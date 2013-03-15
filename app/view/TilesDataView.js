@@ -8,10 +8,7 @@ Ext.define('webinosTV.view.TilesDataView', {
   xtype: 'tileslist',
   config: {
     useComponents: true,
-//     allowMultipleSelection:false, //See Mode
     height: '100%',
-//     indexSelected:-1, //useless
-//     defaultType: 'devicelistitem',
     loadingText: 'Loading list...',
     emptyText: '<div>' + ('No items found!').fontcolor('cyan') + '</div>',
     scrollable: {
@@ -34,62 +31,5 @@ Ext.define('webinosTV.view.TilesDataView', {
         }
       }
     }
-    /*    listeners:{
-     itemsingletap:{
-     fn:this.onItemSingleTap,
-     scope: this
-     },
-     //double tap selects only tapped item and deselects the others (if allowMultipleSelection is true)
-     itemdoubletap:{
-     fn:function(tileList, index, listItem, record, e, eOpts){
-     //           if(tileList.getAllowMultipleSelection())
-     //           {
-     //             tileList.getAt(1).getItems().items.forEach(function(titleListItem,itemIndex){
-     //               itemIndex===index? titleListItem.select():titleListItem.unselect();
-     //             });
-     //             tileList.deselectAll();
-     //           }
-     }
-     }
-     }*/
   }
-
-//   select: function(records, keepExisting, suppressEvent) {
-// /*
-//     var me = this,
-//       record;
-// var r =me.getSelection()
-// if(r.length)
-//   console.log(r[0].select)
-//     if (me.getDisableSelection()) {
-//       return;
-//     }
-//
-//     if (typeof records === "number") {
-//       records = [me.getStore().getAt(records)];
-//     }
-//
-//     if (!records) {
-//       return;
-//     }*/
-//
-//     if (me.getMode() == "SINGLE" && records) {
-//       record = records.length ? records[0] : records;
-//       me.doSingleSelect(record, suppressEvent);
-//     } else {
-//       me.doMultiSelect(records, keepExisting, suppressEvent);
-//     }
-//   },
-//
-//   deselect:function(records, suppressEvent){
-//     var tileList=this;
-// //     tileList.superclass.deselect(records, suppressEvent);
-//     console.log("DESelected")
-//   },
-
-//   onItemSingleTap:function(tl, listItem,index/* , record, e, eOpts*/){
-//     var tileList=this;
-// //     console.log(this.superclass)
-//   }
-
 });

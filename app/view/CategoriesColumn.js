@@ -22,6 +22,7 @@ Ext.define('webinosTV.view.CategoriesColumn', {
         },
         items: [{
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Categories',
             padding: 2,
             margin: 2 /*,flex:1.5*/

@@ -24,10 +24,13 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   },
   sourceDeviceSelected: function(sourceDeviceList, device, eOpts)
   {
-    console.log("SRC SELECT");
+    //console.log("SRC SELECT");
     var mcategory = this.getMcategory();
     var srcDevColumn = this.getSrcDevColumn();
-    srcDevColumn.getAt(0).addCls('selected-column-header');
+    var header = srcDevColumn.query('container[name=columnheadertext]')[0];
+    if (header) {
+      header.addCls('selected-column-header');
+    }
     mcategory.setMasked(false);
     mcategory.setDisabled(false);
     mcategory.setDisableSelection(false);
@@ -46,10 +49,13 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   },
   sourceDeviceDeselected: function(sourceDeviceList, device, eOpts)
   {
-    console.log("SRC DESELECT");
+//    console.log("SRC DESELECT");
     var mcategory = this.getMcategory();
     var srcDevColumn = this.getSrcDevColumn();
-    srcDevColumn.getAt(0).removeCls('selected-column-header');
+    var header = srcDevColumn.query('container[name=columnheadertext]')[0];
+    if (header) {
+      header.removeCls('selected-column-header');
+    }
     var sdevList = this.getSdevList();
     var mtargetdevs = this.getMtargetdevs();
     var mactions = this.getMactions();
@@ -87,21 +93,23 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     var deviceSelected = sourceDeviceList.isSelected(device);
     var bvCurrDeviceId = browserView.getCurrentSourceDeviceQueue();
 
-    console.warn("Toggle Q combination: current", bvCurrDeviceId, "tapped", deviceId, deviceSelected);
+    //console.warn("Toggle Q combination: current", bvCurrDeviceId, "tapped", deviceId, deviceSelected);
 
     var ctrl = this;
     switch (bvCurrDeviceId)
     {
       case null: //SHOW
         {
-          if (deviceSelected) {
-            sourceDeviceList.setDisableSelection(true); //otherwise gets deselected
+          if (device.getCounter() !== 0) {
+            if (deviceSelected) {
+              sourceDeviceList.setDisableSelection(true); //otherwise gets deselected
+            }
+            else
+            {
+              sourceDeviceList.setDisableSelection(false); //otherwise gets deselected
+            }
+            ctrl.showSourceDeviceQueueColumn(browserView, device, deviceId);
           }
-          else
-          {
-            sourceDeviceList.setDisableSelection(false); //otherwise gets deselected
-          }
-          ctrl.showSourceDeviceQueueColumn(browserView, device, deviceId);
         }
         break;
       case deviceId: //HIDE
@@ -114,18 +122,32 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
         break;
       default: //UPDATE
         {
-          if (!deviceSelected) {
-            sourceDeviceList.setDisableSelection(false); //clean
-          }//selected should never happen
-          ctrl.updateSourceDeviceQueueColumn(browserView, device, deviceId);
+          if (device.getCounter() !== 0)
+          {
+            if (!deviceSelected)
+            {
+              sourceDeviceList.setDisableSelection(false); //clean
+            }//selected should never happen
+            ctrl.updateSourceDeviceQueueColumn(browserView, device, deviceId);
+          }
+          else //hide
+          {
+            sourceDeviceList.setDisableSelection(false);
+            ctrl.hideSourceDeviceQueueColumn(browserView);
+          }
         }
     }
-//    var disableSelection = sourceDeviceList.getDisableSelection();
-//    sourceDeviceList.setDisableSelection(!disableSelection);
-//    console.log("Toggle")
   },
+  /**
+   * @private
+   * Shows the device queue column
+   * @param {BrowserView} browserView application main view
+   * @param {Device} device the record involved
+   * @param {string} deviceId id
+
+   */
   showSourceDeviceQueueColumn: function(browserView, device, deviceId) {
-    console.log("SHOW Q for", device.getName(), deviceId);
+    //console.log("SHOW Q for", device.getName(), deviceId);
     browserView.setCurrentSourceDeviceQueue(deviceId);
     browserView.insert(0, {
       xtype: 'devqueuecol',
@@ -133,41 +155,28 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
       device: device
     });
   },
+  /**
+   * @private
+   * Updates the device queue column
+   * @param {BrowserView} browserView application main view
+   * @param {Device} device the record involved
+   * @param {string} deviceId id
+   */
   updateSourceDeviceQueueColumn: function(browserView, device, deviceId) {
-    console.log("UPDATE Q for", device.getName(), deviceId);
+    // console.log("UPDATE Q for", device.getName(), deviceId);
     browserView.setCurrentSourceDeviceQueue(deviceId);
     var qCol = Ext.getCmp('queuecol-id');
     qCol.setDevice(device);
   },
+  /**
+   * @private
+   * removes the device queue column
+   * @param {BrowserView} browserView application main view
+   */
   hideSourceDeviceQueueColumn: function(browserView) {
-    console.log("HIDE ");
+    //   console.log("HIDE ");
     browserView.setCurrentSourceDeviceQueue(null);
     var qc = Ext.getCmp('queuecol-id');
     qc.destroy();
   }
-
-//  /**
-//   * @private
-//   * Shows or updates the device queue column
-//   * @param {BrowserView} browserView application main view
-//   * @param {TilesDataView} soureceDeviceList the source devices list
-//   * @param {Device} record the record involved
-//   * @param {Object} eOpts event options
-//
-//   */
-//  showSourceDeviceQueueColumn: function(browserView, sourceDeviceList, record, eOpts) {
-//    var deviceId = record.getDeviceId();
-//
-//  },
-//  /**
-//   * @private
-//   * removes the device queue column
-//   * @param {BrowserView} browserView application main view
-//   * @param {TilesDataView} soureceDeviceList the source devices list
-//   * @param {Device} record the record involved
-//   * @param {Object} eOpts event options
-//   */
-//  hideSourceDeviceQueueColumn: function(browserView, sourceDeviceList, record, eOpts) {
-//    var deviceId = record.getDeviceId();
-//  }
 });

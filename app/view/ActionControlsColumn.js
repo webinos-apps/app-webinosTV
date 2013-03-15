@@ -19,6 +19,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
         },
         items: [{
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Play Mode',
             padding: 2,
             margin: 2 /*,flex:1.5*/

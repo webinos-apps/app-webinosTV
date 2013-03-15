@@ -12,6 +12,7 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
     },
     items: [{//Headers  #0 (#0a and #0b)
         xtype: 'container',
+        name: 'columnheadertext',
         width: '100%',
         cls: 'title-container',
         layout: {

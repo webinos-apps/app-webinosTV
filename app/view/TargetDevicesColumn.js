@@ -20,6 +20,7 @@ Ext.define('webinosTV.view.TargetDevicesColumn', {
         },
         items: [{
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Target Device',
             padding: 2,
             margin: 2

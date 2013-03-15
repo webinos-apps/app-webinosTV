@@ -20,6 +20,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
         },
         items: [{
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Select Media',
             padding: 2,
             margin: 2 /*,flex:1.5*/
@@ -118,6 +119,11 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
   },
   //resets defaults
   setEmptyContent: function() {
+    var queryPlaylist = this.query('mediaplaylist');
+    //by deselecting, the deselect event gets fired
+    queryPlaylist.forEach(function(pl) {
+      pl.deselectAll();
+    });
     this.setMediaHeaderView({//Header Panel
       flex: 2,
       xtype: 'tilepanel',

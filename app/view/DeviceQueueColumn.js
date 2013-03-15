@@ -24,6 +24,7 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
         items: [
           {
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Device Queue',
             padding: 2,
             margin: 2
@@ -61,7 +62,14 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
             }
           ]
       }
-    ]
+    ],
+    listeners: {
+      ///Forward refresh event to the Device media play list view
+      queuerefresh: function(qcolumn, eOpts) {
+        var playList = qcolumn.query('#deviceq-status-plist-' + qcolumn.getDevice().getDeviceId());
+        playList.fireEvent('updatedata', playList, eOpts);
+      }
+    }
   },
   destroy: function() {
     var qstoreId = this.getDevice().getDeviceId() + '-queuestore-id';
@@ -85,24 +93,21 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
         id: 'deviceq-status-plist-' + device.getDeviceId(),
         xtype: 'mediaplaylist',
         defaultType: 'mplistitem',
-        store: this.getQueueStore(device.getDeviceId(), device.getQueue())
+        store: this._createQueueStore(device)
       });
     }
-    //deviceInfo.setStore(this.getQueueStore(device.getDeviceId(), device.getQueue()));
     return device;
   },
-  getQueueStore: function(deviceId, mediaIdQueue) {
-    var allData = Ext.getStore('mediastore-id').getData().items;
-
-//Get only elements that are referenced by this device
-    var mediaItems = allData.filter(function(item) {
-      return mediaIdQueue.indexOf(item.getId()) !== -1;
-    });
-
+  _createQueueStore: function(device) {
     var qs = Ext.create('webinosTV.store.GenericMediaSubStore', {
-      storeId: deviceId + '-queuestore-id',
-      data: mediaItems
+      storeId: device.getDeviceId() + '-queuestore-id',
+      data: device.getMediaItemsQueue()
     });
     return qs;
+  },
+  updatePlaylist: function() {
+    var device = this.getDevice();
+    var qs = Ext.getStore(device.getDeviceId() + '-queuestore-id');
+    qs.setData(device.getMediaItemsQueue());
   }
 });

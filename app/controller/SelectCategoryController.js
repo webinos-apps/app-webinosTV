@@ -22,19 +22,17 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
     }
   },
   mediaCategoryDeselected: function(mediaCategoryList, record, eOpts) {
+
 //     var mplist=this.getMplist();
     var selectedColumn = this.getCategColumn();
-    selectedColumn.getAt(0).removeCls('selected-column-header');
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.removeCls('selected-column-header');
+    }
     var smColumn = this.getSmColumn();
     var mtargetdevs = this.getMtargetdevs();
     var mactions = this.getMactions();
-//     mplist.setItems({
-//       xtype:'tilepanel',
-//       cls:['tile-panel'],
-//       text: 'please select a media type...'
-//     });
-//     mplist.setMasked(true);
-//     mplist.setDisabled(false);
+
     smColumn.setEmptyContent();
     smColumn.setContentMasked(true);
     mtargetdevs.setMasked(true);
@@ -46,14 +44,12 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
   mediaCategorySelected: function(mediaCategoryList, record, eOpts)
   {
     var selectedColumn = this.getCategColumn();
-    selectedColumn.getAt(0).addCls('selected-column-header');
-//     var mplist=this.getMplist();
+    var header = selectedColumn.query('panel[name=columnheadertext]')[0];
+    if (header) {
+      header.addCls('selected-column-header');
+    }
     var smColumn = this.getSmColumn();
 
-//     console.log("mediaCategorySelected",mplist)
-//     var mcategoryList=this.getMcategory();
-//     console.log("mediaCategorySelected",mcategoryList.getSelectionCount(),record)
-//      console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
     var mediaCategory = record.get('category');
     switch (mediaCategory)
     {

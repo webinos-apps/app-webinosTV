@@ -26,15 +26,26 @@ Ext.define('webinosTV.model.Device', {
    */
   getCounter: function() {
     var q = this.get('queue');
-    if (Object.prototype.toString.call(q) === '[object Array]')
+    if (Ext.isArray(q))
       return this.get('queue').length;
     else
       return null;
   },
-  //CRUD operations on device queue
+  //Get queue as an array of references
   getQueue: function() {
     var q = this.get('queue');
     return q;
+  },
+  //Get queue as an array of Media models
+  getMediaItemsQueue: function() {
+    var q = this.get('queue');
+    var allData = Ext.getStore('mediastore-id').getData().items;
+
+//Get only elements that are referenced by this device
+    var mediaItems = allData.filter(function(item) {
+      return q.indexOf(item.getId()) !== -1;
+    });
+    return mediaItems;
   },
   /**
    * Add one or more mediaIds to the device queue
@@ -59,10 +70,14 @@ Ext.define('webinosTV.model.Device', {
     }
 
     var q = this.get('queue');
+    //filter out media that are already there
+    var _mediaIds = mediaIds.filter(function(m) {
+      return q.indexOf(m) === -1;
+    });
 
-    for (var i = 0; i < mediaIds.length; i++)
+    for (var i = 0; i < _mediaIds.length; i++)
     {
-      q.splice(index, 0, mediaIds[i]);
+      q.splice(index, 0, _mediaIds[i]);
     }
     return q.length;
   },
@@ -85,16 +100,19 @@ Ext.define('webinosTV.model.Device', {
   },
   /**
    * Update media id at given position
-   * @param {Number} index index of the id be updated
+   * If
+   * @param {Number} position index of the id be updated
+   * @param {Number} newMediaId newValue
    */
-  updateQueueItem: function(mediaId) {
+  updateQueueItemAt: function(position, newMediaId) {
     var q = this.get('queue');
-    var index = q.indexOf(mediaId);
-    if (index !== -1)
+
+    var oldValue = q[position];
+    if (oldValue)
     {
-      q[index] = mediaId;
+      q[position] = newMediaId;
     }
-    return index === -1 ? undefined : mediaId;
+    return oldValue;
   },
   /**
    * Removes one or more media Ids

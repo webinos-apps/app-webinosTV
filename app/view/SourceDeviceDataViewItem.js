@@ -56,8 +56,21 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
 
     dataItem._record = newRecord;
     //counter
-    var counterIconCls = newRecord.getCounter === undefined ? null : 'list';
-    var counterText = newRecord.getCounter === undefined ? null : newRecord.getCounter();
+    var counterIconCls = null;
+    var counterText = null;
+    if (newRecord.getCounter)
+    {
+      counterText = newRecord.getCounter();
+      if (counterText > 0)
+      {
+        counterIconCls = 'list';
+      }
+      else
+      {
+        counterText = null;
+      }
+    }
+//    console.log("src dev item", counterText, counterIconCls, newRecord.getCounter())
     dataItem.getDeviceLabel().getAt(0).setIconCls(counterIconCls);
     dataItem.getDeviceLabel().getAt(0).setText(counterText);
     //device
@@ -74,13 +87,4 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
       this.add(newLabel);
     }
   }
-//  toggleDeviceQueue: function(deviceItem) {
-//
-//  },
-//  showDeviceQueue: function() {
-//    var deviceInfo = this.getRecord().get('deviceName');
-//    var browserMainView = Ext.getCmp('browserMainView');
-//    var deviceID = deviceInfo.deviceName; //WARNING we need some device (unique) ID!!!
-//    browserMainView.toggleSourceDeviceQueue(deviceID);
-//  }
 });

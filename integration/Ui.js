@@ -3,22 +3,23 @@ Ext.define('integration.Ui', {
     'integration.Ui.MediaPlayerManager',
     'integration.Ui.DeviceManager',
     'integration.Ui.UiNavigator',
-    'integration.Ui.MediaItemsManager'
-      //'integration.Ui.QueueManager',
+    'integration.Ui.MediaItemsManager',
+    'integration.Ui.QueueManager'
       //'integration.Ui.MediaCategoriesManager',
 //    'integration.Ui.ActionsManager'
   ],
   mixins: ['Ext.mixin.Observable'], //can fire or listen to events
   alternateClassName: ['Ui', 'WebinosUi'],
   config: {
-    mediaPlayerManager: null, //; Ext.create('integration.Ui.MediaPlayerManager', {}),
-    sourceDevicesManager: null, // Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpsrcdevstore-id'}),
-    targetDevicesManager: null, // Ext.create('integration.Ui.DeviceManager', {devicesSID: 'tmpdispdevstore-id'}),
+    mediaPlayerManager: null,
+    sourceDevicesManager: null,
+    targetDevicesManager: null,
     uiNavigator: null,
-    mediaItemsManager: null/*
-     mediaCategoriesManager: Ext.create('integration.Ui.MediaCategoriesManager', {}),
-     queuesManager: Ext.create('integration.Ui.QueueManager', {}),
-     actionsManager: Ext.create('integration.Ui.ActionsManager', {})*/
+    mediaItemsManager: null,
+    queuesManager: null/*
+     mediaCategoriesManager: null,
+
+     actionsManager: null*/
   },
   constructor: function(config) {
 //    console.warn("CFG", config);
@@ -27,10 +28,11 @@ Ext.define('integration.Ui', {
       sourceDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}),
       targetDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}), //TODO drop??
       uiNavigator: Ext.create('integration.Ui.UiNavigator', {}),
-      mediaItemsManager: Ext.create('integration.Ui.MediaItemsManager', {mediaStoreId: 'mediastore-id'})
+      mediaItemsManager: Ext.create('integration.Ui.MediaItemsManager', {mediaStoreId: 'mediastore-id'}),
+      queuesManager: Ext.create('integration.Ui.QueueManager', {})
         /*,
          mediaCategoriesManager: Ext.create('integration.Ui.MediaCategoriesManager', {}),
-         queuesManager: Ext.create('integration.Ui.QueueManager', {}),
+
          actionsManager: Ext.create('integration.Ui.ActionsManager', {})*/
     };
     this.initConfig(cfg);  // We need to initialize the config options when the class is instantiated
