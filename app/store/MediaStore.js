@@ -118,7 +118,6 @@ Ext.define('webinosTV.store.MediaStore', {
           groupName: type,
           data: groupData
         });
-      mediaStore.registerSubStore(substoreId);
     }
     else
     {

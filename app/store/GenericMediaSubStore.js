@@ -12,8 +12,12 @@ Ext.define('webinosTV.store.GenericMediaSubStore', {
       data: [],
       autoLoad: true
     },
+  initialize: function() {
+    var mediaStore = Ext.getStore('mediastore-id');
+    mediaStore.registerSubStore(this.getStoreId());
+  },
   destroy: function() {
-    // console.log("Destroy", this.getStoreId());
+// console.log("Destroy", this.getStoreId());
     var mediaStore = Ext.StoreManager.get('mediastore-id');
     mediaStore.unregisterSubStore(this._storeId);
 //Unregister to media store events
