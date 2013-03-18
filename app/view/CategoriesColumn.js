@@ -1,33 +1,34 @@
-// Categories 
+// Categories
 Ext.define('webinosTV.view.CategoriesColumn', {
   extend: 'Ext.Container',
-  xtype:'categscol',
-  config:{
+  xtype: 'categscol',
+  config: {
 //     height: '100%',
 //     //    width:'90%',
 //     flex: 1.5,
     layout: {
-        type: 'vbox',
-        align: 'center',
-        pack: 'center'
+      type: 'vbox',
+      align: 'center',
+      pack: 'center'
     },
-    items: [{ //Headers  #1
+    items: [{//Headers  #1
         xtype: 'container',
         width: '100%',
         cls: 'title-container',
         layout: {
-            type: 'hbox',
-            align: 'center',
-            pack: 'center'
+          type: 'hbox',
+          align: 'center',
+          pack: 'center'
         },
         items: [{
             xtype: 'panel',
+            name: 'columnheadertext',
             html: 'Categories',
             padding: 2,
             margin: 2 /*,flex:1.5*/
-        } //#1
+          } //#1
         ]
-    }, { //Container #1 - Media Category
+      }, {//Container #1 - Media Category
         xtype: 'tileslist',
         id: 'mediaCategoryList',
         disabled: true,
@@ -37,39 +38,40 @@ Ext.define('webinosTV.view.CategoriesColumn', {
         width: '100%',
         //      flex: 1.5,
         store: {
-            fields: ['id','category', 'mediaCategoryName'],
-            data: [
+          storeId: 'categoriesstore-id',
+          fields: ['id', 'category', 'mediaCategoryName'],
+          data: [
             {
-              id:1,
-              category: 'music',
+              id: 1,
+              category: 'audio',
               mediaCategoryName: 'Mp3 collection'
             },
-           {
-              id:2,
-              category: 'channels',
+            {
+              id: 2,
+              category: 'tvchannel',
               mediaCategoryName: 'DVB-T'
             },
-           {
-              id:3,
-              category: 'movies',
+            {
+              id: 3,
+              category: 'video',
               mediaCategoryName: 'Videos'
-            }, 
-           {
-              id:4,
-              category: 'images',
+            },
+            {
+              id: 4,
+              category: 'image',
               mediaCategoryName: 'Pictures'
             },
-           {
-             id:5,
-              category: 'apps',
+            {
+              id: 5,
+              category: 'app',
               mediaCategoryName: 'webinos app store'
-            }, 
-           {
-             id:6,
-              category: 'docs',
+            },
+            {
+              id: 6,
+              category: 'doc',
               mediaCategoryName: 'Documents'
             }]
         }
-    }]
+      }]
   }
 });

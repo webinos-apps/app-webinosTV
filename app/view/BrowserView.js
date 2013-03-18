@@ -1,8 +1,8 @@
 
 Ext.define('webinosTV.view.BrowserView', {
   extend: 'Ext.Container',
-  requires: [
-    'Ext.Panel', 'Ext.Button', 'Ext.data.Store', 'Ext.Img', 'Ext.SegmentedButton'],
+//  requires: [
+//    'Ext.Panel', 'Ext.Button', 'Ext.data.Store'],
   config: {
     id: 'browserMainView',
     top: 0,
@@ -52,77 +52,78 @@ Ext.define('webinosTV.view.BrowserView', {
         height: '100%',
         id: 'actionControlsColumn'
       }]
-  },
-  showSourceDeviceQueue: function(deviceID) { //TODO update panel if it is already showing (otherwise 2 pushes)
-    var mainContainer = this;
-
-    //TODO remove once layouts are ready
-    function get_random_color() {
-      var letters = '0123456789ABCDEF'.split('');
-      var color = '#';
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.round(Math.random() * 15)];
-      }
-      return color;
-    }
-
-    var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
-    switch (currentSourceDeviceID) {
-      case null:
-        //add
-        {
-
-          //   	  //WARNING: this is NOT the final stuff
-          mainContainer.insert(0, {
-            xtype: 'container',
-            flex: 2,
-            height: '100%',
-            layout: {
-              type: 'vbox',
-              align: 'center',
-              pack: 'center'
-            },
-            items: [{//Headers  #1
-                xtype: 'container',
-                width: '100%',
-                cls: 'title-container',
-                layout: {
-                  type: 'hbox',
-                  align: 'center',
-                  pack: 'center'
-                },
-                items: [{
-                    xtype: 'panel',
-                    html: 'Device Queue',
-                    padding: 2,
-                    margin: 2
-                  }]
-              }, {
-                xtype: 'tilepanel',
-                cls: 'tile-panel',
-                flex: 9,
-                text: ('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small()
-              }]
-          });
-          mainContainer.getAt(0).getAt(1).getAt(0).addCls('not-implemented-yet');
-          mainContainer.setCurrentSourceDeviceQueue(deviceID);
-        }
-        break;
-      case deviceID:
-        //remove
-        {
-          mainContainer.removeAt(0);
-          mainContainer.setCurrentSourceDeviceQueue(null);
-        }
-        break;
-      default:
-        //update
-        {
-          //WARNING: this is NOT the final stuff
-          mainContainer.getAt(0).getAt(1).setText(('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small());
-          mainContainer.setCurrentSourceDeviceQueue(deviceID);
-        }
-        break;
-    }
   }
+//  ,
+//  toggleSourceDeviceQueue: function(deviceID) { //TODO update panel if it is already showing (otherwise 2 pushes)
+//    var mainContainer = this;
+//
+//    //TODO remove once layouts are ready
+//    function get_random_color() {
+//      var letters = '0123456789ABCDEF'.split('');
+//      var color = '#';
+//      for (var i = 0; i < 6; i++) {
+//        color += letters[Math.round(Math.random() * 15)];
+//      }
+//      return color;
+//    }
+//
+//    var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
+//    switch (currentSourceDeviceID) {
+//      case null:
+//        //add
+//        {
+//
+//          //   	  //WARNING: this is NOT the final stuff
+//          mainContainer.insert(0, {
+//            xtype: 'container',
+//            flex: 2,
+//            height: '100%',
+//            layout: {
+//              type: 'vbox',
+//              align: 'center',
+//              pack: 'center'
+//            },
+//            items: [{//Headers  #1
+//                xtype: 'container',
+//                width: '100%',
+//                cls: 'title-container',
+//                layout: {
+//                  type: 'hbox',
+//                  align: 'center',
+//                  pack: 'center'
+//                },
+//                items: [{
+//                    xtype: 'panel',
+//                    html: 'Device Queue',
+//                    padding: 2,
+//                    margin: 2
+//                  }]
+//              }, {
+//                xtype: 'tilepanel',
+//                cls: 'tile-panel',
+//                flex: 9,
+//                text: ('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small()
+//              }]
+//          });
+//          mainContainer.getAt(0).getAt(1).getAt(0).addCls('not-implemented-yet');
+//          mainContainer.setCurrentSourceDeviceQueue(deviceID);
+//        }
+//        break;
+//      case deviceID:
+//        //remove
+//        {
+//          mainContainer.removeAt(0);
+//          mainContainer.setCurrentSourceDeviceQueue(null);
+//        }
+//        break;
+//      default:
+//        //update
+//        {
+//          //WARNING: this is NOT the final stuff
+//          mainContainer.getAt(0).getAt(1).setText(('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small());
+//          mainContainer.setCurrentSourceDeviceQueue(deviceID);
+//        }
+//        break;
+//    }
+//  }
 });

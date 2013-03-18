@@ -1,5 +1,5 @@
 {
-  "sourceDevs": [
+  "devices": [
     {"id": "1", "type": "pc", "queue": [1, 2, 3, 4], "deviceName": "My PC"},
     {"id": "2", "type": "tv", "queue": [8, 9, 11, 300], "deviceName": "Living Room TV"},
     {"id": "5", "type": "tv", "queue": [100, 200], "deviceName": "Kitchen TV"}
