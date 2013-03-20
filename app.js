@@ -24,9 +24,11 @@ Ext.application({
   },
   views: [
     'BrowserView', //main view
+    'ColumnView',
     'TilesDataView', //generic component, list-like, whose elements are made of tiles
     'DefaultTilePanel', //generic component, base element of the UI
     'SourceDevicesColumn', //1st column of the browser view
+    'SourceDevicesDataView', //inner component of SourceDevices Column, subclass of TilesDataView
     'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
     'DeviceQueueColumn', //Shows item in the currently selected source device
     'CategoriesColumn', //2nd column of the browser view
@@ -55,11 +57,12 @@ Ext.application({
     'DevicesStore'
   ],
   controllers: [
-    'SelectPlayModeController',
-    'SelectTargetDeviceController',
+    'BrowserViewController',
+    'SelectSourceDeviceController',
     'SelectCategoryController',
-    'SelectMediaController',
-    'SelectSourceDeviceController'
+    // 'SelectMediaController',
+    //    'SelectTargetDeviceController',//TODO drop if no column specific events are to be managed
+    'SelectPlayModeController'
   ],
   profiles: ['Phone', 'LargeScreen'],
   icon: {
@@ -80,30 +83,56 @@ Ext.application({
   launch: function() {
     // Destroy the #appLoadingIndicator element
     Ext.fly('appLoadingIndicator').destroy();
-
-    //connect webinos platform
-    webinosTV.app.connectUi = Ext.create('integration.Ui');
-    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
-    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+    // Initialize the main view
+    //Ext.Viewport.add(Ext.create('webinosTV.view.' + webinosTV.app.getCurrentProfile().getName() + '.BrowserView'));
 
     // Initialize the stores
-
     //Unified device store (both source and target)
-    var devicesStore = Ext.create('webinosTV.store.DevicesStore');
+    webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore');
 
     //Unified media store
     //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
     //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
-    var mediaStore = Ext.create('webinosTV.store.MediaStore', {
-      substores: [
+    webinosTV.app.mediaStore = Ext.create('webinosTV.store.MediaStore', {
+      groupStores: [
         'audio',
         'video',
         'images',
         'tvchannel',
         'app',
         'doc'
-      ]
+      ],
+      storeId: 'mediastore-id'
     });
+
+    //connect webinos platform
+    webinosTV.app.connectUi = Ext.create('integration.Ui');
+    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+    //console.log("launch app")
+//    //connect webinos platform
+//    webinosTV.app.connectUi = Ext.create('integration.Ui');
+//    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+//    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+
+//    // Initialize the stores
+//
+//    //Unified device store (both source and target)
+//    webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore');
+//
+//    //Unified media store
+//    //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
+//    //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
+//    webinosTV.app.mediaStore = Ext.create('webinosTV.store.MediaStore', {
+//      substores: [
+//        'audio',
+//        'video',
+//        'images',
+//        'tvchannel',
+//        'app',
+//        'doc'
+//      ]
+//    });
 
   },
   //connect interface with ui
@@ -112,6 +141,9 @@ Ext.application({
   connectEvents: null,
   //connect interface with PZP
   connectConnector: null,
+  devicesStore: null,
+  mediaStore: null,
+  //Sencha delta upgrade
   onUpdated: function() {
     Ext.Msg.confirm(
       "Application Update",
@@ -123,13 +155,4 @@ Ext.application({
       }
     );
   }
-//  ,
-//  addDisplayDevices: function(deviceItems) {
-//    var dispDevStore = Ext.getStore('tmpdispdevstore-id');
-//    //dispDevStore.add(deviceItems);
-//  },
-//  addSourceDevices: function(deviceItems) {
-//    var srcDevStore = Ext.getStore('tmpsrcdevstore-id');
-//    //srcDevStore.add(deviceItems);
-//  }
 });

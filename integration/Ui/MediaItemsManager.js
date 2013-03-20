@@ -95,6 +95,7 @@ Ext.define('integration.Ui.MediaItemsManager', {
    *
    */
   clearMediaItems: function(type) {
+    console.warn("CALLED CLEAR MEDIA ITEMS WITH TYPE = ", type);
     var mimgr = this;
     //TODO get this from category store or from mediastore.getGroups labels?
     var types = ['video', 'audio', 'image', 'tvchannel', 'app', 'doc'];

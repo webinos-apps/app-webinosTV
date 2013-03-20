@@ -9,12 +9,13 @@ Ext.define('webinosTV.store.GenericMediaSubStore', {
   config:
     {
       model: 'webinosTV.model.Media',
-      data: [],
-      autoLoad: true
+      data: []//,
+//      autoLoad: true
     },
   initialize: function() {
     var mediaStore = Ext.getStore('mediastore-id');
-    mediaStore.registerSubStore(this.getStoreId());
+    if (mediaStore)
+      mediaStore.registerSubStore(this.getStoreId());
   },
   destroy: function() {
 // console.log("Destroy", this.getStoreId());

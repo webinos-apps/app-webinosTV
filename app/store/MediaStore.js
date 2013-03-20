@@ -14,8 +14,8 @@ Ext.define('webinosTV.store.MediaStore', {
   //TODO this store should change depending on the selected media type
   config:
     {
-      storeId: 'mediastore-id',
-      substores: null,
+      //storeId: 'mediastore-id',
+      groupStores: null,
       model: 'webinosTV.model.Media',
       proxy: {
         type: 'ajax',
@@ -56,6 +56,7 @@ Ext.define('webinosTV.store.MediaStore', {
         },
         clear: {
           fn: function(store, eOpts) {
+            console.error("Called clear for ", store.id, store.getId());
             var mediaStore = this;
             mediaStore.registeredSubStores.forEach(function(storeId) {
               var subStore = Ext.StoreManager.get(storeId);
@@ -96,14 +97,14 @@ Ext.define('webinosTV.store.MediaStore', {
           }
         },
         load: function(mediaStore, records, successful, operation, eOpts) {
-          var substores = mediaStore.getSubstores();
-          if (substores)
-            substores.forEach(mediaStore.loadSubstores);
+          var groupStores = mediaStore.getGroupStores();
+          if (groupStores)
+            groupStores.forEach(mediaStore.loadGroupStores);
         }
       }
     },
   //load or create substores
-  loadSubstores: function(type) {
+  loadGroupStores: function(type) {
     //SUBSTORES: never perform actions on these stores, only on mediaStore!
     var mediaStore = Ext.getStore('mediastore-id');
     var substoreId = type + 'store-id';

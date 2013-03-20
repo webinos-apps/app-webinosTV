@@ -26,7 +26,7 @@ Ext.define('integration.Ui', {
     var cfg = {
       mediaPlayerManager: Ext.create('integration.Ui.MediaPlayerManager', {}),
       sourceDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}),
-      targetDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}), //TODO drop??
+      //targetDevicesManager: Ext.create('integration.Ui.DeviceManager', {devicesSID: 'devicesstore-id'}), //TODO drop??
       uiNavigator: Ext.create('integration.Ui.UiNavigator', {}),
       mediaItemsManager: Ext.create('integration.Ui.MediaItemsManager', {mediaStoreId: 'mediastore-id'}),
       queuesManager: Ext.create('integration.Ui.QueueManager', {})

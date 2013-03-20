@@ -1,3 +1,8 @@
+/**
+ * @class SelectSourceDeviceController
+ * This is the controller for the SourceDeviceColumn. It implements a FSM
+ * to control the device queue column show/update/hide behavior
+ */
 Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   extend: 'Ext.app.Controller',
   xtype: 'selsourcectrl',
@@ -5,178 +10,220 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
 
   //TODO this controller should change shape depending on the selected media category
   config: {
+    qCtrlStatus: 0,
     control: {
-      sdevList:
+      srcDevColumn:
         {
-          select: 'sourceDeviceSelected', //event = select, cb = mediaCategorySelected
-          deselect: 'sourceDeviceDeselected',
-          queueitemtapped: 'toggleSourceDeviceQueueColumn'
+          colselect: 'sourceDeviceSelected',
+          itemtap: 'sourceDeviceItemTapped',
+          itemsremoved: 'resetFSM'
         }
     },
     refs: {
-//       mplist: '#selectMedia',
       srcDevColumn: '#sourceDevicesColumn',
-      mcategory: '#mediaCategoryList',
-      sdevList: '#sourceDeviceList',
-      mtargetdevs: '#targetDevicesList',
-      mactions: '#actionsList'
+      browserView: '#browserMainView',
+      queueColumnView: '#queuecol-id'
     }
   },
-  sourceDeviceSelected: function(sourceDeviceList, device, eOpts)
+  /**
+   * @private
+   * Actions performed after the device is selected
+   * @param {ColumnView} sourceDeviceColumn the source devices columb (list+header)
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   * @param {Object} eOpts event options
+   */
+  sourceDeviceSelected: function(sourceDeviceColumn, sourceDeviceList, device, eOpts)
   {
-    //console.log("SRC SELECT");
-    var mcategory = this.getMcategory();
-    var srcDevColumn = this.getSrcDevColumn();
-    var header = srcDevColumn.query('container[name=columnheadertext]')[0];
-    if (header) {
-      header.addCls('selected-column-header');
-    }
-    mcategory.setMasked(false);
-    mcategory.setDisabled(false);
-    mcategory.setDisableSelection(false);
-
+//    console.log("SRC DEV ColSELECT");
     var deviceId = device.getDeviceId();
-
-    //check whether the q column is shown
-    var browserView = Ext.getCmp('browserMainView');
-    if (browserView.getCurrentSourceDeviceQueue()) {
-      if (deviceId !== browserView.getCurrentSourceDeviceQueue())
-      {
-        this.updateSourceDeviceQueueColumn(browserView, device, deviceId);
-      }
-    }
     webinosTV.app.connectEvents.notify("scanForFiles", {serviceAdr: deviceId});
   },
-  sourceDeviceDeselected: function(sourceDeviceList, device, eOpts)
-  {
-//    console.log("SRC DESELECT");
-    var mcategory = this.getMcategory();
-    var srcDevColumn = this.getSrcDevColumn();
-    var header = srcDevColumn.query('container[name=columnheadertext]')[0];
-    if (header) {
-      header.removeCls('selected-column-header');
-    }
-    var sdevList = this.getSdevList();
-    var mtargetdevs = this.getMtargetdevs();
-    var mactions = this.getMactions();
-
-    var deviceId = device.getDeviceId();
-    var browserView = Ext.getCmp('browserMainView');
-    if (browserView.getCurrentSourceDeviceQueue() === deviceId) {
-      this.hideSourceDeviceQueueColumn(browserView);
-    }
-
-//     console.log("Count",sdevList.getSelectionCount());
-    if (sdevList.getSelectionCount() === 0)
-    {
-      mcategory.deselectAll(false);
-      mcategory.setMasked(true);
-      mcategory.setDisabled(true);
-      mcategory.setDisableSelection(true);
-      mtargetdevs.setMasked(true);
-      mtargetdevs.setDisabled(false);
-      mactions.setMasked(true);
-      mactions.setDisabled(false);
-    }
-  },
   /**
    * @private
-   * Toggle device queue column
-   * @param {BrowserView} browserView application main view
-   * @param {TilesDataView} soureceDeviceList the source devices list
-   * @param {Device} record the record involved
+   * Handler for the SourceDevicesDataView itemtap event
+   * Uses some DOM black magic to distinguish which list panel was tapped
+   * then triggers the FSM
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Number} index the selected item index
+   * @param {SourceDeviceDataViewItem} sourceDeviceDataviewItem the selected source device item
+   * @param {Device} device the involved device
+   * @param {Ext.event} event details
    * @param {Object} eOpts event options
-
    */
-  toggleSourceDeviceQueueColumn: function(browserView, sourceDeviceList, device, eOpts) {
-    var deviceId = device.getDeviceId();
-    var deviceSelected = sourceDeviceList.isSelected(device);
-    var bvCurrDeviceId = browserView.getCurrentSourceDeviceQueue();
+  sourceDeviceItemTapped: function(sourceDeviceList, index, sourceDeviceDataviewItem, device, event, eOpts) {
+    //console.log("ItemSingleTap: sourceDeviceList:", sourceDeviceList.$className, sourceDeviceList.getId());
+    //console.log("Target =", sourceDeviceDataviewItem, sourceDeviceDataviewItem.getId(), sourceDeviceDataviewItem.$className, "--- index=", index);
+    //console.log("Device name =", device.getName(), " queue length =", device.getCounter());
 
-    //console.warn("Toggle Q combination: current", bvCurrDeviceId, "tapped", deviceId, deviceSelected);
+    //DOM Black magic
+    var qPanelEl = Ext.get(event.target.id).up('.queuepanel');
+//    var dPanelEl = Ext.get(event.target.id).up('.devicepanel');
+    //var panelElem = qPanelEl === null ? dPanelEl : qPanelEl;
+    var tapType = qPanelEl === null ? 'D' : 'Q';
 
-    var ctrl = this;
-    switch (bvCurrDeviceId)
+    //console.log(/*"DOM ELEM touched:", panelElem,*/"itemsingletap: tap type is", tapType, "STATUS", this.getQCtrlStatus());
+    this._gotoNextStatus(tapType, sourceDeviceList, device);
+    return false;
+  },
+  /**
+   *
+   */
+  resetFSM: function(store, devices, indices, eOpts) {
+//    console.warn("Devices removed", devices);
+    var controller = this;
+    if (controller.getQCtrlStatus() !== 0) {
+      var sourceDeviceList = controller.getSrcDevColumn().query('#sourceDeviceList')[0];
+      for (var i = 0; i < devices.length; i++) {
+//        console.log("DV", devices[i].getId(), "is sel", sourceDeviceList.isSelected(devices[i]));
+        if (sourceDeviceList.isSelected(devices[i])) //if it is in current selection
+        {
+          controller._hideDeviceQueueColumn();
+          controller._setStatus0(sourceDeviceList);
+        }
+      }
+    }
+    return false;
+  },
+  /**
+   * @private
+   * Go to next status of this controller FSM
+   * @param {string} tapEventType is 'Q' if originated from the Q panel, 'D' else
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _gotoNextStatus: function(tapEventType, sourceDeviceList, device) {
+    var controller = this;
+    var currentStatus = controller.getQCtrlStatus();
+    var queueColumn = controller.getQueueColumnView();
+    var currentDeviceId = queueColumn.getDevice() === null ? -1 : queueColumn.getDevice().getId();
+
+    switch (currentStatus) {
+      case 0:
+        if (tapEventType === 'Q' && device.getCounter() > 0) {
+          //Goto 2
+          controller._setStatus2(sourceDeviceList, device);
+        }
+        else {
+          //Goto 1
+          controller._setStatus1(sourceDeviceList/*, device*/);
+        }
+        break;
+      case 1:
+        if (tapEventType === 'Q' && device.getCounter() > 0) {
+          //Goto 2
+          controller._setStatus2(sourceDeviceList, device);
+        }
+        else {
+          //Goto 0
+          controller._setStatus0(sourceDeviceList/*, device*/);
+        }
+        break;
+      case 2:
+        //Same device ID or counter ===0 -         if (tapEventType === 'Q' && (device.getId() === currentDevice.getId() || device.getCounter() === 0))
+        if (device.getCounter() === 0 || (device.getCounter() > 0 && tapEventType === 'Q' && device.getId() === currentDeviceId)) {
+          //Goto 3
+          controller._setStatus3(sourceDeviceList/*, device*/);
+        }
+        else {
+          //STAY in 2 (probably updating)
+          controller._setStatus2(sourceDeviceList, device);
+        }
+        break;
+      case 3:
+        if (tapEventType === 'Q' && device.getCounter() > 0) {
+          //Goto 2
+          controller._setStatus2(sourceDeviceList, device);
+        }
+        else {
+          //Goto 0
+          controller._setStatus0(sourceDeviceList/*, device*/);
+        }
+        break;
+    }
+//    console.log("NextStatus", controller.getQCtrlStatus(), "\n------------------------------------------------------------------------------------------------\n");
+  },
+  /**
+   * @private
+   * sets status 0 of the FSM
+   * item is deselected, deselection is allowed, queue columns is hidden
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _setStatus0: function(sourceDeviceList/*, device*/) {
+    sourceDeviceList.setAllowDeselect(true);
+//    sourceDeviceList.setWillAllowDeselection(false);
+//    sourceDeviceList.setShowingDeviceQueueColumn(false);
+    this.setQCtrlStatus(0);
+  },
+  /**
+   * @private
+   * sets status 1 of the FSM
+   * item is selected, deselection is allowed, queue columns is hidden
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _setStatus1: function(sourceDeviceList/*, device*/) {
+    sourceDeviceList.setAllowDeselect(true);
+//    sourceDeviceList.setWillAllowDeselection(false);
+//    sourceDeviceList.setShowingDeviceQueueColumn(false);
+    this.setQCtrlStatus(1);
+  },
+  /**
+   * @private
+   * sets status 2 of the FSM
+   *  item is selected, deselection is allowed, queue columns is shown
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _setStatus2: function(sourceDeviceList, device) {
+    sourceDeviceList.setAllowDeselect(false);
+//    sourceDeviceList.setWillAllowDeselection(false);
+//    sourceDeviceList.setShowingDeviceQueueColumn(true);
+    this._showDeviceQueueColumn(sourceDeviceList, device);
+    this.setQCtrlStatus(2);
+  },
+  /**
+   * @private
+   * sets status 3 of the FSM
+   * item is selected, deselection is allowed, queue columns is hidden
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _setStatus3: function(sourceDeviceList/*, device*/) {
+    sourceDeviceList.setAllowDeselect(false);
+//    sourceDeviceList.setWillAllowDeselection(true);
+//    sourceDeviceList.setShowingDeviceQueueColumn(false);
+    this._hideDeviceQueueColumn();
+    this.setQCtrlStatus(3);
+  },
+  /**
+   * Shows or updates the device queue column
+   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+   * @param {Device} device the involved device
+   */
+  _showDeviceQueueColumn: function(sourceDeviceList, device) {
+    var queueColumn = this.getQueueColumnView();
+    //SHOW
+    if (queueColumn.getHidden(false))
     {
-      case null: //SHOW
-        {
-          if (device.getCounter() !== 0) {
-            if (deviceSelected) {
-              sourceDeviceList.setDisableSelection(true); //otherwise gets deselected
-            }
-            else
-            {
-              sourceDeviceList.setDisableSelection(false); //otherwise gets deselected
-            }
-            ctrl.showSourceDeviceQueueColumn(browserView, device, deviceId);
-          }
-        }
-        break;
-      case deviceId: //HIDE
-        {
-          if (deviceSelected) {
-            sourceDeviceList.setDisableSelection(false); //clean
-          }//not selected should never happen
-          ctrl.hideSourceDeviceQueueColumn(browserView);
-        }
-        break;
-      default: //UPDATE
-        {
-          if (device.getCounter() !== 0)
-          {
-            if (!deviceSelected)
-            {
-              sourceDeviceList.setDisableSelection(false); //clean
-            }//selected should never happen
-            ctrl.updateSourceDeviceQueueColumn(browserView, device, deviceId);
-          }
-          else //hide
-          {
-            sourceDeviceList.setDisableSelection(false);
-            ctrl.hideSourceDeviceQueueColumn(browserView);
-          }
-        }
+      queueColumn.setDevice(device);
+      queueColumn.setHidden(false);
+    }
+    else//Update or do nothing
+    {
+      var currentDeviceId = queueColumn.getDevice() === null ? -1 : queueColumn.getDevice().getId();
+      if (device.getId() !== currentDeviceId) {
+        queueColumn.setDevice(device);
+      }
     }
   },
   /**
-   * @private
-   * Shows the device queue column
-   * @param {BrowserView} browserView application main view
-   * @param {Device} device the record involved
-   * @param {string} deviceId id
-
+   * Hides the device queue column
    */
-  showSourceDeviceQueueColumn: function(browserView, device, deviceId) {
-    //console.log("SHOW Q for", device.getName(), deviceId);
-    browserView.setCurrentSourceDeviceQueue(deviceId);
-    browserView.insert(0, {
-      xtype: 'devqueuecol',
-      id: 'queuecol-id',
-      device: device
-    });
-  },
-  /**
-   * @private
-   * Updates the device queue column
-   * @param {BrowserView} browserView application main view
-   * @param {Device} device the record involved
-   * @param {string} deviceId id
-   */
-  updateSourceDeviceQueueColumn: function(browserView, device, deviceId) {
-    // console.log("UPDATE Q for", device.getName(), deviceId);
-    browserView.setCurrentSourceDeviceQueue(deviceId);
-    var qCol = Ext.getCmp('queuecol-id');
-    qCol.setDevice(device);
-  },
-  /**
-   * @private
-   * removes the device queue column
-   * @param {BrowserView} browserView application main view
-   */
-  hideSourceDeviceQueueColumn: function(browserView) {
-    //   console.log("HIDE ");
-    browserView.setCurrentSourceDeviceQueue(null);
-    var qc = Ext.getCmp('queuecol-id');
-    qc.destroy();
+  _hideDeviceQueueColumn: function() {
+    var queueColumn = this.getQueueColumnView();
+    queueColumn.setDevice(null);// in the hide handler
+    queueColumn.setHidden(true);
   }
 });

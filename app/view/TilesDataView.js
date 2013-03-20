@@ -21,6 +21,8 @@ Ext.define('webinosTV.view.TilesDataView', {
     selectedCls: 'tile-panel-selected',
     pressedDelay: 100,
     pressedCls: 'tile-panel-pressed',
+    //Forward events to parent
+    bubbleEvents: ['select', 'deselect'], //TODO add refresh?
     listeners: {
       itemdoubletap: {
         fn: function(tileList, index, listItem, record, e, eOpts) {

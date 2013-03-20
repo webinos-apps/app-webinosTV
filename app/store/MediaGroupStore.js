@@ -8,7 +8,12 @@ Ext.define('webinosTV.store.MediaGroupStore', {
   extend: 'webinosTV.store.GenericMediaSubStore',
   config:
     {
-      groupName: '' //mandatory and must be === model.type
+      groupName: '', //mandatory and must be === model.type,
+      listeners: {
+        clear: function(store) {
+          console.error("Called clear for ", store.id, store.getId(), store.getGroupName());
+        }
+      }
     },
   //override
   insert: function(index, records) {
