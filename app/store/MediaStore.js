@@ -42,7 +42,7 @@ Ext.define('webinosTV.store.MediaStore', {
           },
           direction: 'ASC'
         },
-      autoLoad: true, //WARNING be careful with this!
+      //  autoLoad: true, //WARNING be careful with this!
       listeners: {
         addrecords: {
           fn: function(store, records, eOpts) {
@@ -56,7 +56,7 @@ Ext.define('webinosTV.store.MediaStore', {
         },
         clear: {
           fn: function(store, eOpts) {
-            console.error("Called clear for ", store.id, store.getId());
+            //  console.error("Called clear for ", store.id, store.getId());
             var mediaStore = this;
             mediaStore.registeredSubStores.forEach(function(storeId) {
               var subStore = Ext.StoreManager.get(storeId);
@@ -95,35 +95,35 @@ Ext.define('webinosTV.store.MediaStore', {
               subStore.fireEvent('refresh', subStore, record, newIndex, oldIndex, modifiedFieldNames, modifiedValues, eOpts);
             });
           }
-        },
-        load: function(mediaStore, records, successful, operation, eOpts) {
-          var groupStores = mediaStore.getGroupStores();
-          if (groupStores)
-            groupStores.forEach(mediaStore.loadGroupStores);
         }
       }
     },
   //load or create substores
-  loadGroupStores: function(type) {
+  loadGroupStores: function() {
     //SUBSTORES: never perform actions on these stores, only on mediaStore!
-    var mediaStore = Ext.getStore('mediastore-id');
-    var substoreId = type + 'store-id';
-    var group = mediaStore.getGroups(type);
-    var groupData = group === undefined ? [] : group.children;
+    var mediaStore = this;//Ext.getStore('mediastore-id');
+    var groupStores = mediaStore.getGroupStores();
+    if (groupStores)
+      groupStores.forEach(function(type) {
 
-    var subStore = Ext.getStore(substoreId);
-    if (subStore === undefined) {
-      subStore = Ext.create('webinosTV.store.MediaGroupStore',
+        var substoreId = type + 'store-id';
+        var group = mediaStore.getGroups(type);
+        var groupData = group === undefined ? [] : group.children;
+
+        var subStore = Ext.getStore(substoreId);
+        if (subStore === undefined) {
+          subStore = Ext.create('webinosTV.store.MediaGroupStore',
+            {
+              storeId: substoreId,
+              groupName: type,
+              data: groupData
+            });
+        }
+        else
         {
-          storeId: substoreId,
-          groupName: type,
-          data: groupData
-        });
-    }
-    else
-    {
-      subStore.setData(groupData);
-    }
+          subStore.setData(groupData);
+        }
+      });
   },
   //Event propagation and data syncing
 ///An array of (sub)store IDs

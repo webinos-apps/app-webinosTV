@@ -81,59 +81,55 @@ Ext.application({
     '1496x2048': 'resources/startup/1496x2048.png'
   },
   launch: function() {
-    // Destroy the #appLoadingIndicator element
-    Ext.fly('appLoadingIndicator').destroy();
-    // Initialize the main view
-    //Ext.Viewport.add(Ext.create('webinosTV.view.' + webinosTV.app.getCurrentProfile().getName() + '.BrowserView'));
-
     // Initialize the stores
     //Unified device store (both source and target)
-    webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore');
+    webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore', {
+      storeId: 'devicesstore-id',
+      listeners: {
+        load: function(store) {
+          //console.warn("Devices store loaded: - storeId = ", webinosTV.app.devicesStore.getStoreId(), "; id = ", webinosTV.app.devicesStore.getId());
 
-    //Unified media store
-    //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
-    //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
-    webinosTV.app.mediaStore = Ext.create('webinosTV.store.MediaStore', {
-      groupStores: [
-        'audio',
-        'video',
-        'images',
-        'tvchannel',
-        'app',
-        'doc'
-      ],
-      storeId: 'mediastore-id'
+          //Unified media store
+          //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
+          //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
+          webinosTV.app.mediaStore = Ext.create('webinosTV.store.MediaStore', {
+            groupStores: [
+              'audio',
+              'video',
+              'images',
+              'tvchannel',
+              'app',
+              'doc'
+            ],
+            storeId: 'mediastore-id',
+            listeners: {
+              load: function(store) {
+                //console.warn("General Media store loaded: - storeId = ", webinosTV.app.mediaStore.getStoreId(), "; id = ", webinosTV.app.mediaStore.getId());
+                //load substores
+                webinosTV.app.mediaStore.loadGroupStores();
+                //connect webinos platform
+                webinosTV.app.connectUi = Ext.create('integration.Ui');
+                webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+                webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+                // Destroy the #appLoadingIndicator element
+                Ext.fly('appLoadingIndicator').destroy();
+                // Initialize the main view, which was instantiated in the profile
+                var bw = Ext.getCmp('browserMainView');
+                //load main view components (which will search for the stores)
+                bw.addAllColumns();
+                //show the main view
+                Ext.Viewport.add(bw);
+              }
+            }
+          });
+          //load media store (this triggers its 'load' listener)
+          webinosTV.app.mediaStore.load();
+        }
+      }
     });
 
-    //connect webinos platform
-    webinosTV.app.connectUi = Ext.create('integration.Ui');
-    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
-    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
-    //console.log("launch app")
-//    //connect webinos platform
-//    webinosTV.app.connectUi = Ext.create('integration.Ui');
-//    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
-//    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
-
-//    // Initialize the stores
-//
-//    //Unified device store (both source and target)
-//    webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore');
-//
-//    //Unified media store
-//    //Currently only 6 media types/categories/groups: 'audio','video' 'image', 'tvchannel', 'app', 'doc'
-//    //Plus one collection: 'album' (that should work also as playlist, but we could split those role in the future)
-//    webinosTV.app.mediaStore = Ext.create('webinosTV.store.MediaStore', {
-//      substores: [
-//        'audio',
-//        'video',
-//        'images',
-//        'tvchannel',
-//        'app',
-//        'doc'
-//      ]
-//    });
-
+    //load devices store (this triggers all the above)
+    webinosTV.app.devicesStore.load();
   },
   //connect interface with ui
   connectUi: null,

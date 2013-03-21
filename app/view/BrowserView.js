@@ -15,8 +15,55 @@ Ext.define('webinosTV.view.BrowserView', {
       type: 'hbox', //Main component
       align: 'center',
       pack: 'center'
-    },
-    items: [
+    }//,
+//    items: [
+//      //queue details
+//      {
+//        xtype: 'devqueuecol',
+//        id: 'queuecol-id',
+//        hidden: true,
+//        flex: 2,
+//        height: '100%'
+//      },
+//      // Queue and Source devices
+//      {
+//        xtype: 'srcdevscol',
+//        flex: 2.5,
+//        height: '100%',
+//        id: 'sourceDevicesColumn'
+//      },
+//      // Categories
+//      {
+//        xtype: 'categscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'categoriesColumn'
+//      },
+//      // Media selection
+//      {
+//        xtype: 'mediaselcol',
+//        flex: 3,
+//        height: '100%',
+//        id: 'mediaSelectionColumn'
+//      },
+//      // Target devices
+//      {
+//        xtype: 'tgtdevscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'targetDevicesColumn'
+//      },
+//      // Actions
+//      {
+//        xtype: 'actctrlscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'actionControlsColumn'
+//      }
+//    ]
+  },
+  addAllColumns: function() {
+    this.add([
       //queue details
       {
         xtype: 'devqueuecol',
@@ -59,6 +106,7 @@ Ext.define('webinosTV.view.BrowserView', {
         flex: 1.5,
         height: '100%',
         id: 'actionControlsColumn'
-      }]
+      }
+    ]);
   }
 });
