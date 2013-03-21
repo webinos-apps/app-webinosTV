@@ -15,7 +15,7 @@ Ext.define('webinosTV.view.SourceDevicesDataView', {
     cls: 'phone-listview-indicator', //additional css class to highlight scrollbar
     store: 'devicesstore-id',
     //WARNING don't use itemsingletap because it's fired after select/deselect
-    bubbleEvents: ['select', 'deselect', 'itemtap', 'itemsremoved']
+    bubbleEvents: ['selectionchange', 'select', 'deselect', 'itemtap', 'itemsremoved']
   },
   onStoreRemove: function(store, records, indices) {
     // console.log("Removed records from store!");

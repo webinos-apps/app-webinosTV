@@ -7,7 +7,7 @@ Ext.define('webinosTV.view.MediaPlaylist', {
   xtype: 'mediaplaylist',
   config: {
     mode: "MULTI",
-    bubbleEvents: ['select', 'deselect'], //TODO add refresh?
+    bubbleEvents: ['selectionchange', 'select', 'deselect'], //TODO add refresh?
     scrollable: {
       direction: 'vertical',
       directionLock: true

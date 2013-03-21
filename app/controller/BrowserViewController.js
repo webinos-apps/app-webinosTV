@@ -22,8 +22,8 @@ Ext.define('webinosTV.controller.BrowserViewController', {
       browserView: '#browserMainView'
     }
   },
-  columnSelected: function(column, listOrigin, record) {
-    // console.warn("Called SELECT column for", column.getId(), "from", listOrigin.getId(), record);
+  columnSelected: function(column, listOrigin, records) {
+    //console.warn("+++ Called SELECT column for", column.getId(), "from", listOrigin.getId(), records);
     if (column.getId() !== 'queuecol-id') {
       var browserView = this.getBrowserView();
       column.getHeaderComponent().addCls('selected-column-header');
@@ -31,8 +31,8 @@ Ext.define('webinosTV.controller.BrowserViewController', {
     }
 //    return false;
   },
-  columnDeselected: function(column, listOrigin, record) {
-    // console.warn("Called DESELECT column for", column.getId(), "from", listOrigin.getId(), record);
+  columnDeselected: function(column, listOrigin, records) {
+    //console.warn("--- Called DESELECT column for", column.getId(), "from", listOrigin.getId(), records, "SEL IS VOID =", column.hasVoidSelection());
     if (column.getId() !== 'queuecol-id') {
       var browserView = this.getBrowserView();
 

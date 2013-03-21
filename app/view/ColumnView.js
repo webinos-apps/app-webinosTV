@@ -21,34 +21,37 @@ Ext.define('webinosTV.view.ColumnView', {
       align: 'center',
       pack: 'center'
     },
-    headerComponent: null,
     contentComponent: null,
-    listeners: {
-      select: {
-        /**
-         * fires whenever a column item child is selected
-         * @param {DataView/List} origin list-like component that originated the event
-         * @param {Model} record selected record
-         */
-        fn: function(origin, record)
-        {
+    headerComponent: null,
+    listeners: [
+      {
+        event: 'select',
+        fn: function(origin, record) {
+          var c = origin.getSelectionCount();
+          var r_id = record.id;
+          var last = origin.getLastSelected();
+          var lastId = last ? last.id : null;
+          console.log("+++CURRENT SELECT", c, r_id, lastId);
           this.fireEvent('colselect', this, origin, record);
-          return false; //stop bubbling select event
-        }
+        },
+        buffer: 150,
+        order: 'current'
       },
-      /**
-       * fires whenever a column item is deselected
-       * @param {DataView/List} origin list-like component that originated the event
-       * @param {Model} record deselected record
-       */
-      deselect: {
-        fn: function(origin, record)
-        {
-          this.fireEvent('coldeselect', this, origin, record);
-          return false; //stop bubbling deselect event
-        }
+      {
+        event: 'deselect',
+        fn: function(origin, record) {
+          var c = origin.getSelectionCount();
+          var r_id = record.id;
+          var last = origin.getLastSelected();
+          var lastId = last ? last.id : null;
+          console.log("---CURRENT DESELECT", c, r_id, lastId);
+          if (c === 0)
+            this.fireEvent('coldeselect', this, origin, record);
+        },
+        buffer: 150,
+        order: 'current'
       }
-    }
+    ]
   },
   applyHeaderComponent: function(headerComp) {
     var queryRes = this.query('*[role=columnheader]');
@@ -94,16 +97,16 @@ Ext.define('webinosTV.view.ColumnView', {
    * False if no list child found or selection count > 0
    */
   hasVoidSelection: function() {
-    var selectionVoid = false;
+    var selectionVoid = true;
     var queryListComponents = this.query('dataview');
     if (queryListComponents.length > 0)
     {
       var listComponent = queryListComponents[0];
-      if (listComponent.getSelectionCount() === 0)
+      if (listComponent.getSelectionCount() > 0)
       {
-        selectionVoid = true;
+        selectionVoid = false;
       }
-      //console.warn("hasVoidSelection", queryListComponents, listComponent.getSelectionCount(), selectionVoid);
+      //console.warn(" ooo - hasVoidSelection", queryListComponents, listComponent.getSelectionCount(), selectionVoid);
     }
 
     return selectionVoid;
@@ -119,13 +122,16 @@ Ext.define('webinosTV.view.ColumnView', {
     var disabled = !enabled;
     content.setMasked(disabled);
     content.setDisabled(disabled);
-    var queryListComponents = this.query('dataview');
-    if (queryListComponents.length > 0)
+    if (disabled)
     {
-      var listComponent = queryListComponents[0];
-      listComponent.deselectAll();
-      listComponent.setDisableSelection(disabled);
+      var queryListComponents = this.query('dataview');
+      if (queryListComponents.length > 0)
+      {
+        var listComponent = queryListComponents[0];
+        listComponent.deselectAll();
+        //listComponent.setDisableSelection(disabled);
+      }
     }
-    // console.warn("Called enableContent with enabled = ", enabled);
+    console.warn("Called enableContent with enabled = ", enabled);
   }
 });
