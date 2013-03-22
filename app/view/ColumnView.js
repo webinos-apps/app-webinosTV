@@ -31,7 +31,7 @@ Ext.define('webinosTV.view.ColumnView', {
           var r_id = record.id;
           var last = origin.getLastSelected();
           var lastId = last ? last.id : null;
-          console.log("+++CURRENT SELECT", c, r_id, lastId);
+//          console.log("+++CURRENT SELECT", c, r_id, lastId);
           this.fireEvent('colselect', this, origin, record);
         },
         buffer: 150,
@@ -44,7 +44,7 @@ Ext.define('webinosTV.view.ColumnView', {
           var r_id = record.id;
           var last = origin.getLastSelected();
           var lastId = last ? last.id : null;
-          console.log("---CURRENT DESELECT", c, r_id, lastId);
+//          console.log("---CURRENT DESELECT", c, r_id, lastId);
           if (c === 0)
             this.fireEvent('coldeselect', this, origin, record);
         },

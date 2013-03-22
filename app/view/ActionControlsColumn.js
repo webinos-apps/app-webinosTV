@@ -34,66 +34,51 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
       store: {
         storeId: 'actionsstore-id',
         fields: ['id', 'icon', 'text', 'action'],
-        data: [{
+        data: [
+          {
             id: 1,
             icon: 'play',
             text: 'Play Now',
-            action: function(mode) {
-              if (mode === "play") {
-                //get files to be played
-                var files = Ext.getCmp('mediaSelectionColumn');
-                var fileNames = [];
-                files.getSelection().forEach(function(e) {
-                  fileNames.push(e.data.file);
-                });
-                console.log(fileNames);
-
-
-                //get selected target devices
-                var tar = Ext.getCmp('targetDevicesList');
-                var targetIds = [];
-                tar.getSelection().forEach(function(e) {
-                  targetIds.push(e.data.id);
-                });
-                console.log(targetIds);
-
-
-                //get selected source device
-                var sou = Ext.getCmp('sourceDeviceList');
-                var source = "";
-                sou.getSelection().forEach(function(e) {
-                  source = e.data.id;
-                });
-                console.log(source);
-
-                webinosTV.app.connectEvents.notify("playFiles", {source: source, targets: targetIds, files: fileNames});
-              }
-              if (mode === "stop") {
-                webinosTV.app.connectEvents.notify("stopFiles", {});
-              }
-
+            //call media player manager from controller
+            action: {
+              selected: 'play',
+              deselected: 'pause'
             }
+//              function(mode) {
+//                if (mode === "play") {
+//
+//
+//                  //moved to media player
+//                  // webinosTV.app.connectEvents.notify("playFiles", {source: source, targets: targetIds, files: fileNames});
+//                }
+//                if (mode === "stop") {
+//                  //moved to media player
+//                  // webinosTV.app.connectEvents.notify("stopFiles", {});
+//                }
+//
+//              }
           },
           {
             id: 2,
             icon: 'queue',
-            text: 'Add to Queue',
-            action: function() {
-              //  console.log("Add to Q");
+            text: 'Add to Queue', //call queue manager
+            action: {
+              selected: 'addToDeviceQueues',
+              deselected: null
             }
           }
         ],
         autoLoad: true
       },
       loadingText: "Loading actions...",
-      scrollable: false,
-      //eg addNewRecord({id:3,icon:'tv',text:'watch',action:function(){alert("Video killed radio all stars");}})
-      addNewRecord: function(recordObject) { //TODO reject objects with no id or increment biggest id
-        var store = Ext.StoreManager.get('actionsstore-id');
-        store.add(recordObject);
-        this.refresh(); //seems not to get updated otherwise :( TODO maybe with dedicated model+store works
-      }
+      scrollable: false
+//      , MOVED TO ActionsManager
+//      //eg addNewRecord({id:3,icon:'tv',text:'watch',action:function(){alert("Video killed radio all stars");}})
+//      addNewRecord: function(recordObject) { //TODO reject objects with no id or increment biggest id
+//        var store = Ext.StoreManager.get('actionsstore-id');
+//        store.add(recordObject);
+//        this.refresh(); //seems not to get updated otherwise :( TODO maybe with dedicated model+store works
+//      }
     }
   }
-
 });
