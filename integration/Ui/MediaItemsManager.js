@@ -28,6 +28,20 @@ Ext.define('integration.Ui.MediaItemsManager', {
 //    'docs': null,
 //    'all': 'mediastore-id' //all media here
 //  },
+  getMediaById: function(mediaIDs) {
+    var mimgr = this;
+    var store = Ext.getStore(mimgr.getMediaStoreId());
+    var records = [];
+    if (store)
+    {
+      records = new Array(mediaIDs.length);
+      for (var i = 0; i < mediaIDs.length; i++)
+      {
+        records[i] = store.findRecord('id', mediaIDs[i]);
+      }
+    }
+    return records;
+  },
   /**
    * Add a new media item or updates it if it already exists
    * @param {Object} mediaItem or webinosTV.model.Media record

@@ -132,6 +132,6 @@ Ext.define('webinosTV.view.ColumnView', {
         //listComponent.setDisableSelection(disabled);
       }
     }
-    console.warn("Called enableContent with enabled = ", enabled);
+//    console.warn("Called enableContent with enabled = ", enabled);
   }
 });

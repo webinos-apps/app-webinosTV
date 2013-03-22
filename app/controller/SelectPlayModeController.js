@@ -37,6 +37,15 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
   play: function(data) {
 //we should not refer to fileNames, but to media IDs
     //may be moving to mediaplayer is better
+    var media = webinosTV.app.connectUi.getMediaItemsManager().getMediaById(data.mediaItems)//[0];
+    console.log("selected media", media);
+    //TODO this should not fire here and should be fired only if the selected device is the current device
+//    webinosTV.app.connectUi.getMediaPlayerManager().showMediaPlayer({
+//      mode: 'modal',
+//      mediaType: media.get('type'),
+//      url: media.get('name'),
+//      posterUrl: undefined //sh
+//    });
     webinosTV.app.connectEvents.notify("playFiles", {source: data.srcIds, targets: data.targetDevices, media: data.mediaItems/*files: fileNames*/});
   },
   pause: function(data) {
