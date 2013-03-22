@@ -39,14 +39,14 @@ Ext.define('integration.Ui.MediaPlayerManager', {
   applyUrl: function(url) {
     if (url)
       return url;
-    else
+    else //TODO use some better defaults
       return this.getMediaType() === 'video' ? 'resources/BigBen/bb1.mov' : 'resources/BigBen/Skill_Borrower_-_Ain_t_Gonna_Ask_You.mp3';
   },
   //TODO testing only: remove reference to media files
   applyPosterUrl: function(posterUrl) {
     if (posterUrl)
       return posterUrl;
-    else
+    else //TODO use some webinos-like defaults
       return this.getMediaType() === 'video' ? 'resources/BigBen/bb1.JPG' : 'resources/BigBen/Skill_Borrower_album_art.jpg';
   },
   /**

@@ -7,7 +7,7 @@ Ext.define('webinosTV.view.BrowserView', {
     id: 'browserMainView',
     top: 0,
     left: 0,
-    currentSourceDeviceQueue: null, //private attribute - see showSourceDeviceQueue
+    // currentSourceDeviceQueue: null, //private attribute - see DeviceQueueColumn.js
     width: '100%',
     height: '100%',
     cls: ['main-container', 'restore-size'],
@@ -15,8 +15,63 @@ Ext.define('webinosTV.view.BrowserView', {
       type: 'hbox', //Main component
       align: 'center',
       pack: 'center'
-    },
-    items: [
+    }//,
+//    items: [
+//      //queue details
+//      {
+//        xtype: 'devqueuecol',
+//        id: 'queuecol-id',
+//        hidden: true,
+//        flex: 2,
+//        height: '100%'
+//      },
+//      // Queue and Source devices
+//      {
+//        xtype: 'srcdevscol',
+//        flex: 2.5,
+//        height: '100%',
+//        id: 'sourceDevicesColumn'
+//      },
+//      // Categories
+//      {
+//        xtype: 'categscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'categoriesColumn'
+//      },
+//      // Media selection
+//      {
+//        xtype: 'mediaselcol',
+//        flex: 3,
+//        height: '100%',
+//        id: 'mediaSelectionColumn'
+//      },
+//      // Target devices
+//      {
+//        xtype: 'tgtdevscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'targetDevicesColumn'
+//      },
+//      // Actions
+//      {
+//        xtype: 'actctrlscol',
+//        flex: 1.5,
+//        height: '100%',
+//        id: 'actionControlsColumn'
+//      }
+//    ]
+  },
+  addAllColumns: function() {
+    this.add([
+      //queue details
+      {
+        xtype: 'devqueuecol',
+        id: 'queuecol-id',
+        hidden: true,
+        flex: 2,
+        height: '100%'
+      },
       // Queue and Source devices
       {
         xtype: 'srcdevscol',
@@ -51,79 +106,7 @@ Ext.define('webinosTV.view.BrowserView', {
         flex: 1.5,
         height: '100%',
         id: 'actionControlsColumn'
-      }]
+      }
+    ]);
   }
-//  ,
-//  toggleSourceDeviceQueue: function(deviceID) { //TODO update panel if it is already showing (otherwise 2 pushes)
-//    var mainContainer = this;
-//
-//    //TODO remove once layouts are ready
-//    function get_random_color() {
-//      var letters = '0123456789ABCDEF'.split('');
-//      var color = '#';
-//      for (var i = 0; i < 6; i++) {
-//        color += letters[Math.round(Math.random() * 15)];
-//      }
-//      return color;
-//    }
-//
-//    var currentSourceDeviceID = mainContainer.getCurrentSourceDeviceQueue();
-//    switch (currentSourceDeviceID) {
-//      case null:
-//        //add
-//        {
-//
-//          //   	  //WARNING: this is NOT the final stuff
-//          mainContainer.insert(0, {
-//            xtype: 'container',
-//            flex: 2,
-//            height: '100%',
-//            layout: {
-//              type: 'vbox',
-//              align: 'center',
-//              pack: 'center'
-//            },
-//            items: [{//Headers  #1
-//                xtype: 'container',
-//                width: '100%',
-//                cls: 'title-container',
-//                layout: {
-//                  type: 'hbox',
-//                  align: 'center',
-//                  pack: 'center'
-//                },
-//                items: [{
-//                    xtype: 'panel',
-//                    html: 'Device Queue',
-//                    padding: 2,
-//                    margin: 2
-//                  }]
-//              }, {
-//                xtype: 'tilepanel',
-//                cls: 'tile-panel',
-//                flex: 9,
-//                text: ('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small()
-//              }]
-//          });
-//          mainContainer.getAt(0).getAt(1).getAt(0).addCls('not-implemented-yet');
-//          mainContainer.setCurrentSourceDeviceQueue(deviceID);
-//        }
-//        break;
-//      case deviceID:
-//        //remove
-//        {
-//          mainContainer.removeAt(0);
-//          mainContainer.setCurrentSourceDeviceQueue(null);
-//        }
-//        break;
-//      default:
-//        //update
-//        {
-//          //WARNING: this is NOT the final stuff
-//          mainContainer.getAt(0).getAt(1).setText(('Queue for ' + deviceID + '<br>Here you\'ll see a single device queue...').small());
-//          mainContainer.setCurrentSourceDeviceQueue(deviceID);
-//        }
-//        break;
-//    }
-//  }
 });
