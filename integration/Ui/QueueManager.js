@@ -8,12 +8,12 @@
  */
 Ext.define('integration.Ui.QueueManager', {
   mixins: ['Ext.mixin.Observable'],
-  config: {
-  },
-  // We need to initialize the config options when the class is instantiated
-  constructor: function(config) {
-    this.initConfig(config);
-  },
+//  config: {
+//  },
+//  // We need to initialize the config options when the class is instantiated
+//  constructor: function(config) {
+//    this.initConfig(config);
+//  },
   /**
    * Get queues of the devices with deviceIds
    * Example:
@@ -112,7 +112,7 @@ Ext.define('integration.Ui.QueueManager', {
   },
   _refreshDeviceQueueView: function() {
     var qcolumn = Ext.getCmp('queuecol-id');
-    if (qcolumn)
+    if (!qcolumn.getHidden())
       qcolumn.updatePlaylist();
     var srcDevList = Ext.getCmp('sourceDeviceList');
     srcDevList.refresh();

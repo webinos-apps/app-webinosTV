@@ -3,14 +3,17 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
   requires: ['Ext.Container', 'Ext.Panel'],
   xtype: 'sourcedevlistitem',
   config: {
+    bubbleEvents: ['queuepanelstatuschange'],
+    tapped: false,
     deviceLabel: {
       xtype: 'container',
       layout: 'hbox',
       height: 100,
       items: [
         {//counter
+          //name: 'queuepanel',
           xtype: 'tilepanel',
-          cls: 'tile-panel',
+          cls: ['tile-panel', 'queuepanel'], //queuepanel is a fake css class used for item selection
           iconCls: '',
           text: '',
           flex: 1,
@@ -18,25 +21,12 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
             type: 'hbox',
             align: 'center',
             pack: 'start'
-          },
-          listeners: {
-            tap: {
-              element: 'element',
-              fn: function() {
-                var elem = this;
-                var srcDevItem = elem.getParent().getParent();
-//                console.log("Src dev q elem tap", srcDevItem);
-                var srcDevList = srcDevItem.getDataview();
-                var device = srcDevItem.getRecord();
-                var browserMainView = Ext.getCmp('browserMainView');
-                srcDevList.fireEvent('queueitemtapped', browserMainView, srcDevList, device);
-              }
-            }
           }
         },
         {//device
+//          name: 'devicepanel',
           xtype: 'tilepanel',
-          cls: 'tile-panel',
+          cls: ['tile-panel', 'devicepanel'],
           iconCls: '',
           text: '',
           flex: 1.5
@@ -86,5 +76,27 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     if (newLabel) {
       this.add(newLabel);
     }
-  }
+  }//,
+//  //Status of the button;
+//  applyTapped: function(tapped) {
+//    return tapped;
+//  },
+//  updateTapped: function(newValue, oldValue)
+//  {
+//    if (Ext.isBoolean(newValue))
+//      this.setTapped(newValue);
+//
+//    //if (Ext.isDefined(oldValue)) {
+////      var srcDevColumn = Ext.getCmp('sourceDevicesColumn');
+////    var sourceDeviceList = this.getDataview();
+////    sourceDeviceList.setShowingDeviceQueueColumn(newValue);
+////      var device = this.getRecord();
+////      //console.warn("updateTapped", newValue, oldValue, this.getTapped());
+////
+//////      srcDevList.fireEvent('queuepanelstatuschange', srcDevList, device, newValue);//, oldValue);
+//    //}
+//  },
+//  clearTapped: function() {
+//    this.setTapped(false);
+//  }
 });
