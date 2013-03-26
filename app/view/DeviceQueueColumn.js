@@ -104,7 +104,7 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
    * @param {Device} device device for which the view was built
    */
   _createQueueStore: function(device) {
-    var qs = Ext.create('webinosTV.store.GenericMediaSubStore', {
+    var qs = Ext.create('webinosTV.store.DeviceQueueMediaStore', {
       storeId: device.getDeviceId() + '-queuestore-id',
       data: device.getMediaItemsQueue()
     });

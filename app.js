@@ -53,6 +53,7 @@ Ext.application({
   stores: [
     'MediaStore',
     'GenericMediaSubStore',
+    'DeviceQueueMediaStore',
     'MediaGroupStore',
     'DevicesStore'
   ],
@@ -81,6 +82,34 @@ Ext.application({
     '1496x2048': 'resources/startup/1496x2048.png'
   },
   launch: function() {
+    //ADD THIS Utility to Store prototype and its derived classes
+    /**
+     * Query items by using a pseudo querystring
+     * that is attribute1=value1&attribute2=value2...
+     * but value can include spaces and is not urlencoded
+     * @param {string} querystring the query string
+     * @return {Array} items array of records
+     **/
+    Ext.data.Store.prototype.queryByString = function(querystring) {
+      var store = this;
+      var queryconditions = querystring.split("&");
+      var queryObject = {};
+      for (var i = 0; i < queryconditions.length; i++) {
+        var qc = queryconditions[i].split("=");
+        queryObject[qc[0]] = qc[1];
+      }
+      var validFields = store.getModel().getFields().keys;
+      var qresult = store.queryBy(function(record, id) {
+        var condition = true;
+        for (var key in queryObject) {
+          if (validFields.indexOf(key) !== -1)
+            condition = condition && queryObject[key] === record.get(key);
+        }
+        return condition;
+      });
+      return qresult.items;
+    };
+
     // Initialize the stores
     //Unified device store (both source and target)
     webinosTV.app.devicesStore = Ext.create('webinosTV.store.DevicesStore', {

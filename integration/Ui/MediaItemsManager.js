@@ -15,6 +15,18 @@ Ext.define('integration.Ui.MediaItemsManager', {
   constructor: function(config) {
     this.initConfig(config);
   },
+  /**
+   * Query media item by using a pseudo querystring
+   * that is attribute1=value1&attribute2=value2...
+   * but value can include spaces and is not urlencoded
+   * @param {string} querystring the query string
+   * @return {Array} items array of records
+   **/
+  queryMediaItems: function(querystring) {
+    var mimgr = this;
+    var store = Ext.getStore(mimgr.getMediaStoreId());
+    return store.queryByString(querystring);
+  },
   //WARNING Now all ops are made on a single media store
 //category determined by the media type field
 
@@ -87,57 +99,28 @@ Ext.define('integration.Ui.MediaItemsManager', {
     });
   },
   /**
-   * Remove a media item
-   * @param {webinosTV.model.Media/Object/Number} mediaItem or webinosTV.model.Media record
+   * Remove media items
+   * @param {[webinosTV.model.Media]/String} array of webinosTV.model.Media querystring
    */
-  removeMediaItem: function(mediaItem) {
+  removeMediaItems: function(mediaItems) {
     var mimgr = this;
     var store = Ext.getStore(mimgr.getMediaStoreId());
-    console.log("Store", store.getStoreId(), "got model", mediaItem.isModel);
-    if (mediaItem.isModel === undefined) {
-      var _mediaItem;
-      //is id
-      if (!Ext.isObject(mediaItem)) {
-        _mediaItem = {
-          id: Number(mediaItem)
-        };
-      }
-      else //is object
-      {
-        _mediaItem = mediaItem;
-      }
-      store.remove(Ext.create('webinosTV.model.Media', _mediaItem));
+
+    var _mediaItems;
+    var _mediaItemsKeys;
+    if (Ext.isString(mediaItems)) {
+      var query = mimgr.queryMediaItems(mediaItems);
+      _mediaItems = query;
     }
-    else {//is model
-      store.remove(mediaItem);
-    }
-//    if (mediaItem.isModel === undefined)
-//    {
-//      if (!Ext.isObject(mediaItem))
-//      {
-//        mediaItem = {id: Number(mediaItem)};
-//      }
-//    }
-//    else {//it's a record
-//      mediaItem = mediaItem.raw;
-//    }
-//
-//    _mediaItem = mediaItem;
-//
-////     console.log("Remove",mediaItem.file,"of category",category,"from store", store);
-//    if (store)
-//    {
-//      var index = store.findBy(function(record, id) {
-//        var condition = false;
-//        if (_mediaItem.file !== undefined)
-//          condition = record.get('file') === _mediaItem.file;
-//        condition = condition || record.internalId === _mediaItem.id;
-////        var condition = (record.get('file') === mediaItem.file || /*record.get('title')===mediaItem.title ||*/ record.internalId === mediaItem.id);
-//        return condition;
-//      });
-//      store.removeAt(index);
-//    }
-  },
+    _mediaItemsKeys = _mediaItems.map(function(item) {
+      return item.get('id');
+    });
+    //Clean media items from all device queues to have consistency
+    var queueManager = webinosTV.app.connectUi.getQueuesManager();
+    queueManager.removeFromDevicesQueue(_mediaItemsKeys, 'all');
+    store.remove(_mediaItems);
+  }
+  ,
   /**
    * clear all items or all items of a given category (if type is passed)
    * @param {string} type must be equal to the group/category/media type, i.e. 'video', 'audio','images','tvchannel','app','doc'
