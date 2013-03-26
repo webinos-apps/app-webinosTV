@@ -1,7 +1,9 @@
 /**
  *  Class that implements a media group store
  *  Media are grouped by type (audio, video, etc)
- *  Change to this store are reflected to the main media store
+ *  You can only add media items of the same type
+ *  it is actually a projection of the MediaStore
+ *  TODO: Change to this store should be reflected to the main media store
  *
  */
 Ext.define('webinosTV.store.MediaGroupStore', {
@@ -15,7 +17,7 @@ Ext.define('webinosTV.store.MediaGroupStore', {
 //        }
 //      }
     },
-  //override
+  //override - insert only records with the same type of the store name
   insert: function(index, records) {
     var subStore = this;
     if (!Ext.isArray(records)) {

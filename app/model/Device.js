@@ -1,12 +1,18 @@
+/**
+ * This class represents a device
+ * Example: {"id": "1", "type": "pc", "deviceName": "webinos PC", queue:["1","3","5"]},
+ */
 Ext.define('webinosTV.model.Device', {
   extend: 'Ext.data.Model',
   alternateClassName: ['webinosDevice'],
   config: {
     fields: [
-      'id', //unique device id
-      'type', //device type: 'pc', 'tv', 'tablet', 'phone', 'laptop']
-      'deviceName', //device name - label displayed -TODO handle name clash by adding '-n'
-      'queue' //queue = list of mediItems id
+      ///Defining type should automatically convert raw data to target type, e.g. 1 to '1' but do not rely on it
+      ///@see http://docs.sencha.com/touch/2-1/#!/api/Ext.data.Field-cfg-type
+      {name: 'id', type: 'string', allowNull: false}, //unique device id
+      {name: 'type', type: 'string'}, //device type: 'pc', 'tv', 'tablet', 'phone', 'laptop']
+      {name: 'deviceName', type: 'string'}, //device name - label displayed -TODO handle name clash by adding '-n'
+      {name: 'queue', type: 'auto'} //queue = array of mediItems id
     ],
     validations: [
       {type: 'presence', field: 'id'},
@@ -39,12 +45,19 @@ Ext.define('webinosTV.model.Device', {
   //Get queue as an array of Media models
   getMediaItemsQueue: function() {
     var q = this.get('queue');
-    var allData = Ext.getStore('mediastore-id').getData().items;
+    var allData = Ext.getStore('mediastore-id').getData().map;
 
 //Get only elements that are referenced by this device
-    var mediaItems = allData.filter(function(item) {
-      return q.indexOf(item.getId()) !== -1;
-    });
+//    var mediaItems = allData.filter(function(item) {
+//      return q.indexOf(item.getId()) !== -1;
+//    });
+    var mediaItems = new Array(q.length);
+    for (var i = 0; i < mediaItems.length; i++) {
+      mediaItems[i] = allData[q[i]];
+    }
+
+    //  console.warn("ALL DATA", allData, q, mediaItems);
+
     return mediaItems;
   },
   /**
@@ -71,9 +84,10 @@ Ext.define('webinosTV.model.Device', {
 
     var q = this.get('queue');
     //filter out media that are already there
-    var _mediaIds = mediaIds.filter(function(m) {
-      return q.indexOf(m) === -1;
-    });
+    var _mediaIds = mediaIds;
+//      .filter(function(m) {
+//      return q.indexOf(m) === -1;
+//    });
 
     for (var i = 0; i < _mediaIds.length; i++)
     {
@@ -112,6 +126,7 @@ Ext.define('webinosTV.model.Device', {
     {
       q[position] = newMediaId;
     }
+    this.set('queue', q);
     return oldValue;
   },
   /**
@@ -123,15 +138,15 @@ Ext.define('webinosTV.model.Device', {
     if (!Ext.isArray(mediaIds)) {
       mediaIds = Array.prototype.slice.call(arguments, 1);
     }
-
     var q = this.get('queue');
 
     for (var i = 0; i < mediaIds.length; i++)
     {
-      var index = q.indexOf(mediaIds);
-      if (index !== -1)
-        q.splice(index, 1);
+      q = q.filter(function(e) {
+        return e !== mediaIds[i];
+      });
     }
+    this.set('queue', q);
     return q.length;
   },
   /**
@@ -145,6 +160,7 @@ Ext.define('webinosTV.model.Device', {
     {
       q.splice(index, 1);
     }
+    this.set('queue', q);
     return removable;
   },
   /**
@@ -154,3 +170,4 @@ Ext.define('webinosTV.model.Device', {
     return this.set('queue', []);
   }
 });
+
