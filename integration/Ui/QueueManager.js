@@ -74,11 +74,15 @@ Ext.define('integration.Ui.QueueManager', {
   },
   /**
    * Add mediaIds to the queues of the devices with deviceIds
-   * @param {Number/Array} mediaIds array or single mediaId to be added
-   * @param {Number/Array} deviceIds array or single deviceId target
+   * @param {String/Array} mediaIds array or single mediaId to be added
+   * @param {String/Array} deviceIds array or single deviceId target
+   *  if 'all' is passed, then the mediaIds are removed from all the queues of all devices
    */
   removeFromDevicesQueue: function(mediaIds, deviceIds) {
-    if (!Ext.isArray(deviceIds)) {
+    if (deviceIds === 'all') {
+      deviceIds = Ext.getStore("devicesstore-id").getData().keys;
+    }
+    else if (deviceIds !== 'all' && !Ext.isArray(deviceIds)) {
       deviceIds = Array.prototype.slice.call(deviceIds, 0);
     }
     var devManager = webinosTV.app.connectUi.getSourceDevicesManager();
