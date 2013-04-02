@@ -5,66 +5,59 @@ Ext.define('webinosTV.controller.SelectCategoryController', {
 
   //TODO this controller should change shape depending on the selected media category
   config: {
-    control:{
-      mcategory:
-      {
-    select:'mediaCategorySelected', //event = select, cb = mediaCategorySelected
-  deselect:'mediaCategoryDeselected'
-      }
+    control: {
+      categoriesColumn:
+        {
+          colselect: 'showMediaForSelectedCategory',
+          coldeselect: 'setEmptyContent'
+        }
     },
     refs: {
-      mplist: '#mediaPlaylist',
-      mcategory: '#mediaCategoryList'
+      categoriesColumn: '#categoriesColumn',
+      selectMediaColumn: '#mediaSelectionColumn'
     }
   },
-  
-  mediaCategoryDeselected:function(mediaCategoryList, record, eOpts){
-    var mplist=this.getMplist();
-    mplist.setItems({
-      xtype:'tilepanel',
-      cls:['tile-panel'],
-      text: 'please select a media type...'
-    });
-    mplist.setMasked(true);
-    mplist.setDisabled(false);
-  },
-
-  mediaCategorySelected:function(mediaCategoryList, record, eOpts)
+  showMediaForSelectedCategory: function(categoryColumn, mediaCategoryList, record, eOpts)
   {
-    var mplist=this.getMplist();
-//     console.log("mediaCategorySelected",mplist)
-//     var mcategoryList=this.getMcategory();
-//     console.log("mediaCategorySelected",mcategoryList.getSelectionCount(),record)
-//      console.log("selected",record,record.get('mediaCategoryName'),record.get('category'));
-    var mediaCategory=record.get('category');
-    switch(mediaCategory)
+    // console.warn("showMediaForSelectedCategory");
+    var selectMediaColumn = this.getSelectMediaColumn();
+
+    var mediaCategory = record.get('category');
+    switch (mediaCategory)
     {
-      case 'movies':
+      case 'video':
 //  console.log("selected movies");
-    mplist.showVideos();
-    break;
-      case 'music':
+        selectMediaColumn.showVideos();
+        break;
+      case 'audio':
 //  console.log("selected mp3");
-    mplist.showMusic();
-    break;
-      case 'images':
+        selectMediaColumn.showMusic();
+        break;
+      case 'image':
 //  console.log("selected pictures");
-    mplist.showImages();
-    break;
-      case 'channels':
+        selectMediaColumn.showImages();
+        break;
+      case 'tvchannel':
 //  console.log("selected TV");
-    mplist.showTV();
-    break;
-      case 'apps':
+        selectMediaColumn.showTV();
+        break;
+      case 'app':
 //  console.log("selected Apps");
-    mplist.showApps();
-    break;
-      case 'docs':
+        selectMediaColumn.showApps();
+        break;
+      case 'doc':
 //  console.log("selected Documents");
-    mplist.showDocuments();
-    break;
+        selectMediaColumn.showDocuments();
+        break;
     }
-    mplist.setMasked(false);
-    mplist.setDisabled(true);
+//     mplist.setMasked(false);
+//     mplist.setDisabled(true);
+    return false;
+  },
+  setEmptyContent: function() {
+    var selectMediaColumn = this.getSelectMediaColumn();
+    selectMediaColumn.setEmptyContent();
+    return false;
   }
+
 });

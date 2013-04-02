@@ -1,0 +1,8 @@
+{
+  "devices": [
+    {"id": "1", "type": "pc", "queue": ["1", "2", "3", "1", "4", "1"], "deviceName": "My PC"},
+    {"id": "3", "type": "tablet", "queue": [], "deviceName": "A Tablet"},
+    {"id": "2", "type": "tv", "queue": ["8", "9", "11", "300"], "deviceName": "Living Room TV"},
+    {"id": "5", "type": "tv", "queue": ["100", "200"], "deviceName": "Kitchen TV"}
+  ]
+}

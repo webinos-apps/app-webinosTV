@@ -5,29 +5,18 @@ Ext.define('webinosTV.controller.SelectMediaController', {
 
   //TODO actions depending on media type - right now it's just masking/unmasking
   config: {
-    control:{
-      mcategory:
-      {
-        select:'mediaPLSelected', //event = select, cb = mediaCategorySelected
-        deselect:'mediaPLDeselected'
-      }
+    control: {
+      mediaSelectionColumn:
+        {
+          coldeselect: 'mediaSelectionColumnDeselected'
+        }
     },
     refs: {
-      mplist: '#mediaPlaylist', //controlling
-      targetDeVList: '#targetDevicesList' //controlled
+      mediaSelectionColumn: '#mediaSelectionColumn'
     }
   },
-  
-  mediaPLDeselected:function(mediaPlaylist, record, eOpts){
-    var targetDeVList=this.getTargetDeVList();
-    targetDeVList.setMasked(true);
-    targetDeVList.setDisabled(false);
-  },
-
-  mediaPLSelected:function(mediaPlaylist, record, eOpts)
-  {
-    var targetDeVList=this.getTargetDeVList();
-    targetDeVList.setMasked(false);
-    targetDeVList.setDisabled(true);
+  mediaSelectionColumnDeselected: function(column, listOrigin, record) {
+    column.setEmptyContent();
+//    return false;
   }
 });

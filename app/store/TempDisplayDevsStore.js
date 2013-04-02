@@ -16,6 +16,18 @@ Ext.define('webinosTV.store.TempDisplayDevsStore', {
 	rootProperty: 'displayDevices'
       }
     },
+    listeners: {
+      load: function( store ){
+        //auto loading store will unset mask, this is what we dont want
+        setTimeout(function(){
+          Ext.getCmp('targetDevicesList').container.dataview.mask();
+        },100);
+      }
+    },
+    refs: {
+      tdevList: '#targetDevicesList'
+    },
+
     autoLoad: true //WARNING be careful with this!
   }
 });
