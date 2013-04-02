@@ -10,6 +10,9 @@ Ext.define('webinosTV.profile.Phone', {
   },
   launch: function() {
     Ext.create('webinosTV.view.phone.BrowserView');
+
+
+    //seems not to work in the config
     // Initialize the main view
     //  Ext.Viewport.add(Ext.create('webinosTV.view.phone.BrowserView'));
   }

@@ -1,9 +1,9 @@
 Ext.define('webinosTV.controller.SelectTargetDeviceController', {
   extend: 'Ext.app.Controller',
-  xtype: 'seltargetctrl',
+  xtype: 'seltargetctrl'
 //   requires:[''],
 
-  //TODO this controller should change shape depending on the selected media category
+    //TODO this controller should change shape depending on the selected media category
 //  config: {
 //    control: {
 //      tdevList:
