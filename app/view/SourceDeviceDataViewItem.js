@@ -76,27 +76,5 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
     if (newLabel) {
       this.add(newLabel);
     }
-  }//,
-//  //Status of the button;
-//  applyTapped: function(tapped) {
-//    return tapped;
-//  },
-//  updateTapped: function(newValue, oldValue)
-//  {
-//    if (Ext.isBoolean(newValue))
-//      this.setTapped(newValue);
-//
-//    //if (Ext.isDefined(oldValue)) {
-////      var srcDevColumn = Ext.getCmp('sourceDevicesColumn');
-////    var sourceDeviceList = this.getDataview();
-////    sourceDeviceList.setShowingDeviceQueueColumn(newValue);
-////      var device = this.getRecord();
-////      //console.warn("updateTapped", newValue, oldValue, this.getTapped());
-////
-//////      srcDevList.fireEvent('queuepanelstatuschange', srcDevList, device, newValue);//, oldValue);
-//    //}
-//  },
-//  clearTapped: function() {
-//    this.setTapped(false);
-//  }
+  }
 });
