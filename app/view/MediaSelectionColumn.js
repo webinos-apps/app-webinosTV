@@ -258,8 +258,8 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
             fn: function(elem) {
               var pl = this;
               var items = pl.getInnerItems()[0].innerItems;
-              items.forEach(function(audioListItem) {
-                audioListItem.checkTextOverflow();
+              items.forEach(function(videoListItem) {
+                videoListItem.checkTextOverflow();
               });
             }
           },

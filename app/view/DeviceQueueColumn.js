@@ -83,7 +83,18 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
           id: 'deviceq-status-plist-' + device.getDeviceId(),
           xtype: 'mediaplaylist',
           defaultType: 'mplistitem',
-          store: this._createQueueStore(device)
+          store: this._createQueueStore(device),
+          listeners: {
+            resize: {
+              fn: function(elem) {
+                var pl = this;
+                var items = pl.getInnerItems()[0].innerItems;
+                items.forEach(function(listItem) {
+                  listItem.checkTextOverflow();
+                });
+              }
+            }
+          }
         });
       }
     }

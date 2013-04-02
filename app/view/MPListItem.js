@@ -14,6 +14,7 @@ Ext.define('webinosTV.view.MPListItem', {
       flex: 9,
       items: [
         {
+          name: 'titlepanel',
           xtype: 'panel',
           margin: 2,
           html: ''
@@ -23,7 +24,7 @@ Ext.define('webinosTV.view.MPListItem', {
   },
   applyMediaLabel: function(config)
   {
-    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getMediaLabel())
+    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getMediaLabel());
   },
   updateRecord: function(newRecord)
   {
@@ -48,7 +49,8 @@ Ext.define('webinosTV.view.MPListItem', {
   },
   checkTextOverflow: function() {
     var slidingCls = 'sliding-text';
-    var textPanel = this.getAudioLabel().getAt(0); //TODO a smarter way to get this
+    var textPanel = this.getMediaLabel().query('*[name=titlepanel]')[0];
+
     var hasOverflow = (this.element.dom.clientWidth - this.element.dom.scrollWidth) !== 0;
     var hasSlidingCls = false;
     if (textPanel.getCls() !== null)

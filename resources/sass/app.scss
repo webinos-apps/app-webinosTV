@@ -364,6 +364,23 @@ div.multi-tile-panel-pressed div.tile-panel{
 
 //Sliding text
 .sliding-text{
+  /* W3C  */
+  overflow-x: marquee-line;
+  marquee-direction: forward;
+  marquee-style: scroll;
+  marquee-speed: normal;
+  marquee-play-count: infinite;
+  /* Safari and Chrome  */
+  overflow-x:-webkit-marquee;
+  -webkit-marquee-direction: backwards;
+  -webkit-marquee-style: scroll;
+  -webkit-marquee-speed: normal;
+  -webkit-marquee-increment: 1%;
+  -webkit-marquee-repetition: infinite;
+}
+
+/*
+.sliding-text{
   text-overflow:clip;
   white-space:nowrap;
   -webkit-animation-name: slider;
@@ -377,7 +394,6 @@ div.multi-tile-panel-pressed div.tile-panel{
   0%{
     -webkit-transform: translateX(100%);
   }
-
   50%{
     -webkit-transform: translateX(0%);
   }
@@ -385,7 +401,9 @@ div.multi-tile-panel-pressed div.tile-panel{
   100%{
     -webkit-transform: translateX(-150%);
   }
-}
+}*/
+
+
 
 //For labels of not yet implemented features
 .not-implemented-yet {
