@@ -3,7 +3,7 @@
  * This is the controller for the SourceDeviceColumn. It implements a FSM
  * to control the device queue column show/update/hide behavior
  */
-Ext.define('webinosTV.controller.SelectSourceDeviceController', {
+Ext.define('webinosTV.controller.phone.SelectSourceDeviceController', {
   extend: 'Ext.app.Controller',
   xtype: 'selsourcectrl',
 //   requires:[''],
@@ -62,7 +62,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     //var panelElem = qPanelEl === null ? dPanelEl : qPanelEl;
     var tapType = qPanelEl === null ? 'D' : 'Q';
 
-    //console.log(/*"DOM ELEM touched:", panelElem,*/"itemsingletap: tap type is", tapType, "STATUS", this.getQCtrlStatus());
+    console.log(/*"DOM ELEM touched:", panelElem,*/"itemsingletap: tap type is", tapType, "STATUS", this.getQCtrlStatus());
     this._gotoNextStatus(tapType, sourceDeviceList, device);
     return false;
   },
@@ -101,47 +101,49 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     switch (currentStatus) {
       case 0:
         if (tapEventType === 'Q' && device.getCounter() > 0) {
-          //Goto 2
+          //Goto 2 - T_02
           controller._setStatus2(sourceDeviceList, device);
         }
         else {
-          //Goto 1
+          //Goto 1 - T_01
           controller._setStatus1(sourceDeviceList/*, device*/);
         }
         break;
       case 1:
         if (tapEventType === 'Q' && device.getCounter() > 0) {
-          //Goto 2
+          //Goto 2 - T_12
           controller._setStatus2(sourceDeviceList, device);
         }
         else {
-          //Goto 0
+          //Goto 0 - T_10
           controller._setStatus0(sourceDeviceList/*, device*/);
         }
         break;
       case 2:
-        //Same device ID or counter ===0 -         if (tapEventType === 'Q' && (device.getId() === currentDevice.getId() || device.getCounter() === 0))
-        if (device.getCounter() === 0 || (device.getCounter() > 0 && tapEventType === 'Q' && device.getId() === currentDeviceId)) {
-          //Goto 3
-          controller._setStatus3(sourceDeviceList/*, device*/);
+        //Same device ID or counter ===0
+        if (device.getId() === currentDeviceId) //Goto 0 - T_20
+        {
+          controller._setStatus0(sourceDeviceList);
         }
-        else {
-          //STAY in 2 (probably updating)
+        else if (device.getCounter() === 0 || (device.getCounter() === 0 && tapEventType === 'Q' && device.getId() !== currentDeviceId)) //Goto 1 - T_21
+        {
+          controller._setStatus1(sourceDeviceList);
+        }
+        else if (device.getCounter() > 0 || (device.getCounter() > 0 && tapEventType === 'Q' && device.getId() !== currentDeviceId)) //Stay in 2 - T_2
+        {
           controller._setStatus2(sourceDeviceList, device);
         }
-        break;
-      case 3:
-        if (tapEventType === 'Q' && device.getCounter() > 0) {
-          //Goto 2
-          controller._setStatus2(sourceDeviceList, device);
-        }
-        else {
-          //Goto 0
-          controller._setStatus0(sourceDeviceList/*, device*/);
-        }
+//        if (device.getCounter() === 0 || (device.getCounter() > 0 && tapEventType === 'Q' && device.getId() === currentDeviceId)) {
+//
+//          controller._setStatus3(sourceDeviceList/*, device*/);
+//        }
+//        else {
+//          //STAY in 2 (probably updating)
+//          controller._setStatus2(sourceDeviceList, device);
+//        }
         break;
     }
-//    console.log("NextStatus", controller.getQCtrlStatus(), "\n------------------------------------------------------------------------------------------------\n");
+    console.log("NextStatus", controller.getQCtrlStatus(), "\n------------------------------------------------------------------------------------------------\n");
   },
   /**
    * @private
@@ -152,8 +154,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
    */
   _setStatus0: function(sourceDeviceList/*, device*/) {
     sourceDeviceList.setAllowDeselect(true);
-//    sourceDeviceList.setWillAllowDeselection(false);
-//    sourceDeviceList.setShowingDeviceQueueColumn(false);
+    this._hideDeviceQueueColumn();
     this.setQCtrlStatus(0);
   },
   /**
@@ -165,8 +166,7 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
    */
   _setStatus1: function(sourceDeviceList/*, device*/) {
     sourceDeviceList.setAllowDeselect(true);
-//    sourceDeviceList.setWillAllowDeselection(false);
-//    sourceDeviceList.setShowingDeviceQueueColumn(false);
+    this._hideDeviceQueueColumn();
     this.setQCtrlStatus(1);
   },
   /**
@@ -178,25 +178,21 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
    */
   _setStatus2: function(sourceDeviceList, device) {
     sourceDeviceList.setAllowDeselect(false);
-//    sourceDeviceList.setWillAllowDeselection(false);
-//    sourceDeviceList.setShowingDeviceQueueColumn(true);
     this._showDeviceQueueColumn(sourceDeviceList, device);
     this.setQCtrlStatus(2);
   },
-  /**
-   * @private
-   * sets status 3 of the FSM
-   * item is selected, deselection is allowed, queue columns is hidden
-   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
-   * @param {Device} device the involved device
-   */
-  _setStatus3: function(sourceDeviceList/*, device*/) {
-    sourceDeviceList.setAllowDeselect(false);
-//    sourceDeviceList.setWillAllowDeselection(true);
-//    sourceDeviceList.setShowingDeviceQueueColumn(false);
-    this._hideDeviceQueueColumn();
-    this.setQCtrlStatus(3);
-  },
+//  /**
+//   * @private
+//   * sets status 3 of the FSM
+//   * item is selected, deselection is allowed, queue columns is hidden
+//   * @param {SourceDevicesDataView} sourceDeviceList the source devices list
+//   * @param {Device} device the involved device
+//   */
+//  _setStatus3: function(sourceDeviceList/*, device*/) {
+//    sourceDeviceList.setAllowDeselect(false);
+//    this._hideDeviceQueueColumn();
+//    this.setQCtrlStatus(3);
+//  },
   /**
    * Shows or updates the device queue column
    * @param {SourceDevicesDataView} sourceDeviceList the source devices list
@@ -204,11 +200,14 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
    */
   _showDeviceQueueColumn: function(sourceDeviceList, device) {
     var queueColumn = this.getQueueColumnView();
+    var browserView = this.getBrowserView();
     //SHOW
-    if (queueColumn.getHidden(false))
+//    if (queueColumn.getHidden())
+    if (browserView.getQueueColumnLocked() === true)
     {
       queueColumn.setDevice(device);
-      queueColumn.setHidden(false);
+//      queueColumn.setHidden(false);
+      browserView.setQueueColumnLocked(false);
     }
     else//Update or do nothing
     {
@@ -217,13 +216,16 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
         queueColumn.setDevice(device);
       }
     }
+    browserView.previous();
   },
   /**
    * Hides the device queue column
    */
   _hideDeviceQueueColumn: function() {
     var queueColumn = this.getQueueColumnView();
+    var browserView = this.getBrowserView();
     queueColumn.setDevice(null);// in the hide handler
-    queueColumn.setHidden(true);
+    //  queueColumn.setHidden(true);
+    browserView.setQueueColumnLocked(true);
   }
 });

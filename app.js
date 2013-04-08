@@ -30,7 +30,7 @@ Ext.application({
     'SourceDevicesColumn', //1st column of the browser view
     'SourceDevicesDataView', //inner component of SourceDevices Column, subclass of TilesDataView
     'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
-    'DeviceQueueColumn', //Shows item in the currently selected source device
+    // 'DeviceQueueColumn', //Shows item in the currently selected source device
     'CategoriesColumn', //2nd column of the browser view
     'MediaCategoryDataViewItem', //represents a single media category tile
     'MediaSelectionColumn', //3rd column of the browser view
@@ -59,7 +59,7 @@ Ext.application({
   ],
   controllers: [
     'BrowserViewController',
-    'SelectSourceDeviceController',
+    // 'SelectSourceDeviceController',
     'SelectCategoryController',
     // 'SelectMediaController',
     //    'SelectTargetDeviceController',//TODO drop if no column specific events are to be managed
@@ -81,7 +81,34 @@ Ext.application({
     '1536x2008': 'resources/startup/1536x2008.png',
     '1496x2048': 'resources/startup/1496x2048.png'
   },
+  handleResize: function() {
+    console.log('rpc.view.home.indexView ~ handleOrientationChange');
+
+    //handle font resize here
+
+    var startWidth = document.documentElement.clientWidth;
+    var startHeight = document.documentElement.clientHeight;
+
+    //  alert("now " + startWidth + " x " + startHeight);
+    var rot = Ext.Viewport.getOrientation() === 'landscape' && webinosTV.app.getCurrentProfile().getName() === 'phone' ? '90deg' : '0deg';
+    //alert("NEW OR: " + Ext.Viewport.getOrientation() + " rot: " + rot);
+
+    Ext.Viewport.setStyle('-webkit-transform:rotate(' + rot + ');');
+
+
+
+    // Execute the code that needs to fire on Orientation Change.
+  },
   launch: function() {
+    //var startWidth = document.documentElement.clientWidth;
+    //  var startHeight = document.documentElement.clientHeight;
+    // console.warn("Current Device Orientation", Ext.Viewport.getOrientation(), startWidth, startHeight);
+
+//    alert("start " + startWidth + " x " + startHeight);
+
+    //Ext.Viewport.on('resize', 'handleResize', this, {buffer: 50});
+
+
     //ADD THIS Utility to Store prototype and its derived classes
     /**
      * Query items by using a pseudo querystring

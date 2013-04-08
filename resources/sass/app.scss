@@ -48,6 +48,15 @@ body {
   body {font-size: 20px;}
 }
 
+/*@media all and (orientation:landscape)
+{
+  -webkit-transform: rotate(0deg);
+}*/
+
+/*@media all and (orientation:portrait)
+{
+  -webkit-transform: rotate(-90deg);
+}*/
 
 @import 'sencha-touch/default/all';
 

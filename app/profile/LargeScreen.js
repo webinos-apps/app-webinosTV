@@ -3,7 +3,8 @@ Ext.define('webinosTV.profile.LargeScreen', {
   config: {
     name: 'largescreen',
     namespace: 'largescreen',
-    views: ['BrowserView']
+    views: ['BrowserView', 'DeviceQueueColumn'],
+    controllers: ['SelectSourceDeviceController']
   },
   isActive: function() {
     return (Ext.os.is.Desktop || Ext.os.is.Tablet); //WARNING this is either true or undefined, not false!!!

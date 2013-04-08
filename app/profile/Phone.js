@@ -3,7 +3,8 @@ Ext.define('webinosTV.profile.Phone', {
   config: {
     name: 'phone',
     namespace: 'phone',
-    views: ['BrowserView']
+    views: ['BrowserView', 'DeviceQueueColumn'],
+    controllers: ['SelectSourceDeviceController']
   },
   isActive: function() {
     return Ext.os.is.Phone; //WARNING this is either true or undefined, not false!!!

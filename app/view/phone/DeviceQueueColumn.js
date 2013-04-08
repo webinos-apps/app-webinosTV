@@ -1,6 +1,6 @@
-Ext.define('webinosTV.view.DeviceQueueColumn', {
+Ext.define('webinosTV.view.phone.DeviceQueueColumn', {
   extend: 'webinosTV.view.ColumnView', //'Ext.Container',
-  xtype: 'devqueuecol',
+  xtype: 'phonedevqueuecol',
   config: {
     device: null,
     headerComponent: {//Headers  #1
@@ -55,7 +55,7 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
     }
     ,
     listeners: {
-      ///Forward refresh event to the Device media play list view
+///Forward refresh event to the Device media play list view
       queuerefresh: function(qcolumn, eOpts) {
         var playList = qcolumn.query('#deviceq-status-plist-' + qcolumn.getDevice().getDeviceId());
         playList.fireEvent('updatedata', playList, eOpts);
@@ -64,11 +64,14 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
   },
   destroy: function() {
     this._cleanStore();
-
     this.callParent(arguments);
   },
+  applyHidden: function(hidden) {
+//    console.warn("HIDDEN", hidden);
+    return false; //never hide
+  },
   applyDevice: function(device) {
-//    console.log("ApplyDevice", device, device.isModel, device.$className);
+    // console.log("ApplyDevice", device, device.isModel, device.$className, "Q len", device.getCounter());
     if (device !== null && device !== undefined && device.isModel && device.$className === 'webinosTV.model.Device') {
       var deviceName = this.query('#deviceq-name')[0];
       if (deviceName)
@@ -82,6 +85,7 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
           height: '100%',
           id: 'deviceq-status-plist-' + device.getDeviceId(),
           xtype: 'mediaplaylist',
+          emptyText: "No items queued on this device",
           defaultType: 'mplistitem',
           store: this._createQueueStore(device),
           listeners: {
@@ -89,9 +93,10 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
               fn: function(elem) {
                 var pl = this;
                 var items = pl.getInnerItems()[0].innerItems;
-                items.forEach(function(listItem) {
-                  listItem.checkTextOverflow();
-                });
+                if (items)
+                  items.forEach(function(listItem) {
+                    listItem.checkTextOverflow();
+                  });
               }
             }
           }
@@ -105,10 +110,15 @@ Ext.define('webinosTV.view.DeviceQueueColumn', {
     return device;
   },
   _cleanStore: function() {
-    var qstoreId = this.getDevice().getDeviceId() + '-queuestore-id';
-    var s = Ext.getStore(qstoreId);
-    if (s)
-      s.destroy(); //It is important to do this in order to unregister the q store
+    var device = this.getDevice();
+    if (device) {
+      var qstoreId = device.getDeviceId() + '-queuestore-id';
+      var s = Ext.getStore(qstoreId);
+      if (s)
+      {
+        s.destroy();
+      } //It is important to do this in order to unregister the q store
+    }
   },
   /**
    * Created local queue store for given device using its mediaItem references
