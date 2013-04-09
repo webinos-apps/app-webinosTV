@@ -13,7 +13,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
         {//counter
           //name: 'queuepanel',
           xtype: 'tilepanel',
-          cls: ['tile-panel', 'queuepanel'], //queuepanel is a fake css class used for item selection
+          cls: ['tile-panel', 'webinostv-panel', 'queuepanel'], //queuepanel is a fake css class used for item selection
           iconCls: '',
           text: '',
           flex: 1,
@@ -26,7 +26,7 @@ Ext.define('webinosTV.view.SourceDeviceDataViewItem', {
         {//device
 //          name: 'devicepanel',
           xtype: 'tilepanel',
-          cls: ['tile-panel', 'devicepanel'],
+          cls: ['tile-panel', 'webinostv-panel', 'devicepanel'],
           iconCls: '',
           text: '',
           flex: 1.5

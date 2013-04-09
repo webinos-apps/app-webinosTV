@@ -19,12 +19,12 @@ $font-family:texgyreadventor;
 
 
 body {
-  font-size: 16px;
+  font-size: 22px;
 }
 
 //TODO use properties defined in http://www.javascriptkit.com/dhtmltutors/cssmediaqueries.shtml (Detectable media features)
 
-@media only screen and (-webkit-min-device-pixel-ratio: 0.75), //low res
+/*@media only screen and (-webkit-min-device-pixel-ratio: 0.75), //low res
        only screen and (min--moz-device-pixel-ratio: 0.75),
        only screen and (min-resolution: 115dpi) {
   body {font-size: 12.5px;}
@@ -46,7 +46,7 @@ body {
        only screen and (min--moz-device-pixel-ratio: 2.0),
        only screen and (min-resolution: 307dpi) {
   body {font-size: 20px;}
-}
+}*/
 
 /*@media all and (orientation:landscape)
 {
@@ -299,6 +299,8 @@ div.multi-tile-panel-pressed div.tile-panel{
   display:block;
   margin: auto 3*$tile-margin-unit auto 3*$tile-margin-unit;//auto 1.5em auto 1.5em;
   -webkit-mask-size: 2.5em;//40px;
+  -webkit-mask-position:0 0;
+  -webkit-mask-repeat: no-repeat;
   background-image: none;
   background-color:$fg-color;
   width:2.5em;//40px;
@@ -308,67 +310,67 @@ div.multi-tile-panel-pressed div.tile-panel{
 }
 
 .tile-icon-play{
-  -webkit-mask: 0 0 inline-image('svg/play_on.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/play_on.svg');
 }
 
 .tile-icon-queue{
-  -webkit-mask: 0 0 inline-image('svg/add_queue.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/add_queue.svg');
   -webkit-mask-size: 2em;//32px;
-/*  width:20px;
-  height:20px;*/
+  width:2em;
+  height:2em;
 }
 
 .tile-icon-favorites{
-  -webkit-mask: 0 0 inline-image('favorites.png') no-repeat;
+  -webkit-mask-image: inline-image('favorites.png');
 }
 
 .tile-icon-webinos{
-  -webkit-mask: 0 0 inline-image('svg/apps.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/apps.svg');
 }
 
 .tile-icon-pc{
-  -webkit-mask: 0 0 inline-image('svg/pc.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/pc.svg');
 }
 
 .tile-icon-list{
   margin: auto 10*$tile-margin-unit auto 10*$tile-margin-unit;
-  -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/queue.svg');
 }
 
 .tile-icon-tvchannel{
-  -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tv_channels.svg');
 }
 
 .tile-icon-phone{
-  -webkit-mask: 0 0 inline-image('svg/phone.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/phone.svg');
 }
 
 .tile-icon-tablet{
-  -webkit-mask: 0 0 inline-image('svg/tablet.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tablet.svg');
 }
 
 .tile-icon-tv{
-  -webkit-mask: 0 0 inline-image('svg/tv.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tv.svg');
 }
 
 .tile-icon-laptop{
-  -webkit-mask: 0 0 inline-image('svg/laptop.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/laptop.svg');
 }
 
 .tile-icon-audio{
-  -webkit-mask: 0 0 inline-image('svg/music.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/music.svg');
 }
 
 .tile-icon-video{
-  -webkit-mask: 0 0 inline-image('svg/movie.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/movie.svg');
 }
 
 .tile-icon-image{
-  -webkit-mask: 0 0 inline-image('svg/image.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/image.svg');
 }
 
 .tile-icon-doc{
-  -webkit-mask: 0 0 inline-image('svg/folder.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/folder.svg');
 }
 
 //Sliding text

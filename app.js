@@ -81,32 +81,46 @@ Ext.application({
     '1536x2008': 'resources/startup/1536x2008.png',
     '1496x2048': 'resources/startup/1496x2048.png'
   },
+//  defaulStyleSheet: null,
   handleResize: function() {
-    console.log('rpc.view.home.indexView ~ handleOrientationChange');
+//    //handle font resize here
+    var body = document.getElementsByTagName('body')[0];
+    var baseSizePx = parseFloat(getComputedStyle(body).fontSize);
+    var ratio = webinosTV.app.getCurrentProfile().getRatio(); //computed by hand: body font-size/document clientWidth on my PC
 
-    //handle font resize here
-
-    var startWidth = document.documentElement.clientWidth;
-    var startHeight = document.documentElement.clientHeight;
-
-    //  alert("now " + startWidth + " x " + startHeight);
-    var rot = Ext.Viewport.getOrientation() === 'landscape' && webinosTV.app.getCurrentProfile().getName() === 'phone' ? '90deg' : '0deg';
-    //alert("NEW OR: " + Ext.Viewport.getOrientation() + " rot: " + rot);
-
-    Ext.Viewport.setStyle('-webkit-transform:rotate(' + rot + ');');
+    var w = document.documentElement.clientWidth;
+    // var h = document.documentElement.clientHeight;
+    // var r = w / h;
+    // var d = Math.sqrt(w * w + h * h);
+    //   alert("Size w = " + w + ", h " + h + ", r " + r + ", d " + d);
 
 
+    var newsize = ratio * w;
+    body.style.fontSize = newsize + 'px';
 
-    // Execute the code that needs to fire on Orientation Change.
+    //console.log('webinosTV.app ~ handleResize', newsize);
   },
-  launch: function() {
+  launch: function(styleSheetName) {
     //var startWidth = document.documentElement.clientWidth;
     //  var startHeight = document.documentElement.clientHeight;
-    // console.warn("Current Device Orientation", Ext.Viewport.getOrientation(), startWidth, startHeight);
+//    var body = document.getElementsByTagName('body')[0];
+//    var baseSizePx = parseFloat(getComputedStyle(body).fontSize);
+    //alert("w = " + document.documentElement.clientWidth + ", fs = " + baseSizePx);
+//    webinosTV.app.defaulStyleSheet = (function() {
+//      var ss = null;
+//
+//      for (var s = 0; s < document.styleSheets.length; s++) {
+//        var _s = document.styleSheets.item(s);
+//        if (_s.href !== null && _s.href.search(styleSheetName) !== -1)
+//        {
+//          ss = _s;
+//        }
+//      }
+//      return ss;
+//    })('app.css');
+//    console.warn("webinosTV.app.defaulStyleSheet", webinosTV.app.defaulStyleSheet);
 
-//    alert("start " + startWidth + " x " + startHeight);
-
-    //Ext.Viewport.on('resize', 'handleResize', this, {buffer: 50});
+    Ext.Viewport.on('resize', 'handleResize', this, {buffer: 50});
 
 
     //ADD THIS Utility to Store prototype and its derived classes

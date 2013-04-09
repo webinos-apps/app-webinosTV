@@ -62,7 +62,7 @@ Ext.define('webinosTV.controller.phone.SelectSourceDeviceController', {
     //var panelElem = qPanelEl === null ? dPanelEl : qPanelEl;
     var tapType = qPanelEl === null ? 'D' : 'Q';
 
-    console.log(/*"DOM ELEM touched:", panelElem,*/"itemsingletap: tap type is", tapType, "STATUS", this.getQCtrlStatus());
+    // console.log(/*"DOM ELEM touched:", panelElem,*/"itemsingletap: tap type is", tapType, "STATUS", this.getQCtrlStatus());
     this._gotoNextStatus(tapType, sourceDeviceList, device);
     return false;
   },
@@ -143,7 +143,7 @@ Ext.define('webinosTV.controller.phone.SelectSourceDeviceController', {
 //        }
         break;
     }
-    console.log("NextStatus", controller.getQCtrlStatus(), "\n------------------------------------------------------------------------------------------------\n");
+    //   console.log("NextStatus", controller.getQCtrlStatus(), "\n------------------------------------------------------------------------------------------------\n");
   },
   /**
    * @private

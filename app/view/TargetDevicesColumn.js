@@ -5,7 +5,7 @@ Ext.define('webinosTV.view.TargetDevicesColumn', {
     headerComponent: {//Headers  #3
       xtype: 'container',
       width: '100%',
-      cls: 'title-container',
+      cls: ['title-container', 'col-title'], //used for selection only
       layout: {
         type: 'hbox',
         align: 'center',

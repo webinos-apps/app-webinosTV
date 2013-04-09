@@ -6,7 +6,7 @@ Ext.define('webinosTV.view.phone.DeviceQueueColumn', {
     headerComponent: {//Headers  #1
       xtype: 'container',
       width: '100%',
-      cls: ['title-container', 'selected-column-header'],
+      cls: ['title-container', 'selected-column-header', 'col-title'], //used for selection only
       layout: {
         type: 'hbox',
         align: 'center',

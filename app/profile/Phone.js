@@ -4,7 +4,8 @@ Ext.define('webinosTV.profile.Phone', {
     name: 'phone',
     namespace: 'phone',
     views: ['BrowserView', 'DeviceQueueColumn'],
-    controllers: ['SelectSourceDeviceController']
+    controllers: ['SelectSourceDeviceController'],
+    ratio: 23 / 460  //computed by hand: body font-size/document clientWidth on my SGS2
   },
   isActive: function() {
     return Ext.os.is.Phone; //WARNING this is either true or undefined, not false!!!

@@ -7,7 +7,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       xtype: 'container',
       width: '100%',
       role: 'columnheader',
-      cls: 'title-container',
+      cls: ['title-container', 'col-title'], //used for selection only
       layout: {
         type: 'hbox',
         align: 'center',

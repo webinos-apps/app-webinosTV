@@ -209,6 +209,7 @@ Ext.define('webinosTV.controller.largescreen.SelectSourceDeviceController', {
     {
       queueColumn.setDevice(device);
       queueColumn.setHidden(false);
+      //webinosTV.app.handleResize();
     }
     else//Update or do nothing
     {
@@ -225,5 +226,6 @@ Ext.define('webinosTV.controller.largescreen.SelectSourceDeviceController', {
     var queueColumn = this.getQueueColumnView();
     queueColumn.setDevice(null);// in the hide handler
     queueColumn.setHidden(true);
+    //webinosTV.app.handleResize();
   }
 });
