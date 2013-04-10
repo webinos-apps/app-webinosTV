@@ -16,7 +16,7 @@ Ext.define('webinosTV.view.largescreen.BrowserView', {
       pack: 'center'
     }
   },
-  addAllColumns: function() {
+  addAllColumns: function(callback) {
     this.add([
       //queue details
       {
@@ -62,5 +62,6 @@ Ext.define('webinosTV.view.largescreen.BrowserView', {
         id: 'actionControlsColumn'
       }
     ]);
+    callback();
   }
 });

@@ -59,7 +59,7 @@ Ext.define('webinosTV.view.phone.BrowserView', {
       this.callParent(arguments);
     }
   },
-  addAllColumns: function() {
+  addAllColumns: function(callback) {
     this.add([
       //queue details
       {
@@ -106,5 +106,6 @@ Ext.define('webinosTV.view.phone.BrowserView', {
       }
     ]);
     this.setActiveItem(1);
+    callback();
   }
 });

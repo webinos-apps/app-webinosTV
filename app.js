@@ -81,7 +81,6 @@ Ext.application({
     '1536x2008': 'resources/startup/1536x2008.png',
     '1496x2048': 'resources/startup/1496x2048.png'
   },
-//  defaulStyleSheet: null,
   handleResize: function() {
 //    //handle font resize here
     var body = document.getElementsByTagName('body')[0];
@@ -89,11 +88,6 @@ Ext.application({
     var ratio = webinosTV.app.getCurrentProfile().getRatio(); //computed by hand: body font-size/document clientWidth on my PC
 
     var w = document.documentElement.clientWidth;
-    // var h = document.documentElement.clientHeight;
-    // var r = w / h;
-    // var d = Math.sqrt(w * w + h * h);
-    //   alert("Size w = " + w + ", h " + h + ", r " + r + ", d " + d);
-
 
     var newsize = ratio * w;
     body.style.fontSize = newsize + 'px';
@@ -101,25 +95,6 @@ Ext.application({
     //console.log('webinosTV.app ~ handleResize', newsize);
   },
   launch: function(styleSheetName) {
-    //var startWidth = document.documentElement.clientWidth;
-    //  var startHeight = document.documentElement.clientHeight;
-//    var body = document.getElementsByTagName('body')[0];
-//    var baseSizePx = parseFloat(getComputedStyle(body).fontSize);
-    //alert("w = " + document.documentElement.clientWidth + ", fs = " + baseSizePx);
-//    webinosTV.app.defaulStyleSheet = (function() {
-//      var ss = null;
-//
-//      for (var s = 0; s < document.styleSheets.length; s++) {
-//        var _s = document.styleSheets.item(s);
-//        if (_s.href !== null && _s.href.search(styleSheetName) !== -1)
-//        {
-//          ss = _s;
-//        }
-//      }
-//      return ss;
-//    })('app.css');
-//    console.warn("webinosTV.app.defaulStyleSheet", webinosTV.app.defaulStyleSheet);
-
     Ext.Viewport.on('resize', 'handleResize', this, {buffer: 50});
 
 
@@ -177,16 +152,20 @@ Ext.application({
                 //console.warn("General Media store loaded: - storeId = ", webinosTV.app.mediaStore.getStoreId(), "; id = ", webinosTV.app.mediaStore.getId());
                 //load substores
                 webinosTV.app.mediaStore.loadGroupStores();
-                //connect webinos platform
-                webinosTV.app.connectUi = Ext.create('integration.Ui');
-                webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
-                webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
-                // Destroy the #appLoadingIndicator element
-                Ext.fly('appLoadingIndicator').destroy();
+
                 // Initialize the main view, which was instantiated in the profile
                 var bw = Ext.getCmp('browserMainView');
                 //load main view components (which will search for the stores)
-                bw.addAllColumns();
+                bw.addAllColumns(
+                  function() {
+                    //connect webinos platform
+                    webinosTV.app.connectUi = Ext.create('integration.Ui');
+                    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+                    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+                  }
+                );
+                // Destroy the #appLoadingIndicator element
+                Ext.fly('appLoadingIndicator').destroy();
                 //show the main view
                 Ext.Viewport.add(bw);
               }
