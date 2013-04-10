@@ -56,7 +56,9 @@ Ext.define('webinosTV.controller.BrowserViewController', {
     var nextColumnIndex = currentColumnIndex < columnViewsIds.length - 1 && currentColumnIndex > -1 ? currentColumnIndex + 1 : -1;
 
 //    console.log("Curr", column.getId(), "[" + currentColumnIndex + "], next =", columnViewsIds[nextColumnIndex]);
-    if (nextColumnIndex > -1)
+//Column ID must contain the word "Column" in order to avoid trouble with other components that may get temporarily added to the bw
+//such as a mask
+    if (nextColumnIndex > -1 && columnViewsIds[nextColumnIndex].search(/Column/g) > -1)
     {
       var nextColumn = bv.query('#' + columnViewsIds[nextColumnIndex])[0];
       nextColumn.enableContent(columnEnabled);
