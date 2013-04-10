@@ -112,6 +112,8 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 //csc = complementary of selection color
 @include sencha-carousel-indicator-ui('csc-indicator',$csel-color,'glossy',lighten($csel-color,30%),'glossy');
+//blue indicator
+@include sencha-carousel-indicator-ui('blue-indicator',$sel-color,'glossy',lighten($sel-color,30%),'glossy');
 
 //Scroll indicator for the phone UI
 .phone-listview-indicator{

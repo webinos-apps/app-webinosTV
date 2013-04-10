@@ -14,7 +14,7 @@ Ext.define('webinosTV.view.phone.BrowserView', {
     width: '100%',
     height: '100%',
     cls: ['main-container', 'restore-size'],
-    ui: 'csc-indicator',
+    ui: 'blue-indicator', //, 'csc-indicator', //balls on the bottom of the carousel
     layout: {
       type: 'hbox', //Main component
       align: 'center',
