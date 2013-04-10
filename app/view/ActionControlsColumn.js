@@ -26,6 +26,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
       id: 'actionsList',
 //         disabled: true,
       masked: true,
+      disabled: true,
       mode: 'SINGLE',
       defaultType: 'actctrllistitem', //for display devices
       cls: ['phone-listview-indicator', 'actionslist'], //additional css class to highlight scrollbar

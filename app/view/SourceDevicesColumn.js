@@ -36,7 +36,9 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
     contentComponent: {//Container #0 (#0a and #0b)
       xtype: 'srctileslist',
       width: '100%',
-      id: 'sourceDeviceList'
+      id: 'sourceDeviceList',
+      disabled: false,
+      masked: false
     }
   }
 });

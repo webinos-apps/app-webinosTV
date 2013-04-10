@@ -22,10 +22,26 @@ Ext.define('webinosTV.view.phone.BrowserView', {
     }
   },
   onDragStart: function(e) {
-//    console.log("Curr Item", this.getActiveIndex(), "Dir", e.deltaX > 0 ? "Left" : "Right");
+//    Swipe Direction = e.deltaX > 0 ? "Left" : "Right"
+    var nextitem = this.getInnerItemAt(this.getActiveIndex() + 1);
+    // console.warn("COND", nextitem, nextitem !== undefined, nextitem.getContentComponent().isDisabled(), e.deltaX < 0);
     if (this.getQueueColumnLocked() && e.deltaX > 0 && this.getActiveIndex() === 1)
     {
-      console.warn("Dev Q Col Locked");
+      // console.warn("Dev Q Col Locked");
+      return false;
+    }
+    else if (nextitem !== undefined && nextitem.getContentComponent().isDisabled() && e.deltaX < 0)
+    {
+      //  console.warn("Next element masked");
+      var bw = this;
+      bw.setMasked({
+        xtype: 'mask',
+        cls: 'nextcoldisabledmask',
+        html: 'Select an item'
+      });
+      setTimeout(function() {
+        bw.setMasked(false);
+      }, 500);
       return false;
     }
     else

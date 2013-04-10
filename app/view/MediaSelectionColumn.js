@@ -32,6 +32,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       width: '100%',
       height: '100%',
       masked: true,
+      disabled: true,
       layout:
         {
           type: 'vbox'
