@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.webinos.org/webinostv" version="1.0" height="960" width="540">
+  <!-- Name of the widget -->
+  <name short="webinosTV">webinosTV</name>
+  <!-- Description is shown when installing widget -->
+  <description>Multi-screen switchboard for seamless interaction with distributed content</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="wtv.png" />
+  <!-- Widget author -->
+  <author href="http://webinos.org" email="martin.lasak@fokus.fraunhofer.de">Martin Lasak</author>
+  <!-- No webinos feature is required -->
+  <!-- Distributed under the Apache 2.0 licence -->
+  <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Distributed under the Apache 2.0 License.</license>
+</widget>

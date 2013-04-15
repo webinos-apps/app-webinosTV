@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ant script to package the widget -->
+<project name="webinosTV" default="make-all" basedir="./">
+    <target name="gen-wgt" depends="clean">
+        <exec executable="sencha" dir="${basedir}/..">
+            <arg value="app"/>
+            <arg value="build"/>
+            <arg value="production"/>
+        </exec>
+        <copy file="${basedir}/config.xml" tofile="${basedir}/../build/webinosTV/production/config.xml"/>
+        <copy file="${basedir}/wtv.png" tofile="${basedir}/../build/webinosTV/production/wtv.png"/>
+        <!-- Creates the widget -->
+        <zip destfile="${basedir}/out/${ant.project.name}.wgt">
+            <zipfileset dir="${basedir}/../build/webinosTV/production"  
+            excludes="
+                **/.gitignore
+                **/*.iml" />
+        </zip>
+    </target>
+
+    <target name="clean">
+        <!-- Removes precompiled widget -->
+        <delete file="${basedir}/out/${ant.project.name}.wgt" />
+    </target>
+    
+    <target name="make-all" depends="gen-wgt">
+
+    </target>
+    
+</project>
