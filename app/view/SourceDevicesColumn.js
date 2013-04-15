@@ -16,6 +16,7 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
       items: [{
           xtype: 'panel',
           html: 'Queue',
+          cls: ['col-title'], //used for selection only - here at lower level wrt other cols
           padding: 2,
           margin: 2,
           flex: 1,
@@ -24,6 +25,7 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
         {
           xtype: 'panel',
           html: 'Source Device',
+          cls: ['col-title'], //used for selection only - here at lower level wrt other cols
           padding: 2,
           margin: 2,
           flex: 1.5,
@@ -34,7 +36,9 @@ Ext.define('webinosTV.view.SourceDevicesColumn', {
     contentComponent: {//Container #0 (#0a and #0b)
       xtype: 'srctileslist',
       width: '100%',
-      id: 'sourceDeviceList'
+      id: 'sourceDeviceList',
+      disabled: false,
+      masked: false
     }
   }
 });
