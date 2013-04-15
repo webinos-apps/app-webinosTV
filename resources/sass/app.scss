@@ -1,43 +1,3 @@
-$base-color:#666;
-
-@import 'sencha-touch/default/all';
-
-// You may remove any of the following modules that you
-// do not use in order to create a smaller css file.
-@include sencha-panel;
-@include sencha-buttons;
-@include sencha-sheet;
-@include sencha-picker;
-@include sencha-tabs;
-@include sencha-toolbar;
-@include sencha-toolbar-forms;
-@include sencha-indexbar;
-@include sencha-list;
-@include sencha-layout;
-@include sencha-carousel;
-@include sencha-form;
-@include sencha-msgbox;
-
-// Your custom code goes here...
-/*@include pictos-iconmask('video');
-@include pictos-iconmask('music1');
-@include pictos-iconmask('photos2');
-@include pictos-iconmask('doc2');
-
-@include pictos-iconmask('tv');
-@include pictos-iconmask('phone2');
-@include pictos-iconmask('monitor1');
-
-@include pictos-iconmask('play2');
-@include pictos-iconmask('add_black');
-@include pictos-iconmask('list');
-
-@include pictos-iconmask('tv');
-@include pictos-iconmask('hot');
-@include pictos-iconmask('lab');
-@include pictos-iconmask('infinite');*/
-
-
 $bg-color: #333;//#337; //background color
 $fg-color:#ddd; //foreground color
 $sel-color:#006bb6; //selected items color
@@ -50,6 +10,38 @@ $list-bg-color:$bg-color;
 $list-color:$fg-color;
 $list-active-color:$sel-color;
 $list-pressed-color:$hl-color;
+
+//See http://docs.sencha.com/touch/2-1/#!/api/Global_CSS
+$base-color:lighten($bg-color,20%);
+$active-color:$sel-color;
+$alert-color :$hl-color;
+$font-family:texgyreadventor;
+
+
+body {
+  font-size: 22px;
+}
+
+@import 'sencha-touch/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+@include sencha-panel;
+@include sencha-buttons;
+@include sencha-sheet;
+//@include sencha-picker;
+@include sencha-tabs;
+@include sencha-toolbar;
+@include sencha-toolbar-forms;
+@include sencha-indexbar;
+@include sencha-list;
+@include sencha-layout;
+@include sencha-carousel;
+@include sencha-form;
+@include sencha-msgbox;
+
+// Your custom code goes here...
+
 
 
 @include sencha-list();
@@ -87,36 +79,41 @@ $list-pressed-color:$hl-color;
 
 .title-container{
   background-color: #000;
-  font-size: 80%;
+  font-size: 1.15em;
   white-space: nowrap;
   overflow: hidden;
 }
 
 div.nav-selected, div.x-container .x-unsized .x-dataview{
-  border: 3px solid $csel-color;
+  border: 0.25em solid $csel-color;
 }
-
-/*.nav-selected{
-  .x-container .x-unsized .x-dataview{
-    border: 3px solid $csel-color;
-  }
-}*/
 
 .selected-column-header{
   color:lighten($hl-color,20%);
-  text-shadow: 0 0 20px $hl-color;
+  text-shadow: 0 0 20px white;
 }
 
+//used in phone UI when next component is not available
+.nextcoldisabledmask{
+  $bordercolor: lighten($csel-color,25%);
+  text-align: center;
+  font-size: 2.2em;
+  background-color: transparent;
+  color: rgba($bordercolor,0.5);
+  border-color: $bordercolor;
+  box-shadow: inset 0 0 1em $bordercolor;
+  -webkit-box-shadow: inset 0 0 1em $bordercolor;
+  border-width: 0em;
+  border-style: solid;
+}
 
 @include sencha-button-ui('tile', $bg-color/*, 'glossy'*/);
 
-.tile-btn{
-  font-size:0.7em;
-  color:$fg-color;
-}
 
 //csc = complementary of selection color
 @include sencha-carousel-indicator-ui('csc-indicator',$csel-color,'glossy',lighten($csel-color,30%),'glossy');
+//blue indicator
+@include sencha-carousel-indicator-ui('blue-indicator',$sel-color,'glossy',lighten($sel-color,30%),'glossy');
 
 //Scroll indicator for the phone UI
 .phone-listview-indicator{
@@ -149,39 +146,33 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 .playlist-item{
   text-align:left;
-  font-size:0.7em;
+  font-size:0.75em;
   margin: 0.25em;
   color:$fg-color;
   white-space:nowrap;
 }
 
 .playlist-item{
-/*   background-color:$bg-color; */
   @include background-gradient($bg-color);
 }
 
 .playlist-item:nth-child(odd){
-/*   background-color:darken($bg-color,10%); */
   @include background-gradient(darken($bg-color,10%));
 }
 
 .playlist-item:nth-child(even){
-/*   background-color:$bg-color; */
   @include background-gradient($bg-color);
 }
 
 .playlist-item-pressed{
-/*   background-color:$hl-color; */
   @include background-gradient($hl-color);
 }
 
 .playlist-item-pressed:nth-child(even){
-/*   background-color:$hl-color; */
   @include background-gradient($hl-color);
 }
 
 .playlist-item-pressed:nth-child(odd){
-/*   background-color:$hl-color; */
   @include background-gradient($hl-color);
 }
 
@@ -215,20 +206,20 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
   $dot-size: 1.5px);
 }
 
-//Basic Tile class, much like abstract class
+$tile-margin-unit:0.05em;
+
+//Basic Tile class, much like an abstract class
 .default-tile,.tile-panel,.tile-panel-selected,.tile-panel-pressed,.multi-tile-panel{
   text-align:center;
-  font-size:70%;
+  font-size:0.85em;
   color:$fg-color;
-/*   border: 0.1em solid transparent; */
-  margin: 0.1em;
-/*   padding:0.1em; */
+  margin: $tile-margin-unit;
+  /*padding: 4*$tile-margin-unit 0 4*$tile-margin-unit 0;*/
 }
 
 
 //Tile unselected
 .tile-panel{
-/*   background-color:$bg-color; */
   @include background-gradient($bg-color);
 }
 
@@ -239,34 +230,31 @@ div.nav-selected, div.x-container .x-unsized .x-dataview{
 
 //Tile pressed
 .tile-panel-pressed{
-/*   background-color:$hl-color; */
   @include background-gradient($hl-color);
 }
 
 //Tile text
 .tile-text{
-/*   display:block; */
   overflow-x:hidden;
   /*margin: 0.5em 0em 0.5em 0em;*/
-  margin: 2% 0% 2% 0%;
+  margin: $tile-margin-unit 0 $tile-margin-unit 0;
 }
 
 //Panel with multiple panels inside
 .multi-tile-panel,.multi-tile-panel-selected,.multi-tile-panel-pressed{
   color:transparent;
   border: 0px;
-  margin: 0.1em;
+  margin: $tile-margin-unit;
   padding: 0px;
 }
 
 div.multi-tile-panel div.tile-panel{
-/*   border: 0px; */
   margin: 0px;
-/*   padding: 0px; */
+  /*padding: 4*$tile-margin-unit 0 4*$tile-margin-unit 0;*/
 }
 
 div.multi-tile-panel div.tile-panel:first-child{
-  margin:0 0.15em 0 0;
+  margin:0 2*$tile-margin-unit 0 0;
 }
 
 div.multi-tile-panel-selected div.tile-panel{
@@ -288,104 +276,99 @@ div.multi-tile-panel-pressed div.tile-panel{
 .default-tile-icon,.tile-icon-play,.tile-icon-queue,.tile-icon-favorites,.tile-icon-webinos,.tile-icon-pc,.tile-icon-list,.tile-icon-phone,.tile-icon-tablet,.tile-icon-tv,.tile-icon-laptop,.tile-icon-video,.tile-icon-image,.tile-icon-audio,.tile-icon-doc,.tile-icon-tvchannel
 {
   display:block;
-  margin: auto 6% auto 6%;//auto 1.5em auto 1.5em;
-  -webkit-mask-size: 40px;
+  margin: auto 3*$tile-margin-unit auto 3*$tile-margin-unit;//auto 1.5em auto 1.5em;
+  -webkit-mask-size: 2.5em;//40px;
+  -webkit-mask-position:0 0;
+  -webkit-mask-repeat: no-repeat;
   background-image: none;
   background-color:$fg-color;
-  width:40px;
-  height:40px;
+  width:2.5em;//40px;
+  height:2.5em;//40px;
   padding:0.5em;
   -webkit-transform: translateZ(0);
 }
 
 .tile-icon-play{
-  -webkit-mask: 0 0 inline-image('svg/play_on.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/play_on.svg');
 }
 
 .tile-icon-queue{
-  -webkit-mask: 0 0 inline-image('svg/add_queue.svg') no-repeat;
-  -webkit-mask-size: 32px;
-/*  width:20px;
-  height:20px;*/
+  -webkit-mask-image: inline-image('svg/add_queue.svg');
+  -webkit-mask-size: 2em;//32px;
+  width:2em;
+  height:2em;
 }
 
 .tile-icon-favorites{
-  -webkit-mask: 0 0 inline-image('favorites.png') no-repeat;
+  -webkit-mask-image: inline-image('favorites.png');
 }
 
 .tile-icon-webinos{
-  -webkit-mask: 0 0 inline-image('svg/apps.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/apps.svg');
 }
 
 .tile-icon-pc{
-  -webkit-mask: 0 0 inline-image('svg/pc.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/pc.svg');
 }
 
 .tile-icon-list{
-  margin: auto 1.5em auto 1.5em;
-  -webkit-mask: 0 0 inline-image('svg/queue.svg') no-repeat;
+  margin: auto 10*$tile-margin-unit auto 10*$tile-margin-unit;
+  -webkit-mask-image: inline-image('svg/queue.svg');
 }
 
 .tile-icon-tvchannel{
-  -webkit-mask: 0 0 inline-image('svg/tv_channels.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tv_channels.svg');
 }
 
 .tile-icon-phone{
-  -webkit-mask: 0 0 inline-image('svg/phone.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/phone.svg');
 }
 
 .tile-icon-tablet{
-  -webkit-mask: 0 0 inline-image('svg/tablet.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tablet.svg');
 }
 
 .tile-icon-tv{
-  -webkit-mask: 0 0 inline-image('svg/tv.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/tv.svg');
 }
 
 .tile-icon-laptop{
-  -webkit-mask: 0 0 inline-image('svg/laptop.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/laptop.svg');
 }
 
 .tile-icon-audio{
-  -webkit-mask: 0 0 inline-image('svg/music.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/music.svg');
 }
 
 .tile-icon-video{
-  -webkit-mask: 0 0 inline-image('svg/movie.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/movie.svg');
 }
 
 .tile-icon-image{
-  -webkit-mask: 0 0 inline-image('svg/image.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/image.svg');
 }
 
 .tile-icon-doc{
-  -webkit-mask: 0 0 inline-image('svg/folder.svg') no-repeat;
+  -webkit-mask-image: inline-image('svg/folder.svg');
 }
 
 //Sliding text
 .sliding-text{
-  text-overflow:clip;
-  white-space:nowrap;
-  -webkit-animation-name: slider;
-  -webkit-animation-duration: 20s;
-  -webkit-animation-delay: -10s; //important! makes the text start from 0
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
+  /* W3C  */
+  overflow-x: marquee-line;
+  marquee-direction: forward;
+  marquee-style: scroll;
+  marquee-speed: normal;
+  marquee-play-count: infinite;
+  /* Safari and Chrome  */
+  overflow-x:-webkit-marquee;
+  -webkit-marquee-direction: backwards;
+  -webkit-marquee-style: scroll;
+  -webkit-marquee-speed: normal;
+  -webkit-marquee-increment: 1%;
+  -webkit-marquee-repetition: infinite;
 }
 
-@-webkit-keyframes slider{
-  0%{
-    -webkit-transform: translateX(100%);
-  }
-
-  50%{
-    -webkit-transform: translateX(0%);
-  }
-
-  100%{
-    -webkit-transform: translateX(-150%);
-  }
-}
 
 //For labels of not yet implemented features
 .not-implemented-yet {

@@ -2,7 +2,7 @@ Ext.define('webinosTV.view.VideoMPListItem', {
   extend: 'Ext.dataview.component.DataItem',
   xtype: 'videolistitem',
   config: {
-    audioLabel: {
+    videoLabel: {
       xtype: 'container',
       layout: 'hbox',
       margin: 0,
@@ -10,6 +10,7 @@ Ext.define('webinosTV.view.VideoMPListItem', {
       flex: 9,
       items: [
         {
+          name: 'titlepanel',
           xtype: 'panel',
           margin: 2,
           html: ''
@@ -24,9 +25,9 @@ Ext.define('webinosTV.view.VideoMPListItem', {
       ]
     }
   },
-  applyAudioLabel: function(config)
+  applyVideoLabel: function(config)
   {
-    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getAudioLabel())
+    return Ext.factory(config, webinosTV.view.DefaultTilePanel, this.getVideoLabel());
   },
   updateRecord: function(newRecord)
   {
@@ -37,9 +38,9 @@ Ext.define('webinosTV.view.VideoMPListItem', {
 
     dataItem._record = newRecord;
     var title = newRecord.get('title');
-    dataItem.getAudioLabel().getAt(0).setHtml(title);
+    dataItem.getVideoLabel().getAt(0).setHtml(title);
   },
-  updateAudioLabel: function(newLabel, oldLabel)
+  updateVideoLabel: function(newLabel, oldLabel)
   {
     if (oldLabel) {
       this.remove(oldLabel);
@@ -51,8 +52,9 @@ Ext.define('webinosTV.view.VideoMPListItem', {
   },
   checkTextOverflow: function() {
     var slidingCls = 'sliding-text';
-    var textPanel = this.getAudioLabel().getAt(0); //TODO a smarter way to get this
-    var hasOverflow = (this.element.dom.clientWidth - this.element.dom.scrollWidth) !== 0;
+    var textPanel = this.getVideoLabel().query('*[name=titlepanel]')[0];
+
+    var hasOverflow = (textPanel.element.dom.clientWidth - textPanel.element.dom.scrollWidth) !== 0;
     var hasSlidingCls = false;
     if (textPanel.getCls() !== null)
     {
