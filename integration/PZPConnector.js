@@ -56,11 +56,11 @@ Ext.define('integration.PZPConnector', {
     }
 
 //clear the ui
-    webinosTV.app.connectUi.clearSourceDevices();
-    webinosTV.app.connectUi.clearTargetDevices();
+    //webinosTV.app.connectUi.clearSourceDevices();
+    //webinosTV.app.connectUi.clearTargetDevices();
     //invoke discovery every 15seconds
-    setInterval(connector.discoverServices, 15000);
-    connector.discoverServices();
+    //setInterval(connector.discoverServices, 15000);
+    //connector.discoverServices();
   },
   /**
    *
