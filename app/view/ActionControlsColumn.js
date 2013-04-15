@@ -6,7 +6,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
     headerComponent: {//Headers  #4
       xtype: 'container',
       width: '100%',
-      cls: 'title-container',
+      cls: ['title-container', 'col-title'], //used for selection only
       layout: {
         type: 'hbox',
         align: 'center',
@@ -26,6 +26,7 @@ Ext.define('webinosTV.view.ActionControlsColumn', {
       id: 'actionsList',
 //         disabled: true,
       masked: true,
+      disabled: true,
       mode: 'SINGLE',
       defaultType: 'actctrllistitem', //for display devices
       cls: ['phone-listview-indicator', 'actionslist'], //additional css class to highlight scrollbar

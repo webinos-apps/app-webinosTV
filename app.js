@@ -1,3 +1,18 @@
+/*
+    This file is generated and updated by Sencha Cmd. You can edit this file as
+    needed for your application, but these edits will have to be merged by
+    Sencha Cmd when it performs code generation tasks such as generating new
+    models, controllers or views and when running "sencha app upgrade".
+
+    Ideally changes to this file would be limited and most work would be done
+    in other places (such as Controllers). If Sencha Cmd cannot merge your
+    changes and its generated code, it will produce a "merge conflict" that you
+    will need to resolve manually.
+*/
+
+// DO NOT DELETE - this directive is required for Sencha Cmd packages to work.
+//@require @packageOverrides
+
 //<debug>
 Ext.Loader.setPath({
   'Ext': 'touch/src',
@@ -30,7 +45,7 @@ Ext.application({
     'SourceDevicesColumn', //1st column of the browser view
     'SourceDevicesDataView', //inner component of SourceDevices Column, subclass of TilesDataView
     'SourceDeviceDataViewItem', //represents a source device and its queued items (2 tiles)
-    'DeviceQueueColumn', //Shows item in the currently selected source device
+    // 'DeviceQueueColumn', //Shows item in the currently selected source device
     'CategoriesColumn', //2nd column of the browser view
     'MediaCategoryDataViewItem', //represents a single media category tile
     'MediaSelectionColumn', //3rd column of the browser view
@@ -59,7 +74,7 @@ Ext.application({
   ],
   controllers: [
     'BrowserViewController',
-    'SelectSourceDeviceController',
+    // 'SelectSourceDeviceController',
     'SelectCategoryController',
     // 'SelectMediaController',
     //    'SelectTargetDeviceController',//TODO drop if no column specific events are to be managed
@@ -81,7 +96,22 @@ Ext.application({
     '1536x2008': 'resources/startup/1536x2008.png',
     '1496x2048': 'resources/startup/1496x2048.png'
   },
-  launch: function() {
+  handleResize: function() {
+//    //handle font resize here
+    var body = document.getElementsByTagName('body')[0];
+    var baseSizePx = parseFloat(getComputedStyle(body).fontSize);
+    var ratio = webinosTV.app.getCurrentProfile().getRatio(); //computed by hand: body font-size/document clientWidth on my PC
+
+    var w = document.documentElement.clientWidth;
+
+    var newsize = ratio * w;
+    body.style.fontSize = newsize + 'px';
+
+    //console.log('webinosTV.app ~ handleResize', newsize);
+  },
+  launch: function(styleSheetName) {
+    Ext.Viewport.on('resize', 'handleResize', this, {buffer: 50});
+
     //ADD THIS Utility to Store prototype and its derived classes
     /**
      * Query items by using a pseudo querystring
@@ -136,16 +166,20 @@ Ext.application({
                 //console.warn("General Media store loaded: - storeId = ", webinosTV.app.mediaStore.getStoreId(), "; id = ", webinosTV.app.mediaStore.getId());
                 //load substores
                 webinosTV.app.mediaStore.loadGroupStores();
-                //connect webinos platform
-                webinosTV.app.connectUi = Ext.create('integration.Ui');
-                webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
-                webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
-                // Destroy the #appLoadingIndicator element
-                Ext.fly('appLoadingIndicator').destroy();
+
                 // Initialize the main view, which was instantiated in the profile
                 var bw = Ext.getCmp('browserMainView');
                 //load main view components (which will search for the stores)
-                bw.addAllColumns();
+                bw.addAllColumns(
+                  function() {
+                    //connect webinos platform
+                    webinosTV.app.connectUi = Ext.create('integration.Ui');
+                    webinosTV.app.connectEvents = Ext.create('integration.EventsConnector');//run_events_connect();
+                    webinosTV.app.connectConnector = Ext.create('integration.PZPConnector');//run_connector_connect();
+                  }
+                );
+                // Destroy the #appLoadingIndicator element
+                Ext.fly('appLoadingIndicator').destroy();
                 //show the main view
                 Ext.Viewport.add(bw);
               }

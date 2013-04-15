@@ -3,7 +3,7 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
   xtype: 'tilepanel',
   config:
     {
-      cls: 'default-tile',
+      cls: ['default-tile', 'webinostv-panel'],
       flex: 1,
       iconCls: null,
       textCls: null, //additional CSS for text
@@ -45,59 +45,14 @@ Ext.define('webinosTV.view.DefaultTilePanel', {
       tile.insert(0, {//always first
         name: 'icon',
         xtype: 'panel',
-        cls: 'tile-icon-' + iconCls
+        cls: ['tile-icon-' + iconCls, 'tile-icon']
       });
     }
     else
     {
-      q[0].setCls('tile-icon-' + iconCls);
+      q[0].setCls(['tile-icon-' + iconCls, 'tile-icon']);
     }
     return iconCls;
   }
-//  applyText: function(newText) {
-////     console.log("applyText",newText)
-//    var tile = this;
-//    var oldText = tile.getText();
-//    var position = tile.getIconCls() ? 1 : 0;
-//
-//    if (oldText !== newText)
-//    {
-//      if (oldText === null) //set
-//      {
-//        var tcls = ['tile-text'];
-//        if (tile.getTextCls())
-//          tcls = tcls.concat(tile.getTextCls());
-//        tile.insert(position, {
-//          xtype: 'panel',
-//          cls: tcls,
-//          html: newText
-//        });
-//      }
-//      else //update
-//      {
-//        tile.getAt(position).setHtml(newText);
-//      }
-//    }
-//    return newText;
-//  },
-//  applyIconCls: function(newCls) {
-////     console.log("applyIconCls",newCls)
-//    var tile = this;
-//    var oldIconCls = tile.getIconCls();
-//    if (oldIconCls !== newCls)
-//    {
-//      if (oldIconCls === null) //set
-//      {
-//        tile.insert(0, {//always first
-//          xtype: 'panel',
-//          cls: 'tile-icon-' + newCls
-//        });
-//      }
-//      else //update
-//      {
-//        tile.getAt(0).setCls('tile-icon-' + newCls);
-//      }
-//    }
-//    return newCls;
-//  }
+
 });

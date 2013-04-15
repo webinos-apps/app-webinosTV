@@ -3,7 +3,7 @@
  * This is the controller for the SourceDeviceColumn. It implements a FSM
  * to control the device queue column show/update/hide behavior
  */
-Ext.define('webinosTV.controller.SelectSourceDeviceController', {
+Ext.define('webinosTV.controller.largescreen.SelectSourceDeviceController', {
   extend: 'Ext.app.Controller',
   xtype: 'selsourcectrl',
 //   requires:[''],
@@ -205,10 +205,11 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
   _showDeviceQueueColumn: function(sourceDeviceList, device) {
     var queueColumn = this.getQueueColumnView();
     //SHOW
-    if (queueColumn.getHidden(false))
+    if (queueColumn.getHidden() === true)
     {
       queueColumn.setDevice(device);
       queueColumn.setHidden(false);
+      //webinosTV.app.handleResize();
     }
     else//Update or do nothing
     {
@@ -225,5 +226,6 @@ Ext.define('webinosTV.controller.SelectSourceDeviceController', {
     var queueColumn = this.getQueueColumnView();
     queueColumn.setDevice(null);// in the hide handler
     queueColumn.setHidden(true);
+    //webinosTV.app.handleResize();
   }
 });

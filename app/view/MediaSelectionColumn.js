@@ -7,7 +7,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       xtype: 'container',
       width: '100%',
       role: 'columnheader',
-      cls: 'title-container',
+      cls: ['title-container', 'col-title'], //used for selection only
       layout: {
         type: 'hbox',
         align: 'center',
@@ -32,6 +32,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       width: '100%',
       height: '100%',
       masked: true,
+      disabled: true,
       layout:
         {
           type: 'vbox'
@@ -258,8 +259,8 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
             fn: function(elem) {
               var pl = this;
               var items = pl.getInnerItems()[0].innerItems;
-              items.forEach(function(audioListItem) {
-                audioListItem.checkTextOverflow();
+              items.forEach(function(videoListItem) {
+                videoListItem.checkTextOverflow();
               });
             }
           },
