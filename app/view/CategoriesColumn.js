@@ -42,7 +42,7 @@ Ext.define('webinosTV.view.CategoriesColumn', {
           {
             id: 2,
             category: 'tvchannel',
-            mediaCategoryName: 'DVB-T'
+            mediaCategoryName: 'Television'
           },
           {
             id: 3,
