@@ -109,15 +109,23 @@ Ext.define('integration.PZPConnector', {
       }
     });
     webinosTV.app.connectEvents.addEventListener("playFiles", function(data) {
+      console.log("PLAY!")
+      
+      console.log(webinos.session.getPZPId())
+
+      console.log(data)
+
       try {
-        if (data.source && data.files && data.files.length) {
-          connector.serviceCache.File[data.source].files.videos[data.files[0]].getLink(function(link) {
+        if (data.source && data.media && data.media.length) {
+          console.log(typeof connector.serviceCache,connector.serviceCache);
+          connector.serviceCache.File[data.source].files.videos[data.media[0].split("|")[1]].getLink(function(link) {
 //  webinosTV.app.connectUi.hideVideoPreview();
 
             for (var tix = 0; tix < data.targets.length; tix++) {
-// if(webinos.session.getPZPId()===data.targets[tix]){
-              webinosTV.app.connectUi.showModalVideo(link, "resources/images/svg/tv.svg");
-              //}else{
+              if(webinos.session.getPZPId()===data.targets[tix]){
+                webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(link, "resources/images/svg/tv.svg");
+              }
+              //else{
 
               //}
             }
@@ -128,6 +136,7 @@ Ext.define('integration.PZPConnector', {
           //
         }
       } catch (e) {
+          console.warn(e)
       }
     });
     webinosTV.app.connectEvents.addEventListener("stopFiles", function(data) {
@@ -136,7 +145,7 @@ Ext.define('integration.PZPConnector', {
         v[i].src = "";
       }
       ;
-      webinosTV.app.connectUi.hideVideoPreview();
+      webinosTV.app.connectUi.getMediaPlayerManager().hideMediaPlayer();
     });
     connector.serviceCache.Setup[serviceAdr] = true;
   },
@@ -155,7 +164,7 @@ Ext.define('integration.PZPConnector', {
         var successCallback = function(entries) {
 
 //clear media
-          webinosTV.app.connectUi.clearMediaItems('videos');
+          webinosTV.app.connectUi.getMediaItemsManager().clearMediaItems('video');
           connector.serviceCache.File[serviceAdr].files = {videos: {}};
           for (var i = entries.length - 1; i >= 0; i--) {
             if (entries[i].isFile) {
@@ -175,7 +184,7 @@ Ext.define('integration.PZPConnector', {
                     filename = filename.replace(/\w\S*/g, function(txt) {
                       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                     });
-                    webinosTV.app.connectUi.addMediaItem({file: entries[i].fullPath, title: filename}, 'videos');
+                    webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: entries[i].fullPath, title: filename, type: 'video',id:serviceAdr+"|"+entries[i].fullPath});
                     connector.serviceCache.File[serviceAdr].files.videos[entries[i].fullPath] = entries[i];
                     break;
                   case "mp3":
