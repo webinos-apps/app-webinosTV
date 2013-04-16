@@ -145,7 +145,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
   },
   showMusic: function() {
     this.getContentComponent().setItems([
-      {
+      {//Header Panel
         xtype: 'container',
         name: 'mediaHeader',
         layout: {
@@ -159,7 +159,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
           [
             {
               xtype: 'img',
-              src: './resources/images/cover.png',
+              src: './resources/images/svg/music.svg', //cover.png',
               height: '70%',
               width: '70%',
               padding: 1,
@@ -213,7 +213,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
   },
   showVideos: function() {
     this.getContentComponent().setItems([
-      {
+      {//Header Panel
         name: 'mediaHeader',
         xtype: 'container',
         layout: {
@@ -227,7 +227,7 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
           [
             {
               xtype: 'img',
-              src: './resources/images/video-icon.png',
+              src: './resources/images/svg/movie.svg', //video-icon.png',
               height: '70%',
               width: '70%',
               padding: 1,
@@ -279,12 +279,40 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
       }]);
   },
   showImages: function() {
-    this.getContentComponent().setItems([{//Header Panel
+    this.getContentComponent().setItems([
+      {//Header Panel
+        xtype: 'container',
         name: 'mediaHeader',
+        layout: {
+          type: 'hbox',
+          pack: 'center',
+          align: 'center'
+        },
         flex: 2,
-        xtype: 'tilepanel',
         cls: 'tile-panel',
-        text: 'Images'
+        items:
+          [
+            {
+              xtype: 'img',
+              src: './resources/images/svg/image.svg', //cover.png',
+              height: '70%',
+              width: '70%',
+              padding: 1,
+              margin: 1,
+              flex: 2,
+              zIndex: 1000
+            },
+            {
+              xtype: 'panel',
+              cls: ['tile-text'],
+              items: [{
+                  xtype: 'panel',
+//                  cls: 'sliding-text',
+                  html: 'Images'
+                }],
+              flex: 3
+            }
+          ]
       },
       {//Content Panel
         name: 'mediaContent',
@@ -296,29 +324,107 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
     ]);
   },
   showTV: function() {
-    this.getContentComponent().setItems([{//Header Panel
+    this.getContentComponent().setItems([
+      {//Header Panel
         name: 'mediaHeader',
+        xtype: 'container',
+        layout: {
+          type: 'hbox',
+          pack: 'center',
+          align: 'center'
+        },
         flex: 2,
-        xtype: 'tilepanel',
         cls: 'tile-panel',
-        text: 'DVB-T'
+        items:
+          [
+            {
+              xtype: 'img',
+              src: './resources/images/svg/tv.svg',
+              height: '70%',
+              width: '70%',
+              padding: 1,
+              margin: 1,
+              flex: 2,
+              zIndex: 1000
+            },
+            {
+              xtype: 'panel',
+              cls: ['tile-text'],
+              items: [{
+                  xtype: 'panel',
+                  cls: 'sliding-text',
+                  html: 'TV Channels'
+                }],
+              flex: 3
+            }
+          ]
       },
-      {//Content Panel
+      {//Playlist
         name: 'mediaContent',
+        id: 'tvDataView',
         flex: 9,
-        xtype: 'tilepanel',
-        cls: 'tile-panel',
-        text: ('DVB-T').fontcolor('orange').big()
-      }
-    ]);
+        xtype: 'mediaplaylist',
+        store: 'tvchannelstore-id',
+        defaultType: 'videolistitem', //TODO a videolistitem with small video previews?
+        listeners: {
+          resize: {
+            fn: function(elem) {
+              var pl = this;
+              var items = pl.getInnerItems()[0].innerItems;
+              items.forEach(function(videoListItem) {
+                videoListItem.checkTextOverflow();
+              });
+            }
+          },
+          //echoing the select and deselect events
+          select: {
+            fn: function(list, record, eOpts) {
+              Ext.getCmp('mediaPlaylist').fireEvent('select', list, record, eOpts);
+            }
+          },
+          deselect: {
+            fn: function(list, record, supressed, eOpts) {
+              Ext.getCmp('mediaPlaylist').fireEvent('deselect', list, record, supressed, eOpts);
+            }
+          }
+        }
+      }]);
   },
   showApps: function() {
-    this.getContentComponent().setItems([{//Header Panel
+    this.getContentComponent().setItems([
+      {//Header Panel
+        xtype: 'container',
         name: 'mediaHeader',
+        layout: {
+          type: 'hbox',
+          pack: 'center',
+          align: 'center'
+        },
         flex: 2,
-        xtype: 'tilepanel',
         cls: 'tile-panel',
-        text: 'Apps'
+        items:
+          [
+            {
+              xtype: 'img',
+              src: './resources/images/svg/apps.svg', //cover.png',
+              height: '70%',
+              width: '70%',
+              padding: 1,
+              margin: 1,
+              flex: 2,
+              zIndex: 1000
+            },
+            {
+              xtype: 'panel',
+              cls: ['tile-text'],
+              items: [{
+                  xtype: 'panel',
+//                  cls: 'sliding-text',
+                  html: 'Webinos Apps'
+                }],
+              flex: 3
+            }
+          ]
       },
       {//Content Panel
         name: 'mediaContent',
@@ -330,12 +436,40 @@ Ext.define('webinosTV.view.MediaSelectionColumn', {
     ]);
   },
   showDocuments: function() {
-    this.getContentComponent().setItems([{//Header Panel
+    this.getContentComponent().setItems([
+      {//Header Panel
+        xtype: 'container',
         name: 'mediaHeader',
+        layout: {
+          type: 'hbox',
+          pack: 'center',
+          align: 'center'
+        },
         flex: 2,
-        xtype: 'tilepanel',
         cls: 'tile-panel',
-        text: 'Documents'
+        items:
+          [
+            {
+              xtype: 'img',
+              src: './resources/images/svg/folder.svg', //cover.png',
+              height: '70%',
+              width: '70%',
+              padding: 1,
+              margin: 1,
+              flex: 2,
+              zIndex: 1000
+            },
+            {
+              xtype: 'panel',
+              cls: ['tile-text'],
+              items: [{
+                  xtype: 'panel',
+//                  cls: 'sliding-text',
+                  html: 'Documents'
+                }],
+              flex: 3
+            }
+          ]
       },
       {//Content Panel
         name: 'mediaContent',
