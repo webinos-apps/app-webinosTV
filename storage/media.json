@@ -16,6 +16,8 @@
     {"id": "100", "title": "Big Buck Bunny", "meta": {"artist": "Sacha Goedegebure", "album": "Blender Production"}, "file": "bbb.webm", "type": "video"},
     {"id": "200", "title": "Gizmo Roboter", "meta": {"artist": "808.dk", "album": "U. D. Hansen"}, "file": "gizmo.mp4", "type": "video"},
     {"id": "300", "title": "webinos 101 (HQ)", "meta": {"artist": "webinos project", "album": "webinos demo series"}, "file": "webinos_sub.mp4", "type": "video"},
-    {"id": "400", "title": "webinos 101", "meta": {"artist": "webinos project", "album": "webinos demo series"}, "file": "webinos.webm", "type": "video"}
+    {"id": "400", "title": "webinos 101", "meta": {"artist": "webinos project", "album": "webinos demo series"}, "file": "webinos.webm", "type": "video"},
+    {"id": "1000", "file": "someurl.mp4", "title": "Channel 2", "type": "tvchannel"},
+    {"id": "1001", "file": "someotherurl.mp4", "title": "Channel 69", "type": "tvchannel"}
   ]
 }
