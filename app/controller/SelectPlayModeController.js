@@ -35,6 +35,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
     }
   },
   play: function(data) {
+
 //we should not refer to fileNames, but to media IDs
     //may be moving to mediaplayer is better
     var media = webinosTV.app.connectUi.getMediaItemsManager().getMediaById(data.mediaItems);//[0];
@@ -46,7 +47,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
 //      url: media.get('name'),
 //      posterUrl: undefined //sh
 //    });
-    webinosTV.app.connectEvents.notify("playFiles", {source: data.srcIds, targets: data.targetDevices, media: data.mediaItems/*files: fileNames*/});
+    webinosTV.app.connectEvents.notify("playFiles", {source: data.sourceDevices, targets: data.targetDevices, media: data.mediaItems/*files: fileNames*/});
   },
   pause: function(data) {
     //may be moving to mediaplayer is better
@@ -55,7 +56,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
     if (data !== null) {
       var media = webinosTV.app.connectUi.getMediaItemsManager().getMediaById(data.mediaItems);
       //console.log("DEselected media", media);
-      webinosTV.app.connectEvents.notify("stopFiles", {source: data.srcIds, targets: data.targetDevices, media: data.mediaItems});
+      webinosTV.app.connectEvents.notify("stopFiles", {source: data.sourceDevices, targets: data.targetDevices, media: data.mediaItems});
     }
   },
   addToDeviceQueues: function(data) {
@@ -72,7 +73,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
       var fileIds = new Array(selectedMedia.length);
       for (var i = 0; i < fileIds.length; i++)
       {
-        fileIds[i] = selectedMedia[i].internalId; //true data id
+        fileIds[i] = selectedMedia[i]._data.id; //true data id
       }
       //    console.log("Selected media ids", fileIds);
 
@@ -82,7 +83,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
       var targetIds = new Array(selectedTargetDevices.length);
       for (var i = 0; i < targetIds.length; i++)
       {
-        targetIds[i] = selectedTargetDevices[i].internalId;
+        targetIds[i] = selectedTargetDevices[i]._data.id;
       }
       //    console.log("Selected targets", targetIds);
 
@@ -92,7 +93,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
       var srcIds = new Array(selectedSrcDevices.length);
       for (var i = 0; i < srcIds.length; i++)
       {
-        srcIds[i] = selectedSrcDevices[i].internalId;
+        srcIds[i] = selectedSrcDevices[i]._data.id;
       }
       //    console.log("Selected source device", srcIds);
 
