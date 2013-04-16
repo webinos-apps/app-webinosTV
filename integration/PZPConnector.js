@@ -10,6 +10,7 @@ Ext.define('integration.PZPConnector', {
   },
 //caches for all discovered services on devices
   serviceCache: {
+    "DeviceStatus": {},
     "Setup": {},
     "WebNotification": {},
     "File": {},
@@ -59,19 +60,18 @@ Ext.define('integration.PZPConnector', {
     //webinosTV.app.connectUi.clearSourceDevices();
     //webinosTV.app.connectUi.clearTargetDevices();
     //invoke discovery every 15seconds
-    //setInterval(connector.discoverServices, 15000);
-    //connector.discoverServices();
+    setInterval(connector.discoverDevices, 15000, connector);
+    connector.discoverDevices(connector);
   },
   /**
    *
    */
-  setupDevices: function(serviceAdr) {
-    var connector = this;
+  setupDevice: function(serviceAdr,type,name,connector) {
     if (connector.serviceCache.Setup[serviceAdr]) {
       return;
     }
-    webinosTV.app.connectUi.addSourceDevice(serviceAdr, localStorage["devId_" + serviceAdr + "_type"], 0, localStorage["devId_" + serviceAdr + "_name"]);
-    webinosTV.app.connectUi.addTargetDevice(serviceAdr, localStorage["devId_" + serviceAdr + "_type"], 0, localStorage["devId_" + serviceAdr + "_name"]);
+    webinosTV.app.connectUi.getSourceDevicesManager().addDevice(serviceAdr, type, 0, name);
+    //webinosTV.app.connectUi.getTargetDevicesManager().addDevice(serviceAdr, type, 0, name);
     webinosTV.app.connectEvents.addEventListener("scanForFiles", function(adr) {
       if (connector.serviceCache.File[adr.serviceAdr] && connector.serviceCache.File[adr.serviceAdr].bound) {
         connector.getFilesFromBoundService(adr.serviceAdr);
@@ -89,16 +89,16 @@ Ext.define('integration.PZPConnector', {
                     connector.getFilesFromBoundService(fileService.serviceAddress);
                   }},
               {onUnbind: function() {
-                  alert("onUnbind")
+                  console.log("onUnbind")
                 }},
               {onServiceAvailable: function() {
-                  alert("onServiceAvailable")
+                  console.log("onServiceAvailable")
                 }},
               {onServiceUnavailable: function() {
-                  alert("onServiceUnavailable")
+                  console.log("onServiceUnavailable")
                 }},
               {onError: function() {
-                  alert("onError")
+                  console.log("onError")
                 }}
               );
             }
@@ -419,5 +419,50 @@ Ext.define('integration.PZPConnector', {
                 console.log("Error finding service: " + error.message + " (#" + error.code + ")");
               }
             });
-          }
-        });
+          },
+          discoverDevices: function(connector){
+                webinos.discovery.findServices(new ServiceType('http://webinos.org/api/devicestatus'),
+                {onFound:function(service){connector.onDeviceStatusFoundHandler(service,connector);}});
+          },
+          onDeviceStatusFoundHandler: function(service,connector) {
+            if (!connector.serviceCache.DeviceStatus[service.serviceAddress]) {
+              connector.serviceCache.DeviceStatus[service.serviceAddress] = {found: service};
+              service.bindService(
+                {onBind: function(service) {
+                    connector.serviceCache.DeviceStatus[service.serviceAddress].bound = service;
+                    var prop = {
+                        component:"_DEFAULT",
+                        aspect:"Device",
+                        property:"type"
+                    };
+                    var successCB = function (value) {
+                        webinos.session.addListener('friendlyName', function(msg){
+                          connector.setupDevice(service.serviceAddress,value,msg.payload.message,connector);
+                        });
+                        var options = {"type": 'prop', "payload":{"status": "getFriendlyName"}};
+                        webinos.session.message_send(options, webinos.session.getPZPId());
+                    };
+                    var errorCB = function (value) {
+                        console.log("Error: " + value);
+                    };
+                    service.getPropertyValue(successCB, errorCB, prop);
+                  }},
+              {onUnbind: function() {
+                  console.log("to be implemented.");
+                }},
+              {onServiceAvailable: function() {
+                  console.log("to be implemented.");
+                }},
+              {onServiceUnavailable: function() {
+                  console.log("to be implemented.");
+                }},
+              {onError: function() {
+                  console.log("to be implemented.");
+                }}
+
+
+              );
+            }
+        }
+
+    });
