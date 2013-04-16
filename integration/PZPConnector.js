@@ -540,6 +540,7 @@ Ext.define('integration.PZPConnector', {
                         property:"type"
                     };
                     var successCB = function (value) {
+                        value=(value==="smartphone")?"phone":value;
                         webinos.session.addListener('friendlyName', function(msg){
                           connector.setupDevice(service.serviceAddress,value,msg.payload.message,connector);
                         });
