@@ -14,7 +14,8 @@ Ext.define('integration.PZPConnector', {
     "Setup": {},
     "WebNotification": {},
     "File": {},
-    "App2App": {}
+    "App2App": {},
+    "TV": {}
   },
   appSession: null, // Math.random() + Date.now(),
   retries: null, //10,
@@ -67,14 +68,14 @@ Ext.define('integration.PZPConnector', {
    *
    */
   setupDevice: function(serviceAdr,type,name,connector) {
-    if (connector.serviceCache.Setup[serviceAdr]) {
+    if (connector.serviceCache.Setup[(serviceAdr)]) {
       return;
     }
     webinosTV.app.connectUi.getSourceDevicesManager().addDevice(serviceAdr, type, 0, name);
     //webinosTV.app.connectUi.getTargetDevicesManager().addDevice(serviceAdr, type, 0, name);
     webinosTV.app.connectEvents.addEventListener("scanForFiles", function(adr) {
-      if (connector.serviceCache.File[adr.serviceAdr] && connector.serviceCache.File[adr.serviceAdr].bound) {
-        connector.getFilesFromBoundService(adr.serviceAdr);
+      if (connector.serviceCache.File[(adr.serviceAdr)] && connector.serviceCache.File[(adr.serviceAdr)].bound) {
+        connector.getFilesFromBoundService((adr.serviceAdr));
       } else {
         webinos.discovery.findServices(new ServiceType('http://webinos.org/api/file'),
           {
@@ -82,11 +83,46 @@ Ext.define('integration.PZPConnector', {
               if (adr.serviceAdr !== fileService.serviceAddress) {
                 return;
               }
-              connector.serviceCache.File[fileService.serviceAddress] = {found: fileService};
+              connector.serviceCache.File[(fileService.serviceAddress)] = {found: fileService};
               fileService.bindService(
                 {onBind: function(fileService) {
-                    connector.serviceCache.File[fileService.serviceAddress].bound = fileService;
+                    connector.serviceCache.File[(fileService.serviceAddress)].bound = fileService;
                     connector.getFilesFromBoundService(fileService.serviceAddress);
+                  }},
+              {onUnbind: function() {
+                  console.log("onUnbind")
+                }},
+              {onServiceAvailable: function() {
+                  console.log("onServiceAvailable")
+                }},
+              {onServiceUnavailable: function() {
+                  console.log("onServiceUnavailable")
+                }},
+              {onError: function() {
+                  console.log("onError")
+                }}
+              );
+            }
+          },
+        {},
+          {serviceId: adr.serviceAdr}
+        );
+      }
+      //in addition to files, check for tv api
+      if (connector.serviceCache.TV[adr.serviceAdr] && connector.serviceCache.TV[adr.serviceAdr].bound) {
+        connector.getChannelsFromBoundService(adr.serviceAdr);
+      } else {
+        webinos.discovery.findServices(new ServiceType('http://webinos.org/api/tv'),
+          {
+            onFound: function(tvService) {
+              if (adr.serviceAdr !== tvService.serviceAddress) {
+                return;
+              }
+              connector.serviceCache.TV[tvService.serviceAddress] = {found: tvService};
+              tvService.bindService(
+                {onBind: function(fileService) {
+                    connector.serviceCache.TV[tvService.serviceAddress].bound = tvService;
+                    connector.getChannelsFromBoundService(tvService.serviceAddress);
                   }},
               {onUnbind: function() {
                   console.log("onUnbind")
@@ -109,30 +145,61 @@ Ext.define('integration.PZPConnector', {
       }
     });
     webinosTV.app.connectEvents.addEventListener("playFiles", function(data) {
-      console.log("PLAY!")
-      
-      console.log(webinos.session.getPZPId())
-
-      console.log(data)
 
       try {
         if (data.source && data.media && data.media.length) {
           console.log(typeof connector.serviceCache,connector.serviceCache);
-          connector.serviceCache.File[data.source].files.videos[data.media[0].split("|")[1]].getLink(function(link) {
-//  webinosTV.app.connectUi.hideVideoPreview();
 
-            for (var tix = 0; tix < data.targets.length; tix++) {
-              if(webinos.session.getPZPId()===data.targets[tix]){
-                webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(link, "resources/images/svg/tv.svg");
-              }
-              //else{
-
-              //}
-            }
-//console.log(link)
-// webinosTV.app.connectUi.showModalVideo(link,"resources/images/svg/tv.svg");
-
-          });
+          switch(data.media[0].split("|")[2]){
+            case 'video':
+              connector.serviceCache.File[data.source].files.videos[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix]){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(link, "resources/images/svg/tv.svg");
+                  }
+                  //else{
+                  //play remotely
+                  //}
+                }
+              });
+            break;
+            case 'audio':
+              connector.serviceCache.File[data.source].files.audios[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix]){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalAudio(link, "resources/images/svg/music.svg");
+                  }
+                  //else{
+                  //play remotely
+                  //}
+                }
+              });
+            break;
+            case 'image':
+              connector.serviceCache.File[data.source].files.images[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix]){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo("", link);
+                  }
+                  //else{
+                  //play remotely
+                  //}
+                }
+              });
+            break;
+            case 'tvchannel':
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix]){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(data.media[0].split("|")[1], "resources/images/svg/tv.svg");
+                  }
+                  //else{
+                  //play remotely
+                  //}
+                }
+            
+            break;
+            default:
+        }
           //
         }
       } catch (e) {
@@ -147,15 +214,15 @@ Ext.define('integration.PZPConnector', {
       ;
       webinosTV.app.connectUi.getMediaPlayerManager().hideMediaPlayer();
     });
-    connector.serviceCache.Setup[serviceAdr] = true;
+    connector.serviceCache.Setup[(serviceAdr)] = true;
   },
   /**
    *
    */
   getFilesFromBoundService: function(serviceAdr) {
     var connector = this;
-    if (connector.serviceCache.File[serviceAdr].bound) {
-      connector.serviceCache.File[serviceAdr].bound.requestFileSystem(1, 1024, function(filesystem) {
+    if (connector.serviceCache.File[(serviceAdr)].bound) {
+      connector.serviceCache.File[(serviceAdr)].bound.requestFileSystem(1, 1024, function(filesystem) {
 
         var reader = filesystem.root.createReader();
         var index = "";
@@ -165,32 +232,39 @@ Ext.define('integration.PZPConnector', {
 
 //clear media
           webinosTV.app.connectUi.getMediaItemsManager().clearMediaItems('video');
-          connector.serviceCache.File[serviceAdr].files = {videos: {}};
+          webinosTV.app.connectUi.getMediaItemsManager().clearMediaItems('audio');
+          webinosTV.app.connectUi.getMediaItemsManager().clearMediaItems('image');
+          connector.serviceCache.File[(serviceAdr)].files = {videos: {},audios: {}, images: {}};
           for (var i = entries.length - 1; i >= 0; i--) {
             if (entries[i].isFile) {
 
 //store refs at serviceCache.File[serviceAdr]
               var ext = entries[i].fullPath.match(/\.([^\.]+)$/);
+              index = entries[i].fullPath.lastIndexOf("/") + 1;
+              indexEnd = entries[i].fullPath.lastIndexOf(".");
+              filename = entries[i].fullPath.substring(index, indexEnd);
+              filename = filename.replace(/_/g, " ");
+              filename = filename.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+              });
               if (ext) {
-                switch (ext[1]) {
+                switch (ext[1].toLowerCase()) {
                   case "mp4":
-                  case "MP4":
                   case "webm":
-                  case "WEBM":
-                    index = entries[i].fullPath.lastIndexOf("/") + 1;
-                    indexEnd = entries[i].fullPath.lastIndexOf(".");
-                    filename = entries[i].fullPath.substring(index, indexEnd);
-                    filename = filename.replace(/_/g, " ");
-                    filename = filename.replace(/\w\S*/g, function(txt) {
-                      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                    });
-                    webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: entries[i].fullPath, title: filename, type: 'video',id:serviceAdr+"|"+entries[i].fullPath});
-                    connector.serviceCache.File[serviceAdr].files.videos[entries[i].fullPath] = entries[i];
+                  case "mov":
+                    webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: entries[i].fullPath, title: filename, type: 'video',id:serviceAdr+"|"+entries[i].fullPath +"|video"});
+                    connector.serviceCache.File[(serviceAdr)].files.videos[entries[i].fullPath] = entries[i];
                     break;
                   case "mp3":
-                  case "MP3":
                   case "ogg":
-                  case "OGG":
+                    webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: entries[i].fullPath, title: filename, type: 'audio',id:serviceAdr+"|"+entries[i].fullPath +"|audio"});
+                    connector.serviceCache.File[(serviceAdr)].files.audios[entries[i].fullPath] = entries[i];
+                    break;
+                  case "png":
+                  case "jpg":
+                  case "jpeg":
+                    webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: entries[i].fullPath, title: filename, type: 'images',id:serviceAdr+"|"+entries[i].fullPath +"|image"});
+                    connector.serviceCache.File[(serviceAdr)].files.images[entries[i].fullPath] = entries[i];
                     break;
                   default:
                     console.log("Unknown file extention " + ext[1]);
@@ -214,13 +288,34 @@ Ext.define('integration.PZPConnector', {
   /**
    *
    */
+  getChannelsFromBoundService: function(serviceAdr) {
+    var connector = this;
+    webinosTV.app.connectUi.getMediaItemsManager().clearMediaItems('tvchannel');
+    if (connector.serviceCache.TV[(serviceAdr)].bound) {
+
+      var successCallback = function(sources){
+        if(sources && sources.length){
+          sources=sources[0];
+        for (var i = 0; sources.channelList.length  > i; i++) {
+            webinosTV.app.connectUi.getMediaItemsManager().addMediaItem({file: sources.channelList[i].stream, title: sources.channelList[i].name, type: 'tvchannel',id:serviceAdr+"|"+sources.channelList[i].stream +"|tvchannel"});
+
+        };
+      }
+      };
+      var errorCallback = function(){};
+      connector.serviceCache.TV[(serviceAdr)].bound.tuner.getTVSources(/*TVSuccessCB*/ successCallback, /*optional TVErrorCB*/ errorCallback);
+    }
+  },
+  /**
+   *
+   */
   onNotificationFoundHandler: function(service) {
     var connector = this;
-    if (!connector.serviceCache.WebNotification[service.serviceAddress]) {
-      connector.serviceCache.WebNotification[service.serviceAddress] = {found: service};
+    if (!connector.serviceCache.WebNotification[(service.serviceAddress)]) {
+      connector.serviceCache.WebNotification[(service.serviceAddress)] = {found: service};
       service.bindService(
         {onBind: function(service) {
-            serviceCache.WebNotification[service.serviceAddress].bound = service;
+            serviceCache.WebNotification[(service.serviceAddress)].bound = service;
             //welcome noticifation
             //var wn = new service.WebNotification("title", {body: "body", iconUrl: "icon"});
 
@@ -247,8 +342,8 @@ Ext.define('integration.PZPConnector', {
       );
     }
 
-    if (!connector.pzpCache[service.serviceAddress]) {
-      connector.pzpCache[service.serviceAddress] = {
+    if (!connector.pzpCache[(service.serviceAddress)]) {
+      connector.pzpCache[(service.serviceAddress)] = {
         "available": true
       };
       //new pzp/device discovered, let the user decide on the device type. FIXME: in future this should be automated
@@ -275,11 +370,11 @@ Ext.define('integration.PZPConnector', {
    */
   onApp2AppFoundHandler: function(service) {
     var connector = this;
-    if (!connector.serviceCache.App2App[service.serviceAddress]) {
-      connector.serviceCache.App2App[service.serviceAddress] = {found: service};
+    if (!connector.serviceCache.App2App[(service.serviceAddress)]) {
+      connector.serviceCache.App2App[(service.serviceAddress)] = {found: service};
       service.bindService({
         onBind: function(service) {
-          connector.serviceCache.App2App[service.serviceAddress].bound = service;
+          connector.serviceCache.App2App[(service.serviceAddress)].bound = service;
           var properties = {};
           // we allow all channel clients to send and receive
           properties.mode = "send-receive";
@@ -311,7 +406,7 @@ Ext.define('integration.PZPConnector', {
                 },
                 // callback invoked on success, with the client's channel proxy as parameter
                   function(channelProxy) {
-                    connector.serviceCache.App2App[service.serviceAddress].channelProxy = channelProxy;
+                    connector.serviceCache.App2App[(service.serviceAddress)].channelProxy = channelProxy;
                     window.onbeforeunload = function() {
                       channelProxy.send(
                         {action: "creatorLeaves", message: service.serviceAddress},
@@ -434,11 +529,11 @@ Ext.define('integration.PZPConnector', {
                 {onFound:function(service){connector.onDeviceStatusFoundHandler(service,connector);}});
           },
           onDeviceStatusFoundHandler: function(service,connector) {
-            if (!connector.serviceCache.DeviceStatus[service.serviceAddress]) {
-              connector.serviceCache.DeviceStatus[service.serviceAddress] = {found: service};
+            if (!connector.serviceCache.DeviceStatus[(service.serviceAddress)]) {
+              connector.serviceCache.DeviceStatus[(service.serviceAddress)] = {found: service};
               service.bindService(
                 {onBind: function(service) {
-                    connector.serviceCache.DeviceStatus[service.serviceAddress].bound = service;
+                    connector.serviceCache.DeviceStatus[(service.serviceAddress)].bound = service;
                     var prop = {
                         component:"_DEFAULT",
                         aspect:"Device",
