@@ -61,8 +61,12 @@ Ext.define('integration.PZPConnector', {
     //webinosTV.app.connectUi.clearSourceDevices();
     //webinosTV.app.connectUi.clearTargetDevices();
     //invoke discovery every 15seconds
-    setInterval(connector.discoverDevices, 15000, connector);
+    setInterval(connector.invokeDiscovery, 15000, connector);
+    connector.invokeDiscovery(connector);
+  },
+  invokeDiscovery: function(connector){
     connector.discoverDevices(connector);
+    connector.discoverCommunicationChannel(connector);
   },
   /**
    *
@@ -368,8 +372,7 @@ Ext.define('integration.PZPConnector', {
   /**
    *
    */
-  onApp2AppFoundHandler: function(service) {
-    var connector = this;
+  onApp2AppFoundHandler: function(service, connector) {
     if (!connector.serviceCache.App2App[(service.serviceAddress)]) {
       connector.serviceCache.App2App[(service.serviceAddress)] = {found: service};
       service.bindService({
@@ -380,7 +383,7 @@ Ext.define('integration.PZPConnector', {
           properties.mode = "send-receive";
           var config = {};
           // the namespace is an URN which uniquely defines the channel in the personal zone
-          config.namespace = "urn:webinos-org:webinosTV";
+          config.namespace = "urn:webinos-org:webinosTV-"+btoa(webinos.session.getPZHId());
           config.properties = properties;
           // we can attach application-specific information to the channel
           config.appInfo = {};
@@ -402,7 +405,7 @@ Ext.define('integration.PZPConnector', {
               },
               // callback invoked to receive messages
                 function(message) {
-                  alert("master:" + JSON.stringify(message.contents));
+                  console.log("master:" + JSON.stringify(message.contents));
                 },
                 // callback invoked on success, with the client's channel proxy as parameter
                   function(channelProxy) {
@@ -443,7 +446,7 @@ Ext.define('integration.PZPConnector', {
     connector.serviceCache.App2App[adr].bound.searchForChannels(
       // the namespace to search for (can include a wildcard "*" instead of "example"
       // to search for all channels with prefix "org-webinos")
-      "urn:webinos-org:webinosTV",
+      "urn:webinos-org:webinosTV-"+btoa(webinos.session.getPZHId()),
       // no other zones need to be searched, only its own personal zone
         [],
         // callback invoked on each channel found, we expect it to be called at most once
@@ -457,7 +460,7 @@ Ext.define('integration.PZPConnector', {
                 console.log("channel search accepted.");
               },
               function(error) {
-                alert("Could not search for channel: " + error.message);
+                console.log("Could not search for channel: " + error.message);
               }
             );
           },
@@ -477,10 +480,10 @@ Ext.define('integration.PZPConnector', {
                 if (message.contents && message.contents.action === "creatorLeaves") {
                   //select randomly the next creator.
                   setTimeout(function() {
-                    serviceCache.App2App[adr] = null;
+                    delete serviceCache.App2App[adr];
                   }, 200 * Math.random());
                 } else {
-                  alert("client:" + JSON.stringify(message.contents));
+                  console.log("client:" + JSON.stringify(message.contents));
                 }
               },
               // callback invoked when the client is successfully connected (i.e. authorized by the creator)
@@ -494,7 +497,7 @@ Ext.define('integration.PZPConnector', {
                     // ok, but no action needed in our example
                   },
                     function(error) {
-                      alert("Could not send message: " + error.message);
+                      console.log("Could not send message: " + error.message);
                     }
                   );
                 },
@@ -503,22 +506,9 @@ Ext.define('integration.PZPConnector', {
                 }
               );
             },
-          discoverServices: function() {
-            var connector = this;
-            webinos.discovery.findServices(new ServiceType('http://webinos.org/api/webnotification'),
-              {
-                onFound: connector.onNotificationFoundHandler,
-                onLost: function(service) {
-                  console.log("LOST ", service);
-                },
-                onError: function(error) {
-                  console.log("error ", error);
-                }
-              }
-
-            );
+          discoverCommunicationChannel: function(connector) {
             webinos.discovery.findServices(new ServiceType("http://webinos.org/api/app2app"), {
-              onFound: connector.onApp2AppFoundHandler,
+              onFound: function(srv){connector.onApp2AppFoundHandler(srv,connector);},
               onError: function(error) {
                 console.log("Error finding service: " + error.message + " (#" + error.code + ")");
               }
@@ -541,11 +531,12 @@ Ext.define('integration.PZPConnector', {
                     };
                     var successCB = function (value) {
                         value=(value==="smartphone")?"phone":value;
-                        webinos.session.addListener('friendlyName', function(msg){
-                          connector.setupDevice(service.serviceAddress,value,msg.payload.message,connector);
-                        });
-                        var options = {"type": 'prop', "payload":{"status": "getFriendlyName"}};
-                        webinos.session.message_send(options, webinos.session.getPZPId());
+                        //webinos.session.addListener('friendlyName', function(msg){
+                          var friendlyName = service.serviceAddress;//(service.serviceAddress.split("'s ").length>1)?service.serviceAddress.split("'s ")[1]:service.serviceAddress;
+                          connector.setupDevice(service.serviceAddress,value,friendlyName,connector);
+                        //});
+                        //var options = {"type": 'prop', "payload":{"status": "getFriendlyName"}};
+                        //webinos.session.message_send(options, service.serviceAddress);
                     };
                     var errorCB = function (value) {
                         console.log("Error: " + value);
