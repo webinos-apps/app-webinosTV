@@ -83,6 +83,10 @@ Ext.define('webinosTV.model.Device', {
     }
 
     var q = this.get('queue');
+    if(!q){
+      this.clearQueue();
+      q = this.get('queue');
+    }
     //filter out media that are already there
     var _mediaIds = mediaIds;
 //      .filter(function(m) {
