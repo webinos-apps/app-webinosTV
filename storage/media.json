@@ -1,23 +1,3 @@
 {
-  "media": [
-    {"id": "1", "title": "Top Song", "file": "path/to/some1.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "2", "title": "Almost as Good", "file": "path/to/some2.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "3", "title": "A very long title for a song, don't you think so? I'm sure you agree...", "file": "path/to/some3.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "4", "title": "Another Great Song", "file": "path/to/some4.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "5", "title": "Love Song", "file": "path/to/some5.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "6", "title": "Octopus\'s Garden", "file": "path/to/some6.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "7", "title": "Play It Now", "file": "path/to/some7.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "8", "title": "Sweet Dreams", "file": "path/to/some8.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "9", "title": "Home", "file": "path/to/some9.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "10", "title": "Startup Theme", "file": "path/to/some10.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "11", "title": "webinos Anthem", "file": "path/to/some11.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "12", "title": "Do The Media Share Dance", "file": "path/to/some12.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "13", "title": "The Very Last Song", "file": "path/to/some13.mp3", "meta": {"album": "Album", "artist": "Artist"}, "type": "audio"},
-    {"id": "100", "title": "Big Buck Bunny", "meta": {"artist": "Sacha Goedegebure", "album": "Blender Production"}, "file": "bbb.webm", "type": "video"},
-    {"id": "200", "title": "Gizmo Roboter", "meta": {"artist": "808.dk", "album": "U. D. Hansen"}, "file": "gizmo.mp4", "type": "video"},
-    {"id": "300", "title": "webinos 101 (HQ)", "meta": {"artist": "webinos project", "album": "webinos demo series"}, "file": "webinos_sub.mp4", "type": "video"},
-    {"id": "400", "title": "webinos 101", "meta": {"artist": "webinos project", "album": "webinos demo series"}, "file": "webinos.webm", "type": "video"},
-    {"id": "1000", "file": "someurl.mp4", "title": "Channel 2", "type": "tvchannel"},
-    {"id": "1001", "file": "someotherurl.mp4", "title": "Channel 69", "type": "tvchannel"}
-  ]
+  "media": [  ]
 }

@@ -149,66 +149,7 @@ Ext.define('integration.PZPConnector', {
       }
     });
     webinosTV.app.connectEvents.addEventListener("playFiles", function(data) {
-
-      try {
-        if (data.source && data.media && data.media.length) {
-          console.log(typeof connector.serviceCache,connector.serviceCache);
-
-          switch(data.media[0].split("|")[2]){
-            case 'video':
-              connector.serviceCache.File[data.source].files.videos[data.media[0].split("|")[1]].getLink(function(link) {
-                for (var tix = 0; tix < data.targets.length; tix++) {
-                  if(webinos.session.getPZPId()===data.targets[tix]){
-                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(link, "resources/images/svg/tv.svg");
-                  }
-                  //else{
-                  //play remotely
-                  //}
-                }
-              });
-            break;
-            case 'audio':
-              connector.serviceCache.File[data.source].files.audios[data.media[0].split("|")[1]].getLink(function(link) {
-                for (var tix = 0; tix < data.targets.length; tix++) {
-                  if(webinos.session.getPZPId()===data.targets[tix]){
-                    webinosTV.app.connectUi.getMediaPlayerManager().showModalAudio(link, "resources/images/svg/music.svg");
-                  }
-                  //else{
-                  //play remotely
-                  //}
-                }
-              });
-            break;
-            case 'image':
-              connector.serviceCache.File[data.source].files.images[data.media[0].split("|")[1]].getLink(function(link) {
-                for (var tix = 0; tix < data.targets.length; tix++) {
-                  if(webinos.session.getPZPId()===data.targets[tix]){
-                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo("", link);
-                  }
-                  //else{
-                  //play remotely
-                  //}
-                }
-              });
-            break;
-            case 'tvchannel':
-                for (var tix = 0; tix < data.targets.length; tix++) {
-                  if(webinos.session.getPZPId()===data.targets[tix]){
-                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(data.media[0].split("|")[1], "resources/images/svg/tv.svg");
-                  }
-                  //else{
-                  //play remotely
-                  //}
-                }
-            
-            break;
-            default:
-        }
-          //
-        }
-      } catch (e) {
-          console.warn(e)
-      }
+      connector.playFiles(data,connector);
     });
     webinosTV.app.connectEvents.addEventListener("stopFiles", function(data) {
       var v = document.getElementsByTagName("video");
@@ -218,7 +159,101 @@ Ext.define('integration.PZPConnector', {
       ;
       webinosTV.app.connectUi.getMediaPlayerManager().hideMediaPlayer();
     });
+    webinosTV.app.connectEvents.addEventListener("queueFiles", function(data) {
+      connector.invokeRemotely("queueFiles",data,connector);
+    });
     connector.serviceCache.Setup[(serviceAdr)] = true;
+  },
+  playFiles: function(data,connector){
+          try {
+        if (data.source && data.media && data.media.length) {
+          console.log(typeof connector.serviceCache,connector.serviceCache);
+
+          switch(data.media[0].split("|")[2]){
+            case 'video':
+              connector.serviceCache.File[data.source].files.videos[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix] && (!!!data.appSession || data.appSession!=connector.appSession)){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(link, "resources/images/svg/tv.svg");
+                  }
+                }
+              });
+            break;
+            case 'audio':
+              connector.serviceCache.File[data.source].files.audios[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix] && (!!!data.appSession || data.appSession!=connector.appSession)){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalAudio(link, "resources/images/svg/music.svg");
+                  }
+                }
+              });
+            break;
+            case 'image':
+              connector.serviceCache.File[data.source].files.images[data.media[0].split("|")[1]].getLink(function(link) {
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix] && (!!!data.appSession || data.appSession!=connector.appSession)){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo("", link);
+                  }
+                }
+              });
+            break;
+            case 'tvchannel':
+                for (var tix = 0; tix < data.targets.length; tix++) {
+                  if(webinos.session.getPZPId()===data.targets[tix] && (!!!data.appSession || data.appSession!=connector.appSession)){
+                    webinosTV.app.connectUi.getMediaPlayerManager().showModalVideo(data.media[0].split("|")[1], "resources/images/svg/tv.svg");
+                  }
+                }
+            
+            break;
+            default:
+        }
+        if(data&&!!!data.appSession){
+        //play remotely
+          connector.invokeRemotely("playFiles",{targets:data.targets,source:data.source,media:[data.media[0]],appSession:connector.appSession},connector);
+        }
+        }
+      } catch (e) {
+          console.warn(e)
+      }
+  },
+  invokeRemotely: function(action,data,connector){
+    if(data.source && connector.serviceCache.App2App){
+      for(var a2aix in connector.serviceCache.App2App){
+        if(connector.serviceCache.App2App.hasOwnProperty(a2aix))
+       connector.serviceCache.App2App[a2aix].channelProxy.send(
+        {action: action, message: JSON.stringify(data)},
+      // callback invoked when the message is accepted for processing
+      function(success) {
+        // ok, but no action needed in our example
+      },
+        function(error) {
+          console.log("Could not send message: " + error.message);
+        }
+      );         
+      }
+    
+    }
+  },
+  /**
+   *
+   */
+  handleMessage: function(msgdata,connector){
+    
+    if(msgdata&&msgdata.action){
+      var data = "";
+      try{
+        data = JSON.parse(msgdata.message);
+      }catch(e){}
+      switch(msgdata.action){
+        case "playFiles":
+          connector.playFiles(data,connector);
+        break;
+        case "queueFiles":
+          webinosTV.app.connectUi.getQueuesManager().addToDevicesQueue(data.media, data.targets);
+        break;
+        default:
+      }
+    }
   },
   /**
    *
@@ -406,10 +441,12 @@ Ext.define('integration.PZPConnector', {
               // callback invoked to receive messages
                 function(message) {
                   console.log("master:" + JSON.stringify(message.contents));
+                  connector.handleMessage(message.contents,connector);
                 },
                 // callback invoked on success, with the client's channel proxy as parameter
                   function(channelProxy) {
                     connector.serviceCache.App2App[(service.serviceAddress)].channelProxy = channelProxy;
+                   // alert("masterJoins");
                     window.onbeforeunload = function() {
                       channelProxy.send(
                         {action: "creatorLeaves", message: service.serviceAddress},
@@ -480,16 +517,18 @@ Ext.define('integration.PZPConnector', {
                 if (message.contents && message.contents.action === "creatorLeaves") {
                   //select randomly the next creator.
                   setTimeout(function() {
-                    delete serviceCache.App2App[adr];
+                    delete connector.serviceCache.App2App[adr];
                   }, 200 * Math.random());
                 } else {
                   console.log("client:" + JSON.stringify(message.contents));
+                  connector.handleMessage(message.contents,connector);
                 }
               },
               // callback invoked when the client is successfully connected (i.e. authorized by the creator)
                 function(success) {
                   // make the proxy available now that we are successfully connected
                   connector.serviceCache.App2App[adr].channelProxy = channelProxy;
+                  //alert("clientJoins");
                   channelProxy.send(
                     {message: adr, action: "clientJoins", appSession: connector.appSession},
                   // callback invoked when the message is accepted for processing
