@@ -62,6 +62,7 @@ Ext.define('webinosTV.controller.SelectPlayModeController', {
   addToDeviceQueues: function(data) {
     webinosTV.app.connectUi.getQueuesManager().addToDevicesQueue(data.mediaItems, data.targetDevices);
 //    console.log("added", data.mediaItems, "to the queues of following devices", data.targetDevices);
+    webinosTV.app.connectEvents.notify("queueFiles", {source: data.sourceDevices, targets: data.targetDevices, media: data.mediaItems});
   },
   gatherInformations: function() {
     //get files to be played
