@@ -72,8 +72,11 @@ Ext.define('webinosTV.view.MediaWrapper', {
     }
     srcElement.type = type ? type : '';
     mediaElement.appendChild(srcElement);
+    //Android hack to keep video inside the view
+    //TODO: Find a better way :)
+    var height = 0.87 * window.innerHeight;
     mediaElement.setAttribute('width', '100%');
-    mediaElement.setAttribute('height', '100%');
+    mediaElement.setAttribute('height', height+"px");
 //    mediaElement.setAttribute('preload', true);
     //Set Video Event handlers - TODO use or delete
 //    mediaElement.setAttribute('onloadstart', '(' + mw.onLoadStart + ')("' + mw.getId() + '")');
