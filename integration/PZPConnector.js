@@ -161,6 +161,7 @@ Ext.define('integration.PZPConnector', {
     webinosTV.app.connectEvents.addEventListener("queueFiles", function(data) {
       connector.invokeRemotely("queueFiles",data,connector);
     });
+    webinosTV.app.connectEvents.notify("scanForFiles", {serviceAdr: serviceAdr});
     connector.serviceCache.Setup[(serviceAdr)] = true;
   },
   playFiles: function(data,connector){
