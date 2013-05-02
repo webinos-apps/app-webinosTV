@@ -156,16 +156,16 @@ Ext.define('integration.PZPConnector', {
       for (var i = v.length - 1; i >= 0; i--) {
         v[i].src = "";
       }
-      ;
       webinosTV.app.connectUi.getMediaPlayerManager().hideMediaPlayer();
     });
     webinosTV.app.connectEvents.addEventListener("queueFiles", function(data) {
       connector.invokeRemotely("queueFiles",data,connector);
     });
+    webinosTV.app.connectEvents.notify("scanForFiles", {serviceAdr: serviceAdr});
     connector.serviceCache.Setup[(serviceAdr)] = true;
   },
   playFiles: function(data,connector){
-          try {
+      try {
         if (data.source && data.media && data.media.length) {
           console.log(typeof connector.serviceCache,connector.serviceCache);
 
@@ -416,6 +416,7 @@ Ext.define('integration.PZPConnector', {
           var properties = {};
           // we allow all channel clients to send and receive
           properties.mode = "send-receive";
+          properties.reclaimIfExists = true;
           var config = {};
           // the namespace is an URN which uniquely defines the channel in the personal zone
           config.namespace = "urn:webinos-org:webinosTV-"+btoa(webinos.session.getPZHId());
@@ -480,7 +481,7 @@ Ext.define('integration.PZPConnector', {
   channelFind: function(adr) {
     var connector = this;
     //try to find channel first
-    connector.serviceCache.App2App[adr].bound.searchForChannels(
+    connector.serviceCache.App2App[(adr)].bound.searchForChannels(
       // the namespace to search for (can include a wildcard "*" instead of "example"
       // to search for all channels with prefix "org-webinos")
       "urn:webinos-org:webinosTV-"+btoa(webinos.session.getPZHId()),
@@ -527,8 +528,7 @@ Ext.define('integration.PZPConnector', {
               // callback invoked when the client is successfully connected (i.e. authorized by the creator)
                 function(success) {
                   // make the proxy available now that we are successfully connected
-                  connector.serviceCache.App2App[adr].channelProxy = channelProxy;
-                  //alert("clientJoins");
+                  connector.serviceCache.App2App[(adr)].channelProxy = channelProxy;
                   channelProxy.send(
                     {message: adr, action: "clientJoins", appSession: connector.appSession},
                   // callback invoked when the message is accepted for processing
